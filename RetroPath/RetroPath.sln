@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.Core", "RetroPath.Core\RetroPath.Core.csproj", "{B195FFBA-C2F5-4D98-9DB1-F30A0A8F595C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.Cli", "RetroPath.Cli\RetroPath.Cli.csproj", "{D2A39843-338C-4BD4-BCE2-AA80283AD1EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B195FFBA-C2F5-4D98-9DB1-F30A0A8F595C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B195FFBA-C2F5-4D98-9DB1-F30A0A8F595C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B195FFBA-C2F5-4D98-9DB1-F30A0A8F595C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B195FFBA-C2F5-4D98-9DB1-F30A0A8F595C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2A39843-338C-4BD4-BCE2-AA80283AD1EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2A39843-338C-4BD4-BCE2-AA80283AD1EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2A39843-338C-4BD4-BCE2-AA80283AD1EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2A39843-338C-4BD4-BCE2-AA80283AD1EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
