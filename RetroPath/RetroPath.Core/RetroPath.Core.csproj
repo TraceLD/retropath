@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="CsvHelper" Version="27.2.1" />
       <PackageReference Include="TraceLD.RDKit.CSharp" Version="0.3.0" />
     </ItemGroup>
 
