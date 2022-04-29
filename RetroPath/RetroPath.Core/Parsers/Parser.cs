@@ -6,7 +6,7 @@ public abstract class Parser<T>
 {
     protected InputConfiguration InputConfiguration { get; }
     
-    public Parser(InputConfiguration inputConfiguration)
+    protected Parser(InputConfiguration inputConfiguration)
     {
         InputConfiguration = inputConfiguration;
     }

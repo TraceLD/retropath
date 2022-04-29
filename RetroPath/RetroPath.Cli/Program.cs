@@ -3,6 +3,7 @@
 using RetroPath.Core;
 using RetroPath.Core.Models.Configuration;
 using RetroPath.Core.Parsers;
+using GraphMolWrap;
 
 var inputConfig = new InputConfiguration(
     @"C:\Users\Lukasz\Documents\projects\retropath-standalone\data\retrorules_rr02_rp2_flat_all.csv",
@@ -14,7 +15,9 @@ var inputConfig = new InputConfiguration(
     4
 );
 
-var rulesParser = new RulesParser(inputConfig);
-var parsedRules = rulesParser.Parse(inputConfig.RulesFilePath);
+// var rulesParser = new RulesParser(inputConfig);
+//var parsedRules = rulesParser.Parse(inputConfig.RulesFilePath);
+
+using var mol = RWMol.MolFromSmiles("fdsafdsafdsafdsa");
 
 Console.WriteLine("Goodbye!");

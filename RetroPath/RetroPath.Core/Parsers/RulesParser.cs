@@ -6,9 +6,9 @@ using RetroPath.Core.Models.Configuration;
 
 namespace RetroPath.Core.Parsers;
 
-public class RulesParser : Parser<List<ReactionRule>>
+public sealed class RulesParser : Parser<List<ReactionRule>>
 {
-    private class RawRule
+    private sealed class RawRule
     {
         [Name("Rule ID")] public string RuleId { get; set; } = null!;
 
@@ -31,7 +31,9 @@ public class RulesParser : Parser<List<ReactionRule>>
 
     public override List<ReactionRule> Parse(string filePath)
     {
+        // we will group rules based on SMARTS + Diameter to get rid of duplicates;
         Dictionary<(string ruleSmarts, int diameter), ReactionRule> groupedRules = new();
+        
         using var reader = new StreamReader(filePath);
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
         var rules = csv.GetRecords<RawRule>();
