@@ -2,7 +2,14 @@
 
 namespace RetroPath.Core.Parsers;
 
-public interface IParser<out T>
+public abstract class Parser<T>
 {
-    public T Parse(InputConfiguration rpInputConfiguration, string filePath);
+    protected InputConfiguration InputConfiguration { get; }
+    
+    public Parser(InputConfiguration inputConfiguration)
+    {
+        InputConfiguration = inputConfiguration;
+    }
+
+    public abstract T Parse(string filePath);
 }
