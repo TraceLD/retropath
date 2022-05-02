@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.Cli", "RetroPath.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.Benchmarks", "RetroPath.Benchmarks\RetroPath.Benchmarks.csproj", "{4374932C-1B22-4E31-886E-A59F24ECBC84}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.RDKit.Abstractions", "RetroPath.RDKit.Abstractions\RetroPath.RDKit.Abstractions.csproj", "{DAC79D4F-A2ED-4AF5-9882-3A842F53FF54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{4374932C-1B22-4E31-886E-A59F24ECBC84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4374932C-1B22-4E31-886E-A59F24ECBC84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4374932C-1B22-4E31-886E-A59F24ECBC84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAC79D4F-A2ED-4AF5-9882-3A842F53FF54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAC79D4F-A2ED-4AF5-9882-3A842F53FF54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAC79D4F-A2ED-4AF5-9882-3A842F53FF54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAC79D4F-A2ED-4AF5-9882-3A842F53FF54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
