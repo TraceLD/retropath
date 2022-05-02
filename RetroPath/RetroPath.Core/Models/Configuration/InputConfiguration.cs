@@ -5,6 +5,8 @@ public record InputConfiguration(
     string SinkFilePath,
     string SourceFilePath,
     double SourceMw,
+    string CofactorsFilePath,
+    double CofactorMw,
     int MinDiameter,
     int MaxDiameter,
     int PathwayLength
