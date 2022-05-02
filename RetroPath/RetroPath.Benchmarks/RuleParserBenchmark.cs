@@ -14,8 +14,10 @@ public class RuleParserBenchmark
     {
         _rpConfig = new InputConfiguration(
             @"C:\Users\Lukasz\Documents\projects\retropath-standalone\data\retrorules_rr02_rp2_flat_all.csv",
-            "sink_file",
+            @"sink_file",
             "source_file",
+            1000,
+            "cofacts_file",
             1000,
             0,
             1000,
