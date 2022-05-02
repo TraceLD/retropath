@@ -1,0 +1,177 @@
+// Validating benchmarks:
+// ***** BenchmarkRunner: Start   *****
+// ***** Found 1 benchmark(s) in total *****
+// ***** Building 1 exe(s) in Parallel: Start   *****
+// start dotnet restore  /p:UseSharedCompilation=false /p:BuildInParallel=false /m:1 /p:Deterministic=true /p:Optimize=true in C:\Users\Lukasz\Documents\projects\retropath\RetroPath\RetroPath.Benchmarks\bin\Release\net6.0\7238344d-2fda-4212-a66e-a217c64be577
+// command took 0.93s and exited with 0
+// start dotnet build -c Release  --no-restore /p:UseSharedCompilation=false /p:BuildInParallel=false /m:1 /p:Deterministic=true /p:Optimize=true in C:\Users\Lukasz\Documents\projects\retropath\RetroPath\RetroPath.Benchmarks\bin\Release\net6.0\7238344d-2fda-4212-a66e-a217c64be577
+// command took 1.94s and exited with 0
+// ***** Done, took 00:00:02 (2.92 sec)   *****
+// Found 1 benchmarks:
+//   CompoundParserBenchmark.ParseBigSinksFile: DefaultJob
+
+// **************************
+// Benchmark: CompoundParserBenchmark.ParseBigSinksFile: DefaultJob
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "7238344d-2fda-4212-a66e-a217c64be577.dll" --benchmarkName "RetroPath.Benchmarks.CompoundParserBenchmark.ParseBigSinksFile" --job "Default" --benchmarkId 0 in C:\Users\Lukasz\Documents\projects\retropath\RetroPath\RetroPath.Benchmarks\bin\Release\net6.0\7238344d-2fda-4212-a66e-a217c64be577\bin\Release\net6.0
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// Runtime=.NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+// GC=Concurrent Workstation
+// Job: DefaultJob
+
+OverheadJitting  1: 1 op, 132400.00 ns, 132.4000 us/op
+WorkloadJitting  1: 1 op, 1865908200.00 ns, 1.8659 s/op
+
+WorkloadWarmup   1: 1 op, 1649465400.00 ns, 1.6495 s/op
+WorkloadWarmup   2: 1 op, 1635154200.00 ns, 1.6352 s/op
+WorkloadWarmup   3: 1 op, 1789750900.00 ns, 1.7898 s/op
+WorkloadWarmup   4: 1 op, 1653878000.00 ns, 1.6539 s/op
+WorkloadWarmup   5: 1 op, 1671887200.00 ns, 1.6719 s/op
+WorkloadWarmup   6: 1 op, 1789758300.00 ns, 1.7898 s/op
+WorkloadWarmup   7: 1 op, 1720814800.00 ns, 1.7208 s/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 1762118500.00 ns, 1.7621 s/op
+WorkloadActual   2: 1 op, 1653346000.00 ns, 1.6533 s/op
+WorkloadActual   3: 1 op, 1824657100.00 ns, 1.8247 s/op
+WorkloadActual   4: 1 op, 1658981100.00 ns, 1.6590 s/op
+WorkloadActual   5: 1 op, 1725403100.00 ns, 1.7254 s/op
+WorkloadActual   6: 1 op, 1689971900.00 ns, 1.6900 s/op
+WorkloadActual   7: 1 op, 1768736600.00 ns, 1.7687 s/op
+WorkloadActual   8: 1 op, 1798536000.00 ns, 1.7985 s/op
+WorkloadActual   9: 1 op, 1778382500.00 ns, 1.7784 s/op
+WorkloadActual  10: 1 op, 1640612800.00 ns, 1.6406 s/op
+WorkloadActual  11: 1 op, 1659773500.00 ns, 1.6598 s/op
+WorkloadActual  12: 1 op, 1767688000.00 ns, 1.7677 s/op
+WorkloadActual  13: 1 op, 1768407200.00 ns, 1.7684 s/op
+WorkloadActual  14: 1 op, 1793118100.00 ns, 1.7931 s/op
+WorkloadActual  15: 1 op, 1798227400.00 ns, 1.7982 s/op
+WorkloadActual  16: 1 op, 1801628600.00 ns, 1.8016 s/op
+WorkloadActual  17: 1 op, 1805892900.00 ns, 1.8059 s/op
+WorkloadActual  18: 1 op, 1837736000.00 ns, 1.8377 s/op
+WorkloadActual  19: 1 op, 1758956300.00 ns, 1.7590 s/op
+WorkloadActual  20: 1 op, 1796131600.00 ns, 1.7961 s/op
+WorkloadActual  21: 1 op, 1807547500.00 ns, 1.8075 s/op
+WorkloadActual  22: 1 op, 1708282200.00 ns, 1.7083 s/op
+WorkloadActual  23: 1 op, 1817887600.00 ns, 1.8179 s/op
+WorkloadActual  24: 1 op, 1796428800.00 ns, 1.7964 s/op
+WorkloadActual  25: 1 op, 1801467600.00 ns, 1.8015 s/op
+WorkloadActual  26: 1 op, 1733726500.00 ns, 1.7337 s/op
+WorkloadActual  27: 1 op, 1796765200.00 ns, 1.7968 s/op
+WorkloadActual  28: 1 op, 1691763800.00 ns, 1.6918 s/op
+WorkloadActual  29: 1 op, 1812548400.00 ns, 1.8125 s/op
+WorkloadActual  30: 1 op, 1814206600.00 ns, 1.8142 s/op
+WorkloadActual  31: 1 op, 1656411000.00 ns, 1.6564 s/op
+WorkloadActual  32: 1 op, 1795695600.00 ns, 1.7957 s/op
+WorkloadActual  33: 1 op, 1852876700.00 ns, 1.8529 s/op
+WorkloadActual  34: 1 op, 1846764800.00 ns, 1.8468 s/op
+WorkloadActual  35: 1 op, 1829341100.00 ns, 1.8293 s/op
+WorkloadActual  36: 1 op, 1829131000.00 ns, 1.8291 s/op
+WorkloadActual  37: 1 op, 1822781800.00 ns, 1.8228 s/op
+WorkloadActual  38: 1 op, 1753209600.00 ns, 1.7532 s/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 1762118500.00 ns, 1.7621 s/op
+WorkloadResult   2: 1 op, 1653346000.00 ns, 1.6533 s/op
+WorkloadResult   3: 1 op, 1824657100.00 ns, 1.8247 s/op
+WorkloadResult   4: 1 op, 1658981100.00 ns, 1.6590 s/op
+WorkloadResult   5: 1 op, 1725403100.00 ns, 1.7254 s/op
+WorkloadResult   6: 1 op, 1689971900.00 ns, 1.6900 s/op
+WorkloadResult   7: 1 op, 1768736600.00 ns, 1.7687 s/op
+WorkloadResult   8: 1 op, 1798536000.00 ns, 1.7985 s/op
+WorkloadResult   9: 1 op, 1778382500.00 ns, 1.7784 s/op
+WorkloadResult  10: 1 op, 1640612800.00 ns, 1.6406 s/op
+WorkloadResult  11: 1 op, 1659773500.00 ns, 1.6598 s/op
+WorkloadResult  12: 1 op, 1767688000.00 ns, 1.7677 s/op
+WorkloadResult  13: 1 op, 1768407200.00 ns, 1.7684 s/op
+WorkloadResult  14: 1 op, 1793118100.00 ns, 1.7931 s/op
+WorkloadResult  15: 1 op, 1798227400.00 ns, 1.7982 s/op
+WorkloadResult  16: 1 op, 1801628600.00 ns, 1.8016 s/op
+WorkloadResult  17: 1 op, 1805892900.00 ns, 1.8059 s/op
+WorkloadResult  18: 1 op, 1837736000.00 ns, 1.8377 s/op
+WorkloadResult  19: 1 op, 1758956300.00 ns, 1.7590 s/op
+WorkloadResult  20: 1 op, 1796131600.00 ns, 1.7961 s/op
+WorkloadResult  21: 1 op, 1807547500.00 ns, 1.8075 s/op
+WorkloadResult  22: 1 op, 1708282200.00 ns, 1.7083 s/op
+WorkloadResult  23: 1 op, 1817887600.00 ns, 1.8179 s/op
+WorkloadResult  24: 1 op, 1796428800.00 ns, 1.7964 s/op
+WorkloadResult  25: 1 op, 1801467600.00 ns, 1.8015 s/op
+WorkloadResult  26: 1 op, 1733726500.00 ns, 1.7337 s/op
+WorkloadResult  27: 1 op, 1796765200.00 ns, 1.7968 s/op
+WorkloadResult  28: 1 op, 1691763800.00 ns, 1.6918 s/op
+WorkloadResult  29: 1 op, 1812548400.00 ns, 1.8125 s/op
+WorkloadResult  30: 1 op, 1814206600.00 ns, 1.8142 s/op
+WorkloadResult  31: 1 op, 1656411000.00 ns, 1.6564 s/op
+WorkloadResult  32: 1 op, 1795695600.00 ns, 1.7957 s/op
+WorkloadResult  33: 1 op, 1852876700.00 ns, 1.8529 s/op
+WorkloadResult  34: 1 op, 1846764800.00 ns, 1.8468 s/op
+WorkloadResult  35: 1 op, 1829341100.00 ns, 1.8293 s/op
+WorkloadResult  36: 1 op, 1829131000.00 ns, 1.8291 s/op
+WorkloadResult  37: 1 op, 1822781800.00 ns, 1.8228 s/op
+WorkloadResult  38: 1 op, 1753209600.00 ns, 1.7532 s/op
+GC:  0 0 0 6652216 1
+Threading:  187 47 1
+
+// AfterAll
+// Benchmark Process 15784 has exited with code 0.
+
+Mean = 1.770 s, StdErr = 0.010 s (0.55%), N = 38, StdDev = 0.060 s
+Min = 1.641 s, Q1 = 1.739 s, Median = 1.796 s, Q3 = 1.811 s, Max = 1.853 s
+IQR = 0.073 s, LowerFence = 1.630 s, UpperFence = 1.920 s
+ConfidenceInterval = [1.735 s; 1.805 s] (CI 99.9%), Margin = 0.035 s (1.97% of Mean)
+Skewness = -0.8, Kurtosis = 2.4, MValue = 2
+
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  BenchmarkDotNet.Artifacts\results\RetroPath.Benchmarks.CompoundParserBenchmark-report.csv
+  BenchmarkDotNet.Artifacts\results\RetroPath.Benchmarks.CompoundParserBenchmark-report-github.md
+  BenchmarkDotNet.Artifacts\results\RetroPath.Benchmarks.CompoundParserBenchmark-report.html
+
+// * Detailed results *
+CompoundParserBenchmark.ParseBigSinksFile: DefaultJob
+Runtime = .NET 6.0.4 (6.0.422.16404), X64 RyuJIT; GC = Concurrent Workstation
+Mean = 1.770 s, StdErr = 0.010 s (0.55%), N = 38, StdDev = 0.060 s
+Min = 1.641 s, Q1 = 1.739 s, Median = 1.796 s, Q3 = 1.811 s, Max = 1.853 s
+IQR = 0.073 s, LowerFence = 1.630 s, UpperFence = 1.920 s
+ConfidenceInterval = [1.735 s; 1.805 s] (CI 99.9%), Margin = 0.035 s (1.97% of Mean)
+Skewness = -0.8, Kurtosis = 2.4, MValue = 2
+-------------------- Histogram --------------------
+[1.617 s ; 1.696 s) | @@@@@@@
+[1.696 s ; 1.771 s) | @@@@@@@@@
+[1.771 s ; 1.839 s) | @@@@@@@@@@@@@@@@@@@@
+[1.839 s ; 1.876 s) | @@
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+AMD Ryzen 9 3900X, 1 CPU, 24 logical and 12 physical cores
+.NET SDK=6.0.202
+  [Host]     : .NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+  DefaultJob : .NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+
+
+|            Method |    Mean |    Error |   StdDev | Allocated |
+|------------------ |--------:|---------:|---------:|----------:|
+| ParseBigSinksFile | 1.770 s | 0.0348 s | 0.0601 s |      6 MB |
+
+// * Legends *
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 s       : 1 Second (1 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+// ** Remained 0 benchmark(s) to run **
+Run time: 00:01:26 (86.65 sec), executed benchmarks: 1
+
+Global total time: 00:01:29 (89.57 sec), executed benchmarks: 1
+// * Artifacts cleanup *
