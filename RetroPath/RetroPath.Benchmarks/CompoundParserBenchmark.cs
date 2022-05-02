@@ -22,7 +22,7 @@ public class CompoundParserBenchmark : IDisposable
             0,
             1000,
             4
-        );;
+        );
         _parser = new CompoundParser(_rpConfig);
     }
 

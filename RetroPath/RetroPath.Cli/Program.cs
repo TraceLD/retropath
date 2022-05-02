@@ -17,7 +17,7 @@ var inputConfig = new InputConfiguration(
     4
 );
 
-// var rulesParser = new RulesParser(inputConfig);
+//var rulesParser = new RulesParser(inputConfig);
 //var parsedRules = rulesParser.Parse(inputConfig.RulesFilePath);
 
 using var compoundParser = new CompoundParser(inputConfig);
