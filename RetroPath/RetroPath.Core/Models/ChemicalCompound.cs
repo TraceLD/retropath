@@ -1,15 +1,34 @@
-﻿namespace RetroPath.Core.Models;
+﻿using GraphMolWrap;
 
-public struct ChemicalCompound
+namespace RetroPath.Core.Models;
+
+public record ChemicalCompound(
+    HashSet<string> Names,
+    string Inchi,
+    string Smiles,
+    RWMol? Mol
+): IDisposable
 {
-    public HashSet<string> Names { get; set; }
-    public string Inchi { get; set; }
-    public string Smiles { get; set; }
+    public void Dispose() => Mol?.Dispose();
+};
 
-    public ChemicalCompound(HashSet<string> names, string inchi, string smiles)
+public record ChemicalCompoundWithoutMol(
+    HashSet<string> Names,
+    string Inchi,
+    string Smiles
+)
+{
+    public ChemicalCompoundWithoutMol(ChemicalCompound c) : this(c.Names, c.Inchi, c.Smiles)
     {
-        Names = names;
-        Inchi = inchi;
-        Smiles = smiles;
     }
+};
+
+public record StandardisedCompound(
+    string Name,
+    string Smiles,
+    string Inchi,
+    RWMol? Mol
+) : IDisposable
+{
+    public void Dispose() => Mol?.Dispose();
 }
