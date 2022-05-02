@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.Concurrent;
+using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 using GraphMolWrap;
@@ -44,28 +45,28 @@ public class CompoundParser : IDisposable
         using var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
         var compounds = csv.GetRecords<RawCompound>();
 
-        var standardisedCompounds = new List<StandardisedCompound>();
-        
-        foreach (var compound in compounds)
+        var standardisedCompounds = new ConcurrentBag<StandardisedCompound>();
+
+        Parallel.ForEach(compounds, compound =>
         {
             using var mol = Inchi.InchiToMolSimple(compound.Inchi, true, false);
 
             if (mol is null)
             {
-                continue;
+                return;
             }
 
             var standardised = _standardiser.Standardise(mol);
             if (standardised.Mol is null || standardised.StandardiseFailed)
             {
-                continue;
+                return;
             }
 
             var canonSmiles = RDKFuncs.getCanonSmiles(standardised.Mol);
 
             if (!SmilesExtensions.IsMonomolecular(canonSmiles))
             {
-                continue;
+                return;
             }
 
             // no max mw setting for Sink;
@@ -85,7 +86,7 @@ public class CompoundParser : IDisposable
                     standardisedCompounds.Add(new(compound.Name, canonSmiles, compound.Inchi, standardised.Mol));
                 }
             }
-        }
+        });
 
         var groupedBySmiles = standardisedCompounds.GroupBy(c => c.Smiles);
         var groupedByInchi = new Dictionary<string, ChemicalCompound>();
