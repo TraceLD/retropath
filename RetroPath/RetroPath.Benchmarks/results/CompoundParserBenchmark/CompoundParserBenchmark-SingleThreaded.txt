@@ -1,0 +1,131 @@
+// Validating benchmarks:
+// ***** BenchmarkRunner: Start   *****
+// ***** Found 1 benchmark(s) in total *****
+// ***** Building 1 exe(s) in Parallel: Start   *****
+// start dotnet restore  /p:UseSharedCompilation=false /p:BuildInParallel=false /m:1 /p:Deterministic=true /p:Optimize=true in C:\Users\Lukasz\Documents\projects\retropath\RetroPath\RetroPath.Benchmarks\bin\Release\net6.0\a8e7a0a5-37b7-4511-9c66-df047a034526
+// command took 0.95s and exited with 0
+// start dotnet build -c Release  --no-restore /p:UseSharedCompilation=false /p:BuildInParallel=false /m:1 /p:Deterministic=true /p:Optimize=true in C:\Users\Lukasz\Documents\projects\retropath\RetroPath\RetroPath.Benchmarks\bin\Release\net6.0\a8e7a0a5-37b7-4511-9c66-df047a034526
+// command took 1.94s and exited with 0
+// ***** Done, took 00:00:02 (2.95 sec)   *****
+// Found 1 benchmarks:
+//   CompoundParserBenchmark.ParseBigSinksFile: DefaultJob
+
+// **************************
+// Benchmark: CompoundParserBenchmark.ParseBigSinksFile: DefaultJob
+// *** Execute ***
+// Launch: 1 / 1
+// Execute: dotnet "a8e7a0a5-37b7-4511-9c66-df047a034526.dll" --benchmarkName "RetroPath.Benchmarks.CompoundParserBenchmark.ParseBigSinksFile" --job "Default" --benchmarkId 0 in C:\Users\Lukasz\Documents\projects\retropath\RetroPath\RetroPath.Benchmarks\bin\Release\net6.0\a8e7a0a5-37b7-4511-9c66-df047a034526\bin\Release\net6.0
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// Runtime=.NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+// GC=Concurrent Workstation
+// Job: DefaultJob
+
+OverheadJitting  1: 1 op, 124300.00 ns, 124.3000 us/op
+WorkloadJitting  1: 1 op, 5732992800.00 ns, 5.7330 s/op
+
+WorkloadWarmup   1: 1 op, 5614742400.00 ns, 5.6147 s/op
+WorkloadWarmup   2: 1 op, 5535966900.00 ns, 5.5360 s/op
+WorkloadWarmup   3: 1 op, 5547244200.00 ns, 5.5472 s/op
+WorkloadWarmup   4: 1 op, 5549148300.00 ns, 5.5491 s/op
+WorkloadWarmup   5: 1 op, 5552473200.00 ns, 5.5525 s/op
+WorkloadWarmup   6: 1 op, 5638000700.00 ns, 5.6380 s/op
+WorkloadWarmup   7: 1 op, 5651260400.00 ns, 5.6513 s/op
+WorkloadWarmup   8: 1 op, 5576196200.00 ns, 5.5762 s/op
+WorkloadWarmup   9: 1 op, 5651893400.00 ns, 5.6519 s/op
+WorkloadWarmup  10: 1 op, 5572481200.00 ns, 5.5725 s/op
+
+// BeforeActualRun
+WorkloadActual   1: 1 op, 5670350000.00 ns, 5.6704 s/op
+WorkloadActual   2: 1 op, 5646093100.00 ns, 5.6461 s/op
+WorkloadActual   3: 1 op, 5647833900.00 ns, 5.6478 s/op
+WorkloadActual   4: 1 op, 5656449400.00 ns, 5.6564 s/op
+WorkloadActual   5: 1 op, 5602835700.00 ns, 5.6028 s/op
+WorkloadActual   6: 1 op, 5593648100.00 ns, 5.5936 s/op
+WorkloadActual   7: 1 op, 5591423700.00 ns, 5.5914 s/op
+WorkloadActual   8: 1 op, 5655544900.00 ns, 5.6555 s/op
+WorkloadActual   9: 1 op, 5596337900.00 ns, 5.5963 s/op
+WorkloadActual  10: 1 op, 5629419600.00 ns, 5.6294 s/op
+WorkloadActual  11: 1 op, 5606437100.00 ns, 5.6064 s/op
+WorkloadActual  12: 1 op, 5687517900.00 ns, 5.6875 s/op
+WorkloadActual  13: 1 op, 5665917300.00 ns, 5.6659 s/op
+WorkloadActual  14: 1 op, 5708842800.00 ns, 5.7088 s/op
+WorkloadActual  15: 1 op, 5730334200.00 ns, 5.7303 s/op
+
+// AfterActualRun
+WorkloadResult   1: 1 op, 5670350000.00 ns, 5.6704 s/op
+WorkloadResult   2: 1 op, 5646093100.00 ns, 5.6461 s/op
+WorkloadResult   3: 1 op, 5647833900.00 ns, 5.6478 s/op
+WorkloadResult   4: 1 op, 5656449400.00 ns, 5.6564 s/op
+WorkloadResult   5: 1 op, 5602835700.00 ns, 5.6028 s/op
+WorkloadResult   6: 1 op, 5593648100.00 ns, 5.5936 s/op
+WorkloadResult   7: 1 op, 5591423700.00 ns, 5.5914 s/op
+WorkloadResult   8: 1 op, 5655544900.00 ns, 5.6555 s/op
+WorkloadResult   9: 1 op, 5596337900.00 ns, 5.5963 s/op
+WorkloadResult  10: 1 op, 5629419600.00 ns, 5.6294 s/op
+WorkloadResult  11: 1 op, 5606437100.00 ns, 5.6064 s/op
+WorkloadResult  12: 1 op, 5687517900.00 ns, 5.6875 s/op
+WorkloadResult  13: 1 op, 5665917300.00 ns, 5.6659 s/op
+WorkloadResult  14: 1 op, 5708842800.00 ns, 5.7088 s/op
+WorkloadResult  15: 1 op, 5730334200.00 ns, 5.7303 s/op
+GC:  0 0 0 6461144 1
+Threading:  0 0 1
+
+// AfterAll
+// Benchmark Process 12988 has exited with code 0.
+
+Mean = 5.646 s, StdErr = 0.011 s (0.20%), N = 15, StdDev = 0.043 s
+Min = 5.591 s, Q1 = 5.605 s, Median = 5.648 s, Q3 = 5.668 s, Max = 5.730 s
+IQR = 0.063 s, LowerFence = 5.509 s, UpperFence = 5.763 s
+ConfidenceInterval = [5.600 s; 5.692 s] (CI 99.9%), Margin = 0.046 s (0.81% of Mean)
+Skewness = 0.31, Kurtosis = 1.92, MValue = 2
+
+// ***** BenchmarkRunner: Finish  *****
+
+// * Export *
+  BenchmarkDotNet.Artifacts\results\RetroPath.Benchmarks.CompoundParserBenchmark-report.csv
+  BenchmarkDotNet.Artifacts\results\RetroPath.Benchmarks.CompoundParserBenchmark-report-github.md
+  BenchmarkDotNet.Artifacts\results\RetroPath.Benchmarks.CompoundParserBenchmark-report.html
+
+// * Detailed results *
+CompoundParserBenchmark.ParseBigSinksFile: DefaultJob
+Runtime = .NET 6.0.4 (6.0.422.16404), X64 RyuJIT; GC = Concurrent Workstation
+Mean = 5.646 s, StdErr = 0.011 s (0.20%), N = 15, StdDev = 0.043 s
+Min = 5.591 s, Q1 = 5.605 s, Median = 5.648 s, Q3 = 5.668 s, Max = 5.730 s
+IQR = 0.063 s, LowerFence = 5.509 s, UpperFence = 5.763 s
+ConfidenceInterval = [5.600 s; 5.692 s] (CI 99.9%), Margin = 0.046 s (0.81% of Mean)
+Skewness = 0.31, Kurtosis = 1.92, MValue = 2
+-------------------- Histogram --------------------
+[5.569 s ; 5.753 s) | @@@@@@@@@@@@@@@
+---------------------------------------------------
+
+// * Summary *
+
+BenchmarkDotNet=v0.13.1, OS=Windows 10.0.22000
+AMD Ryzen 9 3900X, 1 CPU, 24 logical and 12 physical cores
+.NET SDK=6.0.202
+  [Host]     : .NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+  DefaultJob : .NET 6.0.4 (6.0.422.16404), X64 RyuJIT
+
+
+|            Method |    Mean |    Error |   StdDev | Allocated |
+|------------------ |--------:|---------:|---------:|----------:|
+| ParseBigSinksFile | 5.646 s | 0.0460 s | 0.0430 s |      6 MB |
+
+// * Legends *
+  Mean      : Arithmetic mean of all measurements
+  Error     : Half of 99.9% confidence interval
+  StdDev    : Standard deviation of all measurements
+  Allocated : Allocated memory per single operation (managed only, inclusive, 1KB = 1024B)
+  1 s       : 1 Second (1 sec)
+
+// * Diagnostic Output - MemoryDiagnoser *
+
+
+// ***** BenchmarkRunner: End *****
+// ** Remained 0 benchmark(s) to run **
+Run time: 00:02:34 (154.12 sec), executed benchmarks: 1
+
+Global total time: 00:02:37 (157.07 sec), executed benchmarks: 1
+// * Artifacts cleanup *
