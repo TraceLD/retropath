@@ -59,7 +59,7 @@ foreach (var f in sources2)
     RDKFuncs.addHs(f);
 }
 
-var sources3 = sources2.Select(s => new ChemicalCompound(new HashSet<string>(), "aaa", "aaa.bbb", s)).ToList();
+var sources3 = sources2.Select(s => new ChemicalCompound(new HashSet<string>(), "aaa", s.MolToSmiles(), s)).ToList();
 
 var groupedRules = parsedRules
     .AsParallel()
@@ -71,6 +71,9 @@ Log.Information("Firing rules...");
 
 var rulesFirer = new RulesFirer(sources3, new(), groupedRules);
 var res = rulesFirer.FireRules();
+
+var gpParser = new GeneratedProductsParser(res, 0, 0);
+gpParser.Parse();
 
 Log.Information("Done firing rules...");
 
