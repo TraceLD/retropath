@@ -10,4 +10,6 @@ public class ReactionRule
     public double Score { get; set; }
 
     public string GetFoldedRuleId() => $"[{string.Join(",", RuleIds)}]@{Diameter}";
+
+    public bool IsMono() => ReactionOrder <= 1;
 }

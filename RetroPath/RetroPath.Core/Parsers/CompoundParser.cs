@@ -24,6 +24,16 @@ public class CompoundParser : IDisposable
         [Name("InChI")] public string Inchi { get; set; }
     }
     
+    private record StandardisedCompound(
+        string Name,
+        string Smiles,
+        string Inchi,
+        RWMol? Mol
+    ) : IDisposable
+    {
+        public void Dispose() => Mol?.Dispose();
+    }
+    
     private readonly InputConfiguration _inputConfiguration;
     private readonly CompoundStandardiser _standardiser;
 

@@ -11,4 +11,9 @@
       <ProjectReference Include="..\RetroPath.Core\RetroPath.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Serilog" Version="2.11.0" />
+      <PackageReference Include="Serilog.Sinks.Console" Version="4.0.2-dev-00890" />
+    </ItemGroup>
+
 </Project>

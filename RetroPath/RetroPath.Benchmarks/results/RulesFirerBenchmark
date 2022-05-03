@@ -1,0 +1,9 @@
+﻿Single-threaded:
+|    Method |    Mean |    Error |   StdDev |      Gen 0 | Allocated |
+|---------- |--------:|---------:|---------:|-----------:|----------:|
+| FireRules | 6.867 s | 0.0464 s | 0.0411 s | 11000.0000 |     98 MB |
+
+Multi-threaded:
+|    Method |     Mean |    Error |   StdDev |   Median |      Gen 0 |     Gen 1 | Allocated |
+|---------- |---------:|---------:|---------:|---------:|-----------:|----------:|----------:|
+| FireRules | 775.6 ms | 21.03 ms | 62.02 ms | 749.8 ms | 14000.0000 | 1000.0000 |    109 MB |

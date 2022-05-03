@@ -1,19 +1,20 @@
 ﻿using BenchmarkDotNet.Attributes;
+using RetroPath.Core;
+using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
 using RetroPath.Core.Parsers;
 
 namespace RetroPath.Benchmarks;
 
 [MemoryDiagnoser]
-public class CompoundParserBenchmark
+public class RulesFirerBenchmark
 {
-    private InputConfiguration? _rpConfig;
-    private CompoundParser? _parser;
+    private RulesFirer? _rulesFirer;
 
     [GlobalSetup]
     public void Setup()
     {
-        _rpConfig = new InputConfiguration(
+        var inputConfig = new InputConfiguration(
             @"C:\Users\Lukasz\Documents\projects\retropath-standalone\data\retrorules_rr02_rp2_flat_all.csv",
             @"C:\Users\Lukasz\Documents\projects\rp\RetroPath2.0\tutorial_data\pinocembrin\sink_B.csv",
             @"C:\Users\Lukasz\Documents\projects\rp\RetroPath2.0\tutorial_data\pinocembrin\source.csv",
@@ -24,12 +25,14 @@ public class CompoundParserBenchmark
             1000,
             4
         );
-        _parser = new CompoundParser(_rpConfig);
+        using var compoundParser = new CompoundParser(inputConfig);
+        var source = compoundParser.Parse(inputConfig.SourceFilePath, ChemicalType.Source).First().Value;
+        var rulesParser = new RulesParser(inputConfig);
+        var parsedRules = rulesParser.Parse(inputConfig.RulesFilePath);
+
+        _rulesFirer = new RulesFirer(source, new(), parsedRules);
     }
-
+    
     [Benchmark]
-    public void ParseBigSinksFile() => _parser!.Parse(_rpConfig!.SinkFilePath, ChemicalType.Sink);
-
-    [GlobalCleanup]
-    public void Cleanup() => _parser?.Dispose();
+    public void FireRules() => _rulesFirer!.FireRules();
 }
