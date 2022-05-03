@@ -7,26 +7,21 @@ namespace RetroPath.Core;
 
 public class RulesFirer
 {
-    private readonly ChemicalCompound _source;
+    private readonly List<ChemicalCompound> _sources;
     private readonly Dictionary<string, ChemicalCompound> _cofactors;
-    private readonly List<ReactionRule> _rules;
+    private readonly List<IGrouping<int,ReactionRule>> _groupedRules;
 
-    public RulesFirer(ChemicalCompound source, Dictionary<string, ChemicalCompound> cofactors, List<ReactionRule> rules)
+    public RulesFirer(List<ChemicalCompound> sources, Dictionary<string, ChemicalCompound> cofactors, List<IGrouping<int,ReactionRule>> groupedRules)
     {
-        _source = source;
+        _sources = sources;
         _cofactors = cofactors;
-        _rules = rules;
+        _groupedRules = groupedRules;
     }
 
     public ConcurrentBag<GeneratedProduct> FireRules()
     {
-        var groupedRules = _rules
-            .AsParallel()
-            .GroupBy(r => r.Diameter)
-            .OrderByDescending(r => r.Key);
-
         var results = new ConcurrentBag<GeneratedProduct>();
-        foreach (var rulesGrouping in groupedRules)
+        foreach (var rulesGrouping in _groupedRules)
         {
             Parallel.ForEach(rulesGrouping, rule =>
             {
@@ -51,39 +46,45 @@ public class RulesFirer
         return results;
     }
 
-    private List<GeneratedProduct> ProcessMono(ReactionRule rule)
+    private ConcurrentBag<GeneratedProduct> ProcessMono(ReactionRule rule)
     {
-        var generatedProducts = new List<GeneratedProduct>();
+        var generatedProducts = new ConcurrentBag<GeneratedProduct>();
         var smartsLeft = rule.RuleSmarts.Split(">>")[0];
 
         if (smartsLeft.StartsWith("(") && smartsLeft.EndsWith(")"))
         {
             smartsLeft = smartsLeft[1..^1];
         }
-        
-        using var smartsLeftMol = RWMol.MolFromSmarts(smartsLeft);
 
-        // justification for null suppression: it's a source compound so Mol will always be populated;
-        if (_source.Mol!.hasSubstructMatch(smartsLeftMol))
+        // ReSharper disable once ConvertToUsingDeclaration justification: prefer explicit scope to show it's not disposed before ForEach and its lambda complete;
+        using (var smartsLeftMol = RWMol.MolFromSmarts(smartsLeft))
         {
-            try
+            Parallel.ForEach(_sources, source =>
             {
-                using var rxn = new OneComponentReaction(rule.RuleSmarts, _source.Mol);
-                var products = rxn.RunReaction();
-
-                foreach (var p in products)
+                // justification for null suppression: it's a source compound so Mol will always be populated;
+                // ReSharper disable once AccessToDisposedClosure justification: the lambda always completes before smartsLeftMol is disposed;
+                if (source.Mol!.hasSubstructMatch(smartsLeftMol))
                 {
-                    var leftSplit = _source.Smiles.Split('.').ToList();
-                    var rightSplit = p.Split('.').ToList();
-                    var gp = new GeneratedProduct(leftSplit, rightSplit, rule);
+                    try
+                    {
+                        using var rxn = new OneComponentReaction(rule.RuleSmarts, source.Mol);
+                        var products = rxn.RunReaction();
 
-                    generatedProducts.Add(gp);
+                        foreach (var p in products)
+                        {
+                            var leftSplit = source.Smiles.Split('.').ToList();
+                            var rightSplit = p.Split('.').ToList();
+                            var gp = new GeneratedProduct(leftSplit, rightSplit, rule, source);
+
+                            generatedProducts.Add(gp);
+                        }
+                    }
+                    catch
+                    {
+                        // ignored
+                    }
                 }
-            }
-            catch
-            {
-                // ignored
-            }
+            });
         }
         
         return generatedProducts;
