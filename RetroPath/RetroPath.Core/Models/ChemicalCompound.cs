@@ -7,7 +7,7 @@ public record ChemicalCompound(
     string Inchi,
     string Smiles,
     RWMol? Mol
-): IDisposable
+) : IDisposable
 {
     public void Dispose() => Mol?.Dispose();
 }
