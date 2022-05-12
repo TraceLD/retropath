@@ -25,6 +25,6 @@ public static class SinkAndSourceDivider
             parsedSinks.Add(inchi, compound);
         }
 
-        return new(sourcesInSink, sourcesNotInSink, parsedSinks);
+        return new(sourcesInSink.Values.ToList(), sourcesNotInSink.Values.ToList(), parsedSinks.Values.ToList());
     }
 }
