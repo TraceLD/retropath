@@ -7,6 +7,39 @@ namespace RetroPath.Core;
 
 public class GeneratedProductsParser : IDisposable
 {
+    public record ParsedResults(
+        List<ParsedGeneratedCompound> Left,
+        List<ParsedGeneratedCompound> Right,
+        List<TransformationInfo> RuleInfos
+    );
+    
+    public record TransformationIdCoeff(string TransformationId, int Coeff);
+
+    internal record SideCompound(
+        string SideSmiles,
+        RWMol? Mol,
+        List<string> TransformationIds,
+        List<TransformationIdCoeff> TransformationIdCoeff
+    ) : IDisposable
+    {
+        public void Dispose() => Mol?.Dispose();
+
+        public ParsedGeneratedCompound ToParsedGeneratedCompound()
+        {
+            if (Mol is null)
+            {
+                throw new NullReferenceException(
+                    "Mol cannot be empty when attempting to convert SideCompound to ParsedGeneratedCompound");
+            }
+
+            var inchi = Inchi.MolToInchiSimple(Mol);
+            var liteInchi = LiteInchi.ToLiteInchiExtended(Mol);
+            var smiles = RDKFuncs.getCanonSmiles(Mol);
+
+            return new(TransformationIds, inchi!, liteInchi, smiles, Mol, TransformationIdCoeff);
+        }
+    }
+
     private record Transformation(
         List<string> Left,
         List<string> Right,
@@ -19,17 +52,6 @@ public class GeneratedProductsParser : IDisposable
     {
         public string TransformationId => $"TRS_{SourceIter}_{StepIter}_{RId}";
     }
-
-    internal record TransformationIdCoeff(string TransformationId, int Coeff);
-
-    internal record SideCompound(string SideSmiles, RWMol? Mol, List<string> TransformationIds, List<TransformationIdCoeff> TransformationIdCoeff) 
-        : IDisposable
-    {
-        public void Dispose()
-        {
-            Mol?.Dispose();
-        }
-    };
 
     private record ExtractRightResult(List<SideCompound> Res, HashSet<string> BadTransformations);
     
@@ -46,15 +68,43 @@ public class GeneratedProductsParser : IDisposable
         _standardiser = new();
     }
 
-    public void Parse()
+    public ParsedResults Parse()
     {
         var transformations = GetTransformations();
+        
         var extractedLeft = ExtractLeft(transformations);
         var (extractedRight, badTransformations) = ExtractRight(transformations);
         
+        var filteredLeft = extractedLeft.FilterOutBadTransformations(badTransformations);
+        var filteredRight = extractedRight.FilterOutBadTransformations(badTransformations);
         
-        
-        throw new NotImplementedException();
+        var parsedLeft = filteredLeft.Select(x => x.ToParsedGeneratedCompound()).ToList();
+        var parsedRight = filteredRight.Select(x => x.ToParsedGeneratedCompound()).ToList();
+
+        var transformationInfos = transformations
+            // filter out bad transformations;
+            .Where(t => !badTransformations.Contains(t.TransformationId))
+            // each raw Transformation into TransformationInfo;
+            .Select(t =>
+            {
+                var ruleIds = new HashSet<string>();
+                var diameter = int.MinValue;
+                var ecNumber = new HashSet<string>();
+                var score = double.MaxValue;
+
+                foreach (var (_, rule) in t.ReactionRules)
+                {
+                    ruleIds.UnionWith(rule.RuleIds);
+                    diameter = Math.Max(diameter, rule.Diameter);
+                    ecNumber.UnionWith(rule.EcNumber);
+                    score = Math.Min(score, rule.Score);
+                }
+
+                return new TransformationInfo(t.TransformationId, ruleIds, diameter, ecNumber, score, t.Source.Names);
+            })
+            .ToList();
+
+        return new(parsedLeft, parsedRight, transformationInfos);
     }
 
     private List<Transformation> GetTransformations() =>
@@ -139,7 +189,7 @@ public class GeneratedProductsParser : IDisposable
                 standardised.Dispose();
                 s.Mol?.Dispose();
 
-                foreach (var (t, _) in s.TransformationIdCoeff)
+                foreach (var t in s.TransformationIds)
                 {
                     badTransformations.Add(t);
                 }

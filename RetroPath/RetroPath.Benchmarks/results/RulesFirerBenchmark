@@ -7,3 +7,6 @@ Multi-threaded:
 |    Method |     Mean |    Error |   StdDev |   Median |      Gen 0 |     Gen 1 | Allocated |
 |---------- |---------:|---------:|---------:|---------:|-----------:|----------:|----------:|
 | FireRules | 775.6 ms | 21.03 ms | 62.02 ms | 749.8 ms | 14000.0000 | 1000.0000 |    109 MB |
+
+KNIME:
+31713ms = 31.7s

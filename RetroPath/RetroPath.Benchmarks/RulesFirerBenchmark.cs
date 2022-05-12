@@ -30,7 +30,7 @@ public class RulesFirerBenchmark
         var rulesParser = new RulesParser(inputConfig);
         var parsedRules = rulesParser.Parse(inputConfig.RulesFilePath);
 
-        _rulesFirer = new RulesFirer(source, new(), parsedRules);
+        _rulesFirer = new RulesFirer(new[] {source}.ToList(), new(), parsedRules);
     }
     
     [Benchmark]
