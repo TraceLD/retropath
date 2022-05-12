@@ -10,7 +10,7 @@ public class GeneratedProductsParser : IDisposable
     public record ParsedResults(
         List<ParsedGeneratedCompound> Left,
         List<ParsedGeneratedCompound> Right,
-        List<TransformationInfo> RuleInfos
+        List<TransformationInfo> TransformationInfos
     );
     
     public record TransformationIdCoeff(string TransformationId, int Coeff);
