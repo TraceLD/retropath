@@ -110,6 +110,8 @@ public class CompoundParser : IDisposable
             RWMol? mol = null;
             for (var i = 0; i < groupingList.Count; i++)
             {
+                names.Add(groupingList[i].Name);
+                
                 if (i != 0)
                 {
                     groupingList[i].Dispose();
