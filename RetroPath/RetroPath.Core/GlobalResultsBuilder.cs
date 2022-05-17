@@ -2,6 +2,8 @@
 
 namespace RetroPath.Core;
 
+// TODO: this is WIP
+
 /// <summary>
 /// Represents a generic results builder.
 /// </summary>
@@ -15,17 +17,19 @@ public interface IBuilder<out T>
     public IEnumerable<T> Build();
 }
 
+public record GlobalResult();
+
 /// <summary>
 /// Builder for building final results from a recursive iteration.
 /// </summary>
-public class ResultsBuilder
+public class GlobalResultsBuilder : IBuilder<GlobalResult>
 {
     private readonly List<ParsedGeneratedCompound> _left;
     private readonly List<ParsedGeneratedCompound> _right;
     private readonly Dictionary<string, TransformationInfo> _transformations;
     private readonly List<ChemicalCompound> _newSourceInSink;
 
-    public ResultsBuilder(
+    public GlobalResultsBuilder(
         List<ParsedGeneratedCompound> left,
         List<ParsedGeneratedCompound> right,
         Dictionary<string, TransformationInfo> transformations,
@@ -38,12 +42,14 @@ public class ResultsBuilder
         _newSourceInSink = newSourceInSink;
     }
 
-    public void Build()
+    /// <inheritdoc />
+    public IEnumerable<GlobalResult> Build()
     {
         var leftUngrouped = _left.UngroupTransformations();
         var rightUngrouped = _right.UngroupTransformations();
         var leftAgg = leftUngrouped.Aggregate();
         var rightAgg = rightUngrouped.Aggregate();
-        
+
+        throw new NotImplementedException();
     }
 }
