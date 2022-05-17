@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.Benchmarks", "Ret
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.RDKit.Abstractions", "RetroPath.RDKit.Abstractions\RetroPath.RDKit.Abstractions.csproj", "{DAC79D4F-A2ED-4AF5-9882-3A842F53FF54}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.Tests", "RetroPath.Tests\RetroPath.Tests.csproj", "{EB2900CC-BD64-452B-B0BE-1C1AE41CA23E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{DAC79D4F-A2ED-4AF5-9882-3A842F53FF54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAC79D4F-A2ED-4AF5-9882-3A842F53FF54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAC79D4F-A2ED-4AF5-9882-3A842F53FF54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB2900CC-BD64-452B-B0BE-1C1AE41CA23E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB2900CC-BD64-452B-B0BE-1C1AE41CA23E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB2900CC-BD64-452B-B0BE-1C1AE41CA23E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB2900CC-BD64-452B-B0BE-1C1AE41CA23E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
