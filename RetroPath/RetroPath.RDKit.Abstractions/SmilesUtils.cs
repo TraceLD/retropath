@@ -1,9 +1,9 @@
 ﻿namespace RetroPath.RDKit.Abstractions;
 
 /// <summary>
-/// Useful extensions for working with SMILES.
+/// Useful utility methods for working with SMILES strings.
 /// </summary>
-public static class SmilesExtensions
+public static class SmilesUtils
 {
     /// <summary>
     /// Checks whether a substrate is mono molecular.

@@ -74,7 +74,7 @@ public class CompoundParser : IDisposable
 
             var canonSmiles = RDKFuncs.getCanonSmiles(standardised.Mol);
 
-            if (!SmilesExtensions.IsMonomolecular(canonSmiles))
+            if (!SmilesUtils.IsMonomolecular(canonSmiles))
             {
                 return;
             }
