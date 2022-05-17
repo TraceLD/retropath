@@ -5,12 +5,21 @@ using RetroPath.RDKit.Abstractions.Reactions;
 
 namespace RetroPath.Core;
 
+/// <summary>
+/// Class that applies all the rules on source compounds.
+/// </summary>
 public class RulesFirer
 {
     private readonly List<ChemicalCompound> _sources;
     private readonly Dictionary<string, ChemicalCompound> _cofactors;
     private readonly List<IGrouping<int,ReactionRule>> _groupedRules;
 
+    /// <summary>
+    /// Constructor that instantiates a new instance of <see cref="RulesFirer"/>.
+    /// </summary>
+    /// <param name="sources">Sources over which to fire rules.</param>
+    /// <param name="cofactors">Cofactors to use for bi-molecular reactions.</param>
+    /// <param name="groupedRules">Rules grouped by diameter.</param>
     public RulesFirer(List<ChemicalCompound> sources, Dictionary<string, ChemicalCompound> cofactors, List<IGrouping<int,ReactionRule>> groupedRules)
     {
         _sources = sources;
@@ -18,6 +27,10 @@ public class RulesFirer
         _groupedRules = groupedRules;
     }
 
+    /// <summary>
+    /// Fires the rules on the given sources.
+    /// </summary>
+    /// <returns>Generated products.</returns>
     public ConcurrentBag<GeneratedProduct> FireRules()
     {
         var results = new ConcurrentBag<GeneratedProduct>();
@@ -46,6 +59,11 @@ public class RulesFirer
         return results;
     }
 
+    /// <summary>
+    /// Processes a monomolecular reaction.
+    /// </summary>
+    /// <param name="rule">Reaction rule.</param>
+    /// <returns>Generated products.</returns>
     private ConcurrentBag<GeneratedProduct> ProcessMono(ReactionRule rule)
     {
         var generatedProducts = new ConcurrentBag<GeneratedProduct>();
@@ -90,5 +108,12 @@ public class RulesFirer
         return generatedProducts;
     }
 
+    // TODO: add code for processing bi reactions
+    // TODO: postponed until later because all the rules in the big rules file are mono;
+    /// <summary>
+    /// Processes a bi-molecular reaction.
+    /// </summary>
+    /// <param name="rule">Reaction rule.</param>
+    /// <returns>Generated products.</returns>
     private void ProcessBi(ReactionRule rule) => throw new NotImplementedException();
 }
