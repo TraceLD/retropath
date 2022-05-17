@@ -9,5 +9,6 @@ public record InputConfiguration(
     double CofactorMw,
     int MinDiameter,
     int MaxDiameter,
-    int PathwayLength
+    int PathwayLength,
+    int MaxStructures
 );
