@@ -3,7 +3,7 @@ using FluentAssertions;
 using RetroPath.RDKit.Abstractions;
 using Xunit;
 
-namespace RetroPath.Tests.Core;
+namespace RetroPath.Tests.Abstractions;
 
 public class SmilesUtilsTests
 {
