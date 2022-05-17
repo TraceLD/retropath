@@ -41,6 +41,7 @@ Log.Information("Sinks + sources: {SpsCount}", sourcesAndSinks.Count);
 Log.Information("Sources in sink: {SisCount}", sourcesInSink.Count);
 Log.Information("Sources NOT in sink: {SnisCount}", sourcesNotInSink.Count);
 
+// TODO: extract this into its own method;
 var groupedRules = parsedRules
     .AsParallel()
     .GroupBy(r => r.Diameter)
