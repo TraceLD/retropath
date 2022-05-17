@@ -10,7 +10,7 @@ public class GeneratedProductsParser : IDisposable
     public record ParsedResults(
         List<ParsedGeneratedCompound> Left,
         List<ParsedGeneratedCompound> Right,
-        List<TransformationInfo> TransformationInfos
+        Dictionary<string, TransformationInfo> TransformationInfos
     );
     
     public record TransformationIdCoeff(string TransformationId, int Coeff);
@@ -104,7 +104,8 @@ public class GeneratedProductsParser : IDisposable
             })
             .ToList();
 
-        return new(parsedLeft, parsedRight, transformationInfos);
+        // TODO: improve efficiency of this by creating the dict earlier;
+        return new(parsedLeft, parsedRight, transformationInfos.ToDictionary(x => x.TransformationId));
     }
 
     private List<Transformation> GetTransformations() =>

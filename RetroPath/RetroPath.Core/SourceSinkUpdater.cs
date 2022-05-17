@@ -30,13 +30,13 @@ public class SourceSinkUpdater
     public SourceSinkUpdater(
         Dictionary<string, ChemicalCompound> sink,
         List<ParsedGeneratedCompound> rightCompounds,
-        IEnumerable<TransformationInfo> transformations,
+        Dictionary<string, TransformationInfo> transformations,
         InputConfiguration inputConfiguration
     )
     {
         _sink = sink;
         _rightCompounds = rightCompounds;
-        _transformations = transformations.ToDictionary(x => x.TransformationId);
+        _transformations = transformations;
         _inputConfiguration = inputConfiguration;
     }
 
