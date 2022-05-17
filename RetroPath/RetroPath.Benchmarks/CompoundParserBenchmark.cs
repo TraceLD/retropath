@@ -22,7 +22,8 @@ public class CompoundParserBenchmark
             1000,
             0,
             1000,
-            4
+            4,
+            100
         );
         _parser = new CompoundParser(_rpConfig);
     }
