@@ -14,7 +14,8 @@ var inputConfig = new InputConfiguration(
     1000,
     0,
     1000,
-    4
+    4,
+    100
 );
 
 Log.Logger = new LoggerConfiguration()
@@ -51,11 +52,36 @@ Log.Information("Firing rules...");
 var rulesFirer = new RulesFirer(sourcesNotInSink, new(), groupedRules);
 var res = rulesFirer.FireRules();
 
-var gpParser = new GeneratedProductsParser(res, 0, 0);
+using var gpParser = new GeneratedProductsParser(res, 0, 0);
 var parsedResults = gpParser.Parse();
 
-var updater = new SourceSinkUpdater(sourcesAndSinks, parsedResults.Right, parsedResults.TransformationInfos);
+var updater = new SourceSinkUpdater(sourcesAndSinks, parsedResults.Right, parsedResults.TransformationInfos, inputConfig);
+var (sourceInSink, newSink, newSources) = updater.Update();
 
 Log.Information("Done firing rules...");
 
 Console.WriteLine("Goodbye");
+
+// TODO: make the recursive loop a nice class;
+// TODO: currently not using the loop for debug purposes (easier to test stuff without a recursive loop)
+List<string> Recurse(int pathwayLength, int iOuter, int iInner, InputConfiguration inputConfig, List<ChemicalCompound> iSourcesInSink, List<ChemicalCompound> iSourcesNotInSink, Dictionary<string, ChemicalCompound> iSourcesAndSinks,List<IGrouping<int, ReactionRule>> rules, List<string> results)
+{
+    if (iInner > pathwayLength || iSourcesAndSinks.Count < 1 || iSourcesNotInSink.Count < 1)
+    {
+        return results;
+    }
+    
+    var iRulesFirer = new RulesFirer(iSourcesNotInSink, new(), rules);
+    var iRes = iRulesFirer.FireRules();
+
+    using var iGpParser = new GeneratedProductsParser(iRes, iOuter, iInner);
+    var iParsedProducts = iGpParser.Parse();
+
+    var iUpdater = new SourceSinkUpdater(iSourcesAndSinks, iParsedProducts.Right, iParsedProducts.TransformationInfos,
+        inputConfig);
+    var (iNewSourcesInSink, iNewSink, iNewSources) = iUpdater.Update();
+
+    var iNewInner = iInner + 1;
+
+    return Recurse(pathwayLength, iOuter, iNewInner, inputConfig, iNewSourcesInSink, iNewSources, iNewSink, rules, results);
+}
