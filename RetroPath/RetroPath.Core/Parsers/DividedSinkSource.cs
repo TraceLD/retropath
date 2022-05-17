@@ -5,5 +5,5 @@ namespace RetroPath.Core.Parsers;
 public record DividedSinkSource(
     List<ChemicalCompound> SourcesInSink,
     List<ChemicalCompound> SourcesNotInSink,
-    List<ChemicalCompound> SourcesAndSinks
+    Dictionary<string, ChemicalCompound> SourcesAndSinks
 );
