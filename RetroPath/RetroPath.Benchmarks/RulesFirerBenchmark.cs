@@ -23,14 +23,20 @@ public class RulesFirerBenchmark
             1000,
             0,
             1000,
-            4
+            4,
+            100
         );
         using var compoundParser = new CompoundParser(inputConfig);
         var source = compoundParser.Parse(inputConfig.SourceFilePath, ChemicalType.Source).First().Value;
         var rulesParser = new RulesParser(inputConfig);
         var parsedRules = rulesParser.Parse(inputConfig.RulesFilePath);
+        var groupedRules = parsedRules
+            .AsParallel()
+            .GroupBy(r => r.Diameter)
+            .OrderByDescending(r => r.Key)
+            .ToList();
 
-        _rulesFirer = new RulesFirer(new[] {source}.ToList(), new(), parsedRules);
+        _rulesFirer = new RulesFirer(new[] {source}.ToList(), new(), groupedRules);
     }
     
     [Benchmark]
