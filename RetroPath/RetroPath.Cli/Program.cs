@@ -82,6 +82,20 @@ List<string> Recurse(int pathwayLength, int iOuter, int iInner, InputConfigurati
         inputConfig);
     var (iNewSourcesInSink, iNewSink, iNewSources) = iUpdater.Update();
 
+    // TODO: this needs extensive testing;
+    // dispose sources that will no longer be needed;
+    if (iInner != 0)
+    {
+        foreach (var s in iSourcesNotInSink)
+        {
+            s.Dispose();
+        }
+    }
+    else
+    {
+        iSourcesNotInSink[iOuter].Dispose();
+    }
+
     var iNewInner = iInner + 1;
 
     return Recurse(pathwayLength, iOuter, iNewInner, inputConfig, iNewSourcesInSink, iNewSources, iNewSink, rules, results);
