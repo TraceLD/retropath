@@ -142,7 +142,7 @@ public class CompoundParser : IDisposable
             }
             else
             {
-                groupedByInchi.Add(inchi, new ChemicalCompound(names, inchi, smiles!, mol));
+                groupedByInchi.Add(inchi, new ChemicalCompound(names, inchi, smiles!, mol, true));
             }
         }
 

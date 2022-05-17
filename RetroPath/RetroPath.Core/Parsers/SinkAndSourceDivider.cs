@@ -22,9 +22,10 @@ public static class SinkAndSourceDivider
 
         foreach (var (inchi, compound) in parsedSources)
         {
-            parsedSinks.Add(inchi, compound);
+            var sinkCc = compound with {Mol = null, Initial = false};
+            parsedSinks.Add(inchi, sinkCc);
         }
 
-        return new(sourcesInSink.Values.ToList(), sourcesNotInSink.Values.ToList(), parsedSinks.Values.ToList());
+        return new(sourcesInSink.Values.ToList(), sourcesNotInSink.Values.ToList(), parsedSinks.Values.ToDictionary(x => x.Inchi));
     }
 }
