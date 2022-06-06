@@ -113,7 +113,7 @@ public class SourceSinkUpdater
     /// <param name="sources">Sources to filter.</param>
     private List<ChemicalCompound> TakeBestSources(IEnumerable<(double Score, ChemicalCompound Compound)> sources)
         => sources
-            .OrderByDescending(x => x.Score)
+            .OrderBy(x => x.Score)
             .Select(x => x.Compound)
             .TakeAndDispose(_inputConfiguration.MaxStructures)
             .ToList();
