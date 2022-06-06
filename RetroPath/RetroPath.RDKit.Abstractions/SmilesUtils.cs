@@ -20,4 +20,14 @@ public static class SmilesUtils
     ///
     /// <remarks>Uses "." to concat the SMILES strings (see: SMILES bonds description).</remarks>
     public static string ConcatSmiles(IEnumerable<string> smilesEnum) => string.Join(".", smilesEnum);
+
+    /// <summary>
+    /// Creates a reaction SMARTS from two SMILES (substrate and product).
+    /// </summary>
+    /// <param name="substrate">Substrate</param>
+    /// <param name="product">Product</param>
+    /// <returns>Reaction SMARTS from two SMILES.</returns>
+    ///
+    /// <remarks>Concats with <code>>></code> as per SMARTS specification.</remarks>
+    public static string CreateReactionSmarts(string substrate, string product) => substrate + ">>" + product;
 }
