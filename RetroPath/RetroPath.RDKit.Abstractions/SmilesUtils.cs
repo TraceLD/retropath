@@ -1,4 +1,6 @@
-﻿namespace RetroPath.RDKit.Abstractions;
+﻿using RetroPath.RDKit.Abstractions.Exceptions;
+
+namespace RetroPath.RDKit.Abstractions;
 
 /// <summary>
 /// Useful utility methods for working with SMILES strings.
@@ -29,5 +31,18 @@ public static class SmilesUtils
     /// <returns>Reaction SMARTS from two SMILES.</returns>
     ///
     /// <remarks>Concats with <code>>></code> as per SMARTS specification.</remarks>
-    public static string CreateReactionSmarts(string substrate, string product) => substrate + ">>" + product;
+    public static string CreateReactionSmarts(string substrate, string product)
+    {
+        if (string.IsNullOrWhiteSpace(substrate))
+        {
+            throw new SmilesEmptyException("Substrate SMILES cannot be empty when creating a reaction SMARTS");
+        }
+
+        if (string.IsNullOrWhiteSpace(product))
+        {
+            throw new SmilesEmptyException("Product SMILES cannot be empty when creating a reaction SMARTS");
+        }
+
+        return substrate + ">>" + product;
+    }
 }
