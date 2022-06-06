@@ -1,4 +1,5 @@
-﻿using RetroPath.RDKit.Abstractions.Exceptions;
+﻿using GraphMolWrap;
+using RetroPath.RDKit.Abstractions.Exceptions;
 
 namespace RetroPath.RDKit.Abstractions;
 
@@ -44,5 +45,18 @@ public static class SmilesUtils
         }
 
         return substrate + ">>" + product;
+    }
+
+    /// <summary>
+    /// Gets canonical SMILES from an RDKit molecule.
+    /// </summary>
+    /// <param name="mol">RDKit molecule.</param>
+    /// <returns>Canonical SMILES for the given RDKit molecule.</returns>
+    public static string MolToCanonicalSmiles(RWMol mol)
+    {
+        // sanitise first;
+        RDKFuncs.sanitizeMol(mol);
+
+        return RDKFuncs.MolToSmiles(mol, true);
     }
 }

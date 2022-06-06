@@ -56,7 +56,7 @@ public class GeneratedProductsParser : IDisposable
 
             var inchi = Inchi.MolToInchiSimple(Mol);
             var liteInchi = LiteInchi.ToLiteInchiExtended(Mol);
-            var smiles = RDKFuncs.getCanonSmiles(Mol);
+            var smiles = SmilesUtils.MolToCanonicalSmiles(Mol);
 
             return new(TransformationIds, inchi!, liteInchi, smiles, Mol, TransformationIdCoeff);
         }
