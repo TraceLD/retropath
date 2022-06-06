@@ -4,7 +4,7 @@
 /// Represents a generic results builder.
 /// </summary>
 /// <typeparam name="T">Results output type.</typeparam>
-public interface IBuilder<out T>
+public interface IResultsBuilder<out T>
 {
     /// <summary>
     /// Builds the results.
