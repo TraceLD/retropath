@@ -53,15 +53,25 @@ Log.Information("Firing rules...");
 var rulesFirer = new RulesFirer(sourcesNotInSink, new(), groupedRules);
 var res = rulesFirer.FireRules();
 
+Log.Information("Done firing rules...");
+
+Log.Information("Parsing rules and updating sink and source...");
+
 using var gpParser = new GeneratedProductsParser(res, 0, 0);
 var parsedResults = gpParser.Parse();
 
 var updater = new SourceSinkUpdater(sourcesAndSinks, parsedResults.Right, parsedResults.TransformationInfos, inputConfig);
 var (sourceInSink, newSink, newSources) = updater.Update();
 
-Log.Information("Done firing rules...");
+Log.Information("Parsed rules and updated sink and source");
 
-Console.WriteLine("Goodbye");
+var builder = new GlobalResultsResultsBuilder(parsedResults.Left, parsedResults.Right, parsedResults.TransformationInfos,
+    sourceInSink);
+var results = builder.Build();
+
+Log.Information("Generated {GlobalResultsCount} global results", results.Count());
+
+Log.Information("Goodbye");
 
 // TODO: make the recursive loop a nice class;
 // TODO: currently not using the loop for debug purposes (easier to test stuff without a recursive loop)
