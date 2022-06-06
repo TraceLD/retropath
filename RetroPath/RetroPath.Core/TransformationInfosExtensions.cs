@@ -5,7 +5,7 @@ namespace RetroPath.Core;
 
 public static class TransformationInfosExtensions
 {
-    public static Dictionary<string, string> Aggregate(this IEnumerable<(string Smiles, string TransformationId, int Coeff)> ungroupedCompounds)
+    public static Dictionary<string, (string Smiles, string Inchi)> Aggregate(this IEnumerable<(string Smiles, string Inchi, string TransformationId, int Coeff)> ungroupedCompounds)
         => ungroupedCompounds
             .Select(x =>
             {
@@ -23,16 +23,18 @@ public static class TransformationInfosExtensions
                 return x;
             })
             .GroupBy(x => x.TransformationId)
-            .ToDictionary(x => x.Key, x => SmilesUtils.ConcatSmiles(x.Select(y => y.Smiles)));
+            .ToDictionary(x => x.Key, x => (SmilesUtils.ConcatSmiles(x.Select(y => y.Smiles)), x.First().Inchi));
 
-    public static IEnumerable<(string Smiles, string TransformationId, int Coeff)> UngroupTransformations(
+    public static IEnumerable<(string Smiles, string Inchi, string TransformationId, int Coeff)> UngroupTransformations(
         this IEnumerable<ParsedGeneratedCompound> generatedCompounds)
     {
         foreach (var compound in generatedCompounds)
         {
             foreach (var (transformationId, coeff) in compound.TransformationIdCoeff)
             {
-                yield return (compound.Smiles, transformationId, coeff);
+                var liteInchi = compound.LiteInchi ?? throw new NullReferenceException("LiteInchi cannot be null when ungrouping transformations.");
+                
+                yield return (compound.Smiles, liteInchi, transformationId, coeff);
             }
         }
     }
