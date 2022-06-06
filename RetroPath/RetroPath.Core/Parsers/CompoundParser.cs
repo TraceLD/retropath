@@ -59,43 +59,9 @@ public class CompoundParser : IDisposable
 
         Parallel.ForEach(compounds, compound =>
         {
-            using var mol = Inchi.InchiToMolSimple(compound.Inchi, true, false);
-
-            if (mol is null)
-            {
-                return;
-            }
-
-            var standardised = _standardiser.Standardise(mol);
-            if (standardised.Mol is null || standardised.StandardiseFailed)
-            {
-                return;
-            }
-
-            var canonSmiles = RDKFuncs.getCanonSmiles(standardised.Mol);
-
-            if (!SmilesUtils.IsMonomolecular(canonSmiles))
-            {
-                return;
-            }
-
-            // no max mw setting for Sink;
-            if (cType is ChemicalType.Sink)
-            {
-                standardisedCompounds.Add(new(compound.Name, canonSmiles, compound.Inchi, standardised.Mol));
-            }
-            else
-            {
-                var mw = RDKFuncs.calcExactMW(mol);
-                bool isWithin = cType is ChemicalType.Source
-                    ? mw <= _inputConfiguration.SourceMw
-                    : mw <= _inputConfiguration.CofactorMw;
-
-                if (isWithin)
-                {
-                    standardisedCompounds.Add(new(compound.Name, canonSmiles, compound.Inchi, standardised.Mol));
-                }
-            }
+            var standardised = StandardiseRawCompound(compound, cType);
+            
+            if (standardised is not null) standardisedCompounds.Add(standardised);
         });
 
         var groupedBySmiles = standardisedCompounds.GroupBy(c => c.Smiles);
@@ -147,6 +113,44 @@ public class CompoundParser : IDisposable
         }
 
         return groupedByInchi;
+    }
+
+    private StandardisedCompound? StandardiseRawCompound(RawCompound compound, ChemicalType cType)
+    {
+        using var mol = Inchi.InchiToMolSimple(compound.Inchi, true, false);
+
+        if (mol is null)
+        {
+            return null;
+        }
+
+        var standardised = _standardiser.Standardise(mol);
+        if (standardised.Mol is null || standardised.StandardiseFailed)
+        {
+            return null;
+        }
+
+        var canonSmiles = RDKFuncs.getCanonSmiles(standardised.Mol);
+
+        if (!SmilesUtils.IsMonomolecular(canonSmiles))
+        {
+            return null;
+        }
+
+        // no max mw setting for Sink;
+        if (cType is ChemicalType.Sink)
+        {
+            return new(compound.Name, canonSmiles, compound.Inchi, standardised.Mol);
+        }
+
+        var mw = RDKFuncs.calcExactMW(mol);
+        bool isWithin = cType is ChemicalType.Source
+            ? mw <= _inputConfiguration.SourceMw
+            : mw <= _inputConfiguration.CofactorMw;
+
+        return isWithin
+            ? new(compound.Name, canonSmiles, compound.Inchi, standardised.Mol)
+            : null;
     }
 
     public void Dispose()
