@@ -65,7 +65,7 @@ public class GlobalResultsBuilder : IBuilder<GlobalResult>
                     ReactionSmarts = SmilesUtils.CreateReactionSmarts(left.Value.Smiles, right.Value.Smiles)
                 })
             .ToList();
-        var leftInfo = reactions
+        var substratesInfo = reactions
             .Join(
                 leftUngrouped,
                 r => r.TranformationId,
@@ -77,7 +77,7 @@ public class GlobalResultsBuilder : IBuilder<GlobalResult>
                     SubstrateSmiles = left.Smiles,
                     SubstrateInchi = left.Inchi
                 });
-        var rightInfo = reactions
+        var productsInfo = reactions
             .Join(
                 rightUngrouped,
                 rxn => rxn.TranformationId,
@@ -89,20 +89,20 @@ public class GlobalResultsBuilder : IBuilder<GlobalResult>
                     ProductInchi = right.Inchi
                 });
 
-        var globalResults = leftInfo
-            // join ungrouped left with ungrouped right into final reactions;
+        var globalResults = substratesInfo
+            // join substrates with products into final reactions;
             .Join(
-                rightInfo,
-                l => l.TranformationId,
-                r => r.TranformationId,
-                (left, right) => new
+                productsInfo,
+                s => s.TranformationId,
+                p => p.TranformationId,
+                (substrate, product) => new
                 {
-                    left.TranformationId,
-                    left.ReactionSmarts,
-                    left.SubstrateSmiles,
-                    left.SubstrateInchi,
-                    right.ProductInchi,
-                    right.ProductSmiles
+                    substrate.TranformationId,
+                    substrate.ReactionSmarts,
+                    substrate.SubstrateSmiles,
+                    substrate.SubstrateInchi,
+                    product.ProductInchi,
+                    product.ProductSmiles
                 })
             // join rule info
             .Join(
@@ -115,31 +115,30 @@ public class GlobalResultsBuilder : IBuilder<GlobalResult>
                 _newSourceInSink,
                 i => i.rxn.ProductInchi,
                 s => s.Inchi,
-                (info, sinkInfo) =>
+                (rxnInfo, sinkInfo) =>
                 {
                     var sink = sinkInfo.SingleOrDefault();
                     
-                    var initialSource = info.Value.InitialSource;
-                    var transformationId = info.rxn.TranformationId;
-                    var reactionSmarts = info.rxn.ReactionSmarts;
-                    var substrateSmiles = info.rxn.SubstrateSmiles;
-                    var substrateInchi = info.rxn.SubstrateInchi;
-                    var productSmiles = info.rxn.ProductSmiles;
-                    var productInchi = info.rxn.ProductInchi;
+                    var initialSource = rxnInfo.Value.InitialSource;
+                    var transformationId = rxnInfo.rxn.TranformationId;
+                    var reactionSmarts = rxnInfo.rxn.ReactionSmarts;
+                    var substrateSmiles = rxnInfo.rxn.SubstrateSmiles;
+                    var substrateInchi = rxnInfo.rxn.SubstrateInchi;
+                    var productSmiles = rxnInfo.rxn.ProductSmiles;
+                    var productInchi = rxnInfo.rxn.ProductInchi;
                     var inSink = sink?.Initial ?? false;
                     var sinkNames = sink?.Names is not null
                         ? sink.Names.Any() ? sink.Names : new() {"None"}
                         : new() {"None"};
-                    var diameter = info.Value.Diameter;
-                    var ruleIds = info.Value.RuleIds;
-                    var ecNumber = info.Value.EcNumber;
-                    var score = info.Value.Score;
+                    var diameter = rxnInfo.Value.Diameter;
+                    var ruleIds = rxnInfo.Value.RuleIds;
+                    var ecNumber = rxnInfo.Value.EcNumber;
+                    var score = rxnInfo.Value.Score;
 
                     return new GlobalResult(initialSource, transformationId, reactionSmarts, substrateSmiles,
                         substrateInchi, productSmiles, productInchi, inSink, sinkNames, diameter, ruleIds, ecNumber,
                         score);
                 });
-
 
         return globalResults;
     }
