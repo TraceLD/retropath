@@ -3,24 +3,6 @@ using RetroPath.RDKit.Abstractions;
 
 namespace RetroPath.Core;
 
-// TODO: this is WIP
-
-public record GlobalResult(
-    HashSet<string> InitialSource,
-    string TransformationId,
-    string ReactionSmiles,
-    string SubstrateSmiles,
-    string SubstrateInchi,
-    string ProductSmiles,
-    string ProductInchi,
-    bool InSink,
-    HashSet<string> SinkNames,
-    int Diameter,
-    HashSet<string> RuleId,
-    HashSet<string> EcNumber,
-    double Score
-);
-
 /// <summary>
 /// Builder for building final results from a recursive iteration.
 /// </summary>
