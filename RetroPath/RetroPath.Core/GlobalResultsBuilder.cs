@@ -13,6 +13,13 @@ public class GlobalResultsBuilder : IBuilder<GlobalResult>
     private readonly Dictionary<string, TransformationInfo> _transformations;
     private readonly List<ChemicalCompound> _newSourceInSink;
 
+    /// <summary>
+    /// Constructor that instantiates a new instance of <see cref="GlobalResultsBuilder"/>.
+    /// </summary>
+    /// <param name="left">Left (substrates) coming from <see cref="GeneratedProductsParser"/>.</param>
+    /// <param name="right">Right (products) coming from <see cref="GeneratedProductsParser"/>.</param>
+    /// <param name="transformations">Transformations coming from <see cref="GeneratedProductsParser"/>.</param>
+    /// <param name="newSourceInSink">Post-update sources in sink.</param>
     public GlobalResultsBuilder(
         List<ParsedGeneratedCompound> left,
         List<ParsedGeneratedCompound> right,
