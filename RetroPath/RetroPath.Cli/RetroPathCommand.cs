@@ -1,6 +1,8 @@
 ﻿using CliFx;
 using CliFx.Attributes;
 using CliFx.Infrastructure;
+using RetroPath.Core;
+using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
 using Serilog;
 
@@ -58,11 +60,18 @@ public class RetroPathCommand : ICommand
         Log.Information("Writing results to: \"{ResultsDirPath}\"", outputConfig.OutputDir);
         
         using var rp = new RetroPath.Core.RetroPath(inputConfig, outputConfig);
-
+        
+        rp.PrepareOutputDir();
         await rp.ParseInputs();
+        
         var results = rp.Compute();
         
         Log.Information("Generated {GlobalResultsCount} global results", results.Count);
+
+        var resultsWriter = new CsvOutputWriter<GlobalResult>(outputConfig.OutputDir, "global.csv", results);
+        resultsWriter.Write();
+        
+        Log.Information("Wrote global results to CSV");
     }
 
     private InputConfiguration GetInputConfigurationObject()

@@ -34,10 +34,17 @@ public class RetroPath : IDisposable
         await Task.Run(ParseRules);
         await ParseSourcesAndSinks();
         
-        Log.Information("Rules: {RulesCount}", _rules!.Count);
         Log.Information("Sinks + sources: {SpsCount}", _sourcesAndSinks!.Count);
         Log.Information("Sources in sink: {SisCount}", _sourcesInSink!.Count);
         Log.Information("Sources NOT in sink: {SnisCount}", _sourcesNotInSink!.Count);
+    }
+
+    public void PrepareOutputDir()
+    {
+        if (!Directory.Exists(_outputConfiguration.OutputDir))
+        {
+            Directory.CreateDirectory(_outputConfiguration.OutputDir);
+        }
     }
 
     public List<GlobalResult> Compute()
@@ -56,7 +63,11 @@ public class RetroPath : IDisposable
 
     private void ParseRules()
     {
-        var rules = _rulesParser.Parse(_inputConfiguration.RulesFilePath)
+        var rawRules = _rulesParser.Parse(_inputConfiguration.RulesFilePath);
+        
+        Log.Information("Rules: {RulesCount}", rawRules.Count);
+        
+        var rules = rawRules
             .AsParallel()
             .GroupBy(r => r.Diameter)
             .OrderByDescending(r => r.Key)
