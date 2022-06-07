@@ -68,7 +68,7 @@ public static class MolExtensions
             }
             catch (Exception e)
             {
-                Log.Error(e, "Reaction {ReactionIteration} ('{Smarts}') failed for {Reactant} on {Cycle} cycle",
+                Log.Warning(e, "Reaction {ReactionIteration} ('{Smarts}') failed for {Reactant} on {Cycle} cycle",
                     iReaction, smarts, strSmiles, iCycle);
             }
         }
