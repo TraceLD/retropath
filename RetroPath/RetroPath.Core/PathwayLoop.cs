@@ -83,7 +83,7 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
         var iBuilder = new GlobalResultsResultsBuilder(iParsedProducts.Left, iParsedProducts.Right, iParsedProducts.TransformationInfos, _iSourcesInSink);
         var iResults = iBuilder.Build().ToList();
 
-        Log.Information("Generated {ResCount} results", iResults.Count);
+        Log.Information("Added {ResCount} global results from iteration {IInner}", iResults.Count, CurrentIteration);
 
         _results.AddRange(iResults);
 
