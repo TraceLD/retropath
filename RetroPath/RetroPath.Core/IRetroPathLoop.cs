@@ -2,7 +2,7 @@
 
 public interface IRetroPathLoop<out TResult>
 {
-    public int I { get; }
+    public int CurrentIteration { get; }
     
     public TResult Run();
     public void RunIteration();

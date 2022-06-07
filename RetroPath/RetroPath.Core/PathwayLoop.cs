@@ -16,7 +16,7 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
     private List<ChemicalCompound> _iSourcesNotInSink;
     private Dictionary<string, ChemicalCompound> _iSourcesAndSinks;
     
-    public int I { get; private set; }
+    public int CurrentIteration { get; private set; }
     
     public PathwayLoop(
         InputConfiguration inputConfiguration,
@@ -37,19 +37,19 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
         _iSourcesNotInSink = starterSourcesNotInSink;
         _iSourcesAndSinks = starterSourcesAndSinks;
         
-        I = 0;
+        CurrentIteration = 0;
     }
 
     public List<GlobalResult> Run()
     {
         while (true)
         {
-            if (I > _pathwayLength || _iSourcesAndSinks.Count < 1 || _iSourcesNotInSink.Count < 1)
+            if (CurrentIteration > _pathwayLength || _iSourcesAndSinks.Count < 1 || _iSourcesNotInSink.Count < 1)
             {
                 return _results;
             }
             
-            Log.Information("Iteration: {IInner} for source {ISource}, Number of sources to iterate through: {SourcesCount}", I, _iOuter, _iSourcesNotInSink.Count);
+            Log.Information("Iteration: {IInner} for source {ISource}, Number of sources to iterate through: {SourcesCount}", CurrentIteration, _iOuter, _iSourcesNotInSink.Count);
             
             RunIteration();
         }
@@ -60,7 +60,7 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
         var iRulesFirer = new RulesFirer(_iSourcesNotInSink, new(), _rules);
         var iRes = iRulesFirer.FireRules();
 
-        using var iGpParser = new GeneratedProductsParser(iRes, _iOuter, I);
+        using var iGpParser = new GeneratedProductsParser(iRes, _iOuter, CurrentIteration);
         var iParsedProducts = iGpParser.Parse();
 
         var iUpdater = new SourceSinkUpdater(_iSourcesAndSinks, iParsedProducts.Right, iParsedProducts.TransformationInfos, _inputConfiguration);
@@ -68,7 +68,7 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
 
         // TODO: this needs extensive testing;
         // dispose sources that will no longer be needed;
-        if (I != 0)
+        if (CurrentIteration != 0)
         {
             foreach (var s in _iSourcesNotInSink)
             {
@@ -87,7 +87,7 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
 
         _results.AddRange(iResults);
 
-        I++;
+        CurrentIteration++;
         _iSourcesInSink = iNewSourcesInSink;
         _iSourcesNotInSink = iNewSources;
         _iSourcesAndSinks = iNewSink;
