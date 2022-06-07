@@ -51,9 +51,7 @@ public class RetroPath : IDisposable
         var rpLoop = new PathwayLoop(_inputConfiguration, 0, _rules, _sourcesInSink,
             _sourcesNotInSink, _sourcesAndSinks);
         
-        rpLoop.Run();
-
-        return rpLoop.Results;
+        return rpLoop.Run();
     }
 
     private void ParseRules()

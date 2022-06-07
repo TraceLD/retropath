@@ -4,18 +4,18 @@ using Serilog;
 
 namespace RetroPath.Core;
 
-public class PathwayLoop : IRetroPathLoop<GlobalResult>
+public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
 {
     private readonly InputConfiguration _inputConfiguration;
     private readonly int _pathwayLength;
     private readonly int _iOuter;
     private readonly List<IGrouping<int, ReactionRule>> _rules;
+    private readonly List<GlobalResult> _results;
 
     private List<ChemicalCompound> _iSourcesInSink;
     private List<ChemicalCompound> _iSourcesNotInSink;
     private Dictionary<string, ChemicalCompound> _iSourcesAndSinks;
-
-    public List<GlobalResult> Results { get; }
+    
     public int I { get; private set; }
     
     public PathwayLoop(
@@ -31,22 +31,22 @@ public class PathwayLoop : IRetroPathLoop<GlobalResult>
         _pathwayLength = inputConfiguration.PathwayLength;
         _iOuter = iOuter;
         _rules = rules;
+        _results = new();
 
         _iSourcesInSink = starterSourcesInSink;
         _iSourcesNotInSink = starterSourcesNotInSink;
         _iSourcesAndSinks = starterSourcesAndSinks;
         
-        Results = new();
         I = 0;
     }
 
-    public void Run()
+    public List<GlobalResult> Run()
     {
         while (true)
         {
             if (I > _pathwayLength || _iSourcesAndSinks.Count < 1 || _iSourcesNotInSink.Count < 1)
             {
-                break;
+                return _results;
             }
             
             Log.Information("Iteration: {IInner} for source {ISource}, Number of sources to iterate through: {SourcesCount}", I, _iOuter, _iSourcesNotInSink.Count);
@@ -85,7 +85,7 @@ public class PathwayLoop : IRetroPathLoop<GlobalResult>
 
         Log.Information("Generated {ResCount} results", iResults.Count);
 
-        Results.AddRange(iResults);
+        _results.AddRange(iResults);
 
         I++;
         _iSourcesInSink = iNewSourcesInSink;
