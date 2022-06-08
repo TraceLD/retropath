@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using CsvHelper;
 
-namespace RetroPath.Core;
+namespace RetroPath.Core.Output;
 
 public class CsvOutputWriter<T>
 {
