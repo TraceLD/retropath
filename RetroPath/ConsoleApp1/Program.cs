@@ -44,14 +44,18 @@ var rpConfig = new InputConfiguration(
     3,
     100
 );
-var parser = new RulesParser(rpConfig);
-var rules = parser
+
+Log.Information("Parsing rules...");
+
+var rulesParser = new RulesParser(rpConfig);
+var rules = rulesParser
     .Parse(rpConfig.RulesFilePath)
     .AsParallel()
     .GroupBy(r => r.Diameter)
     .OrderByDescending(r => r.Key)
     .ToList();
 
+Log.Information("Parsed rules");
 
 Log.Information("Starting loop");
 
