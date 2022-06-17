@@ -1,0 +1,4 @@
+﻿[09:16:08 INF] Starting loop
+[09:23:26 INF] Finished loop
+[09:23:26 INF] 1204
+Process finished with exit code 0.
