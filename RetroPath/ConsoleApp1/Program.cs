@@ -41,7 +41,7 @@ var rpConfig = new InputConfiguration(
     1000,
     0,
     1000,
-    4,
+    3,
     100
 );
 var parser = new RulesParser(rpConfig);
