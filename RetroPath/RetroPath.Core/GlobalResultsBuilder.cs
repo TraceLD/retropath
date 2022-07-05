@@ -12,6 +12,7 @@ public class GlobalResultsBuilder : IResultsBuilder<GlobalResult>
     private readonly List<ParsedGeneratedCompound> _right;
     private readonly Dictionary<string, TransformationInfo> _transformations;
     private readonly List<ChemicalCompound> _newSourceInSink;
+    private readonly int _pathwayLoopIteration;
 
     /// <summary>
     /// Constructor that instantiates a new instance of <see cref="GlobalResultsBuilder"/>.
@@ -20,17 +21,20 @@ public class GlobalResultsBuilder : IResultsBuilder<GlobalResult>
     /// <param name="right">Right (products) coming from <see cref="GeneratedProductsParser"/>.</param>
     /// <param name="transformations">Transformations coming from <see cref="GeneratedProductsParser"/>.</param>
     /// <param name="newSourceInSink">Post-update sources in sink.</param>
+    /// <param name="pathwayLoopIteration">Iteration of the <see cref="PathwayLoop"/>.</param>
     public GlobalResultsBuilder(
         List<ParsedGeneratedCompound> left,
         List<ParsedGeneratedCompound> right,
         Dictionary<string, TransformationInfo> transformations,
-        List<ChemicalCompound> newSourceInSink
+        List<ChemicalCompound> newSourceInSink,
+        int pathwayLoopIteration
     )
     {
         _left = left;
         _right = right;
         _transformations = transformations;
         _newSourceInSink = newSourceInSink;
+        _pathwayLoopIteration = pathwayLoopIteration;
     }
 
     /// <inheritdoc />
@@ -126,7 +130,7 @@ public class GlobalResultsBuilder : IResultsBuilder<GlobalResult>
 
                     return new GlobalResult(initialSource, transformationId, reactionSmarts, substrateSmiles,
                         substrateInchi, productSmiles, productInchi, inSink, sinkNames, diameter, ruleIds, ecNumber,
-                        score);
+                        score, _pathwayLoopIteration);
                 });
 
         return globalResults;

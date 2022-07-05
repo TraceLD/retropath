@@ -13,5 +13,6 @@ public record GlobalResult(
     int Diameter,
     HashSet<string> RuleId,
     HashSet<string> EcNumber,
-    double Score
+    double Score,
+    int Iteration
 );
