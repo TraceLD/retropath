@@ -6,7 +6,7 @@ namespace RetroPath.Core;
 /// <summary>
 /// Builder for building final results from a recursive iteration.
 /// </summary>
-public class GlobalResultsResultsBuilder : IResultsBuilder<GlobalResult>
+public class GlobalResultsBuilder : IResultsBuilder<GlobalResult>
 {
     private readonly List<ParsedGeneratedCompound> _left;
     private readonly List<ParsedGeneratedCompound> _right;
@@ -14,13 +14,13 @@ public class GlobalResultsResultsBuilder : IResultsBuilder<GlobalResult>
     private readonly List<ChemicalCompound> _newSourceInSink;
 
     /// <summary>
-    /// Constructor that instantiates a new instance of <see cref="GlobalResultsResultsBuilder"/>.
+    /// Constructor that instantiates a new instance of <see cref="GlobalResultsBuilder"/>.
     /// </summary>
     /// <param name="left">Left (substrates) coming from <see cref="GeneratedProductsParser"/>.</param>
     /// <param name="right">Right (products) coming from <see cref="GeneratedProductsParser"/>.</param>
     /// <param name="transformations">Transformations coming from <see cref="GeneratedProductsParser"/>.</param>
     /// <param name="newSourceInSink">Post-update sources in sink.</param>
-    public GlobalResultsResultsBuilder(
+    public GlobalResultsBuilder(
         List<ParsedGeneratedCompound> left,
         List<ParsedGeneratedCompound> right,
         Dictionary<string, TransformationInfo> transformations,
