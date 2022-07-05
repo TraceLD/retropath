@@ -77,10 +77,8 @@ public sealed class RulesParser : Parser<List<ReactionRule>>
 
         var rulesList = groupedRules.Values.ToList();
 
-        Parallel.ForEach(rulesList, rule =>
-        {
-            rule.CalculateFingerprint();
-        });
+        Parallel.ForEach(rulesList, rule => { rule.CalculateLeftFingerprint(); });
+        //foreach (var r in rulesList) { r.CalculateLeftFingerprint(); }
         
         return rulesList;
     }

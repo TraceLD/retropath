@@ -5,7 +5,7 @@ namespace RetroPath.Core.Extensions;
 
 public static class ExplicitBitVectExtensions
 {
-    public static BitArray ToCsBitArray(this ExplicitBitVect bv)
+    public static BitArray ToBclBitArray(this ExplicitBitVect bv)
     {
         var bvCount = (int)bv.getNumBits();
         var arr = new BitArray(bvCount);

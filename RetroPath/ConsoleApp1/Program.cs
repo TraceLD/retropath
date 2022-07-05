@@ -1,9 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Text.Json;
 using ConsoleApp1;
 using GraphMolWrap;
+using RetroPath.Core;
+using RetroPath.Core.Extensions;
 using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
 using RetroPath.Core.Parsers;
@@ -60,51 +63,58 @@ Log.Information("Parsed rules");
 Log.Information("Starting loop");
 
 var generatedProducts = new ConcurrentBag<GeneratedProduct>();
+var test = new ConcurrentBag<bool>();
+
+//Parallel.ForEach(sources, s => s.CalculateFingerprint());
+foreach (var s in sources) s.CalculateFingerprint();
+
+// ReSharper disable AccessToDisposedClosure
 foreach (var rulesGrouping in rules)
 {
-    //var results = new ConcurrentBag<(ChemicalCompound Source, ReactionRule Rule)>();
-
     Parallel.ForEach(rulesGrouping, rule =>
     {
-        if (rule.IsMono())
+        if (!rule.IsMono())
         {
-            var smartsLeft = rule.RuleSmarts.Split(">>")[0];
-
-            if (smartsLeft.StartsWith("(") && smartsLeft.EndsWith(")"))
-            {
-                smartsLeft = smartsLeft[1..^1];
-            }
-
-            using (var smartsLeftMol = RWMol.MolFromSmarts(smartsLeft))
-            {
-                Parallel.ForEach(sources, source =>
-                {
-                    try
-                    {
-                        if (source.Mol!.hasSubstructMatch(smartsLeftMol))
-                        {
-                            //results.Add((source, rule));
-
-                            using var rxn = new OneComponentReaction(rule.RuleSmarts, source.Mol);
-                            var products = rxn.RunReaction();
-
-                            foreach (var p in products)
-                            {
-                                var leftSplit = source.Smiles.Split('.').ToList();
-                                var rightSplit = p.Split('.').ToList();
-                                var gp = new GeneratedProduct(leftSplit, rightSplit, rule, source);
-
-                                generatedProducts.Add(gp);
-                            }
-                        }
-                    }
-                    catch
-                    {
-                        // ignored;
-                    }
-                });
-            }
+            throw new NotImplementedException();
         }
+        
+        using var smartsLeftMol = RWMol.MolFromSmarts(rule.Left!.Smarts);
+
+        Parallel.ForEach(sources, source =>
+        {
+            var shouldDeepCheck = rule.Left!.Fingerprint.Cardinality <= source.Fingerprint!.Cardinality &&
+                                  rule.Left!.Fingerprint.FingerprintArr.NewAnd(source.Fingerprint!.FingerprintArr)
+                                      .FastGetCardinality() == rule.Left!.Fingerprint.Cardinality;
+
+            if (shouldDeepCheck)
+            {
+                try
+                {
+                    if (source.Mol!.hasSubstructMatch(smartsLeftMol))
+                    {
+                        //results.Add((source, rule));
+
+                        test.Add(true);
+                        
+                        // using var rxn = new OneComponentReaction(rule.RuleSmarts, source.Mol);
+                        // var products = rxn.RunReaction();
+                        //
+                        // foreach (var p in products)
+                        // {
+                        //     var leftSplit = source.Smiles.Split('.').ToList();
+                        //     var rightSplit = p.Split('.').ToList();
+                        //     var gp = new GeneratedProduct(leftSplit, rightSplit, rule, source);
+                        //
+                        //     generatedProducts.Add(gp);
+                        // }
+                    }
+                }
+                catch
+                {
+                    // ignored for now;
+                }
+            }
+        });
     });
     
     if (!generatedProducts.IsEmpty)

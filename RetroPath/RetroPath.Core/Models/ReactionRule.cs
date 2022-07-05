@@ -19,9 +19,9 @@ public class ReactionRule
 
     public bool IsMono() => ReactionOrder <= 1;
 
-    public void CalculateFingerprint()
+    public void CalculateLeftFingerprint()
     {
-        if (Left is not null) return; // already calculated;
+        if (Left?.Fingerprint is not null) return; // already calculated;
 
         var smartsLeft = RuleSmarts.Split(">>")[0];
         if (smartsLeft.StartsWith("(") && smartsLeft.EndsWith(")"))
@@ -34,12 +34,12 @@ public class ReactionRule
         {
             using (var fp = RDKFuncs.PatternFingerprintMol(mol, FingerprintSettings.PreProcessingPatternFingerprintSize))
             {
-                arrFingerprint = fp.ToCsBitArray();
+                arrFingerprint = fp.ToBclBitArray();
             }
         }
 
         var cardinality = arrFingerprint.FastGetCardinality();
 
-        Left = new(smartsLeft, cardinality, arrFingerprint);
+        Left = new(smartsLeft, new(arrFingerprint, cardinality));
     }
 }

@@ -32,4 +32,16 @@ public static class BitArrayExtensions
 
         return count;
     }
+
+    public static BitArray NewAnd(this BitArray ba1, BitArray ba2)
+    {
+        var newBa = new BitArray(ba1.Count);
+
+        for (var i = 0; i < ba1.Count; i++)
+        {
+            newBa[i] = ba1[i] && ba2[i];
+        }
+
+        return newBa;
+    }
 }
