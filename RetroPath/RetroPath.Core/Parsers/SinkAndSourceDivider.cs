@@ -22,9 +22,8 @@ public static class SinkAndSourceDivider
 
         foreach (var (inchi, compound) in parsedSources)
         {
-            compound.Mol = null;
-            compound.Initial = false;
-            parsedSinks.Add(inchi, compound);
+            var sinkCompound = new ChemicalCompound(compound.Names, compound.Inchi, compound.Smiles, null, false);
+            parsedSinks.Add(inchi, sinkCompound);
         }
 
         return new(sourcesInSink.Values.ToList(), sourcesNotInSink.Values.ToList(), parsedSinks.Values.ToDictionary(x => x.Inchi));
