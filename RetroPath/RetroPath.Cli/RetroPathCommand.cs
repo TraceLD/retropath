@@ -12,6 +12,9 @@ namespace RetroPath.Cli;
 [Command]
 public class RetroPathCommand : ICommand
 {
+    private InputConfiguration? _inputConfiguration;
+    private OutputConfiguration? _outputConfiguration;
+    
     #region Parameters
 
     [CommandParameter(0, Name = "rules", Description = "Path to the CSV file defining reactions rules.")]
@@ -52,32 +55,67 @@ public class RetroPathCommand : ICommand
     public string OutputDir { get; init; } = Path.Combine(Directory.GetCurrentDirectory(), "results");
 
     #endregion
+
+    // cannot be a ctor because the props aren't filled in by CliFx at that point;
+    private void Init()
+    {
+        _inputConfiguration = new(RulesFilePath, SinkFilePath, SourceFilePath, SourceMw, CofactorsFilePath, CofactorMw,
+            MinDiameter, MaxDiameter, PathwayLength, MaxStructures);
+        
+        _outputConfiguration = new(OutputDir);
+    }
     
     public async ValueTask ExecuteAsync(IConsole console)
     {
-        var inputConfig = GetInputConfigurationObject();
-        var outputConfig = GetOutputConfigurationObject();
-
-        Log.Information("Writing results to: \"{ResultsDirPath}\"", outputConfig.OutputDir);
+        Init();
         
-        using var rp = new RetroPath.Core.RetroPath(inputConfig, outputConfig);
+        LogInputConfig();
+        LogOutputConfig();
+
+        using var rp = new RetroPath.Core.RetroPath(_inputConfiguration!, _outputConfiguration!);
         
         rp.PrepareOutputDir();
-        await rp.ParseInputs();
         
-        var results = rp.Compute();
+        await rp.ParseInputsAsync();
         
-        Log.Information("Generated {GlobalResultsCount} global results", results.Count);
-
-        var resultsWriter = new CsvOutputWriter<GlobalResult>(outputConfig.OutputDir, "global.csv", results);
-        resultsWriter.Write();
+        Log.Information("Running the RP algorithm...");
         
-        Log.Information("Wrote global results to CSV");
+        rp.Compute();
+        
+        Log.Information("Writing the results to CSV...");
+        
+        await rp.WriteResultsToCsvAsync();
+        
+        Log.Information("Wrote all results to CSV");
     }
 
-    private InputConfiguration GetInputConfigurationObject()
-        => new(RulesFilePath, SinkFilePath, SourceFilePath, SourceMw, CofactorsFilePath, CofactorMw, MinDiameter,
-            MaxDiameter, PathwayLength, MaxStructures);
+    private void LogInputConfig()
+    {
 
-    private OutputConfiguration GetOutputConfigurationObject() => new(OutputDir);
+        Log.Information(@"Running RetroPath with the following input configuration:
+    Rules file: {RulesFile}
+    Sink file: {SinkFile}
+    Source file: {SourceFile}
+    Source max weight: {SourceMw}
+    Cofactors file: {CofactorsFile}
+    Cofactor max weight: {CofactorMw}
+    Min rule diameter: {MinRuleDiameter}
+    Max rule diameter: {MaxRuleDiameter}
+    Pathway length: {PathwayLength}
+    Max structures: {MaxStructures}",
+            _inputConfiguration!.RulesFilePath, _inputConfiguration.SinkFilePath, _inputConfiguration.SourceFilePath,
+            _inputConfiguration.SourceMw, _inputConfiguration.CofactorsFilePath ?? "None",
+            _inputConfiguration.CofactorMw, _inputConfiguration.MinDiameter, _inputConfiguration.MaxDiameter,
+            _inputConfiguration.PathwayLength, _inputConfiguration.MaxStructures);
+
+    }
+    
+    private void LogOutputConfig()
+    {
+        
+        Log.Information(@"Running RetroPath with the following output configuration:
+    Output directory: {OutputDir}",
+            _outputConfiguration!.OutputDir);
+        
+    }
 }
