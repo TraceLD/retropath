@@ -87,7 +87,8 @@ class Build : NukeBuild
     
     void PublishCliForPlatform(Platform platform)
     {
-        DotNetTasks.DotNetPublish(_ => _.SetConfiguration(Configuration.Release)
+        DotNetTasks.DotNetPublish(_ => _
+            .SetConfiguration(Configuration.Release)
             .SetProject(Solution.GetProject(RetroPathCliProject))
             .SetRuntime(platform.Rid)
             .SetOutput(platform.TargetDir)
