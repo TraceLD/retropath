@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using GraphMolWrap;
+using RetroPath.Core.Extensions;
 using RetroPath.Core.Models;
 using RetroPath.RDKit.Abstractions.Reactions;
 
@@ -79,28 +80,39 @@ public class RulesFirer
         {
             Parallel.ForEach(_sources, source =>
             {
+                if (source.Fingerprint is null)
+                {
+                    source.CalculateFingerprint();
+                }
+                
+                var shouldDeepCheck = rule.Left!.Fingerprint.Cardinality <= source.Fingerprint!.Cardinality &&
+                                      rule.Left!.Fingerprint.FingerprintArr.NewAnd(source.Fingerprint!.FingerprintArr)
+                                          .FastGetCardinality() == rule.Left!.Fingerprint.Cardinality;
+
                 // justification for null suppression: it's a source compound so Mol will always be populated;
                 // ReSharper disable once AccessToDisposedClosure justification: the lambda always completes before smartsLeftMol is disposed;
-                if (source.Mol!.hasSubstructMatch(smartsLeftMol))
+                if (!shouldDeepCheck || !source.Mol!.hasSubstructMatch(smartsLeftMol))
                 {
-                    try
-                    {
-                        using var rxn = new OneComponentReaction(rule.RuleSmarts, source.Mol);
-                        var products = rxn.RunReaction();
+                    return;
+                }
+                
+                try
+                {
+                    using var rxn = new OneComponentReaction(rule.RuleSmarts, source.Mol);
+                    var products = rxn.RunReaction();
 
-                        foreach (var p in products)
-                        {
-                            var leftSplit = source.Smiles.Split('.').ToList();
-                            var rightSplit = p.Split('.').ToList();
-                            var gp = new GeneratedProduct(leftSplit, rightSplit, rule, source);
-
-                            generatedProducts.Add(gp);
-                        }
-                    }
-                    catch
+                    foreach (var p in products)
                     {
-                        // ignored
+                        var leftSplit = source.Smiles.Split('.').ToList();
+                        var rightSplit = p.Split('.').ToList();
+                        var gp = new GeneratedProduct(leftSplit, rightSplit, rule, source);
+
+                        generatedProducts.Add(gp);
                     }
+                }
+                catch
+                {
+                    // ignored
                 }
             });
         }
