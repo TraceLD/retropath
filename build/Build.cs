@@ -95,7 +95,8 @@ class Build : NukeBuild
             {
                 {"DebugType", "None"},
                 {"DebugSymbols", false}
-            }));
+            })
+            .EnableSelfContained());
         
         CopyDirectoryRecursively(EXAMPLE_DATA_DIR, platform.TargetDir / "example_data");
     }
