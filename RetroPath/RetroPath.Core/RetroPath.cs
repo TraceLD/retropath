@@ -1,6 +1,8 @@
 ﻿using RetroPath.Core.Exceptions;
 using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
+using RetroPath.Core.Models.Csv;
+using RetroPath.Core.Output;
 using RetroPath.Core.Parsers;
 using Serilog;
 
@@ -64,24 +66,26 @@ public class RetroPath : IDisposable
                 $"You must parse the inputs using the ${nameof(ParseRules)} method before running RP via ${nameof(Compute)}.");
         }
 
-        var rpPathwayLoop = new PathwayLoop(_inputConfiguration, _outputConfiguration, 0, _rules, _sourcesInSink,
+        var rpPathwayLoop = new PathwayLoop(_inputConfiguration, 0, _rules, _sourcesInSink,
             _sourcesNotInSink, _sourcesAndSinks);
         
         _globalResults = rpPathwayLoop.Run();
         
         Log.Information("Generated {GlobalResultsCount} global results", _globalResults.Count);
     }
-
-    // TODO: remove the pragma once implemented;
-#pragma warning disable CS1998
+    
     public async Task WriteResultsToCsvAsync()
-#pragma warning restore CS1998
     {
         if (_globalResults is null)
         {
             throw new ResultsNotGeneratedException("Results need to be generated first.");
         }
-        
+
+        var csvGlobalResults = _globalResults.Select(x => x.GetCsvRepresentation());
+        var globalResultsWriter = new CsvOutputWriter<CsvGlobalResult>(_outputConfiguration.OutputDir, "results.csv", csvGlobalResults);
+
+        await globalResultsWriter.WriteAsync();
+
         // TODO: write scope results here;
     }
 

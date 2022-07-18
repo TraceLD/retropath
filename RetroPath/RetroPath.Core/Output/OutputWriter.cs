@@ -21,4 +21,12 @@ public class CsvOutputWriter<T>
         
         csv.WriteRecords(_resultsToWrite);
     }
+
+    public async Task WriteAsync()
+    {
+        await using var writer = new StreamWriter(_filePath);
+        await using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+        
+        await csv.WriteRecordsAsync(_resultsToWrite);
+    }
 }
