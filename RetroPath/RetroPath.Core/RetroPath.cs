@@ -19,6 +19,8 @@ public class RetroPath : IDisposable
     private List<ChemicalCompound>? _sourcesNotInSink;
     private Dictionary<string, ChemicalCompound>? _sourcesAndSinks;
 
+    private List<GlobalResult>? _globalResults;
+
     public RetroPath(InputConfiguration inputConfiguration, OutputConfiguration outputConfiguration)
     {
         _inputConfiguration = inputConfiguration;
@@ -27,12 +29,12 @@ public class RetroPath : IDisposable
         _compoundParser = new(_inputConfiguration);
     }
 
-    public async Task ParseInputs()
+    public async Task ParseInputsAsync()
     {
         Log.Information("Parsing inputs...");
         
-        await Task.Run(ParseRules);
-        await ParseSourcesAndSinks();
+        await Task.Run(() => ParseRules(true));
+        await ParseSourcesAndSinksAsync(true);
         
         Log.Information("Sinks + sources: {SpsCount}", _sourcesAndSinks!.Count);
         Log.Information("Sources in sink: {SisCount}", _sourcesInSink!.Count);
@@ -44,26 +46,57 @@ public class RetroPath : IDisposable
         if (!Directory.Exists(_outputConfiguration.OutputDir))
         {
             Directory.CreateDirectory(_outputConfiguration.OutputDir);
+            
+            return;
+        }
+
+        foreach (var file in Directory.GetFiles(_outputConfiguration.OutputDir))
+        {
+            File.Delete(file);
         }
     }
 
-    public List<GlobalResult> Compute()
+    public void Compute()
     {
         if (_rules is null || _sourcesInSink is null || _sourcesNotInSink is null || _sourcesAndSinks is null)
         {
             throw new InputsNotParsedException(
                 $"You must parse the inputs using the ${nameof(ParseRules)} method before running RP via ${nameof(Compute)}.");
         }
-        
-        var rpLoop = new PathwayLoop(_inputConfiguration, 0, _rules, _sourcesInSink,
+
+        var rpPathwayLoop = new PathwayLoop(_inputConfiguration, _outputConfiguration, 0, _rules, _sourcesInSink,
             _sourcesNotInSink, _sourcesAndSinks);
         
-        return rpLoop.Run();
+        _globalResults = rpPathwayLoop.Run();
+        
+        Log.Information("Generated {GlobalResultsCount} global results", _globalResults.Count);
     }
 
-    private void ParseRules()
+    // TODO: remove the pragma once implemented;
+#pragma warning disable CS1998
+    public async Task WriteResultsToCsvAsync()
+#pragma warning restore CS1998
+    {
+        if (_globalResults is null)
+        {
+            throw new ResultsNotGeneratedException("Results need to be generated first.");
+        }
+        
+        // TODO: write scope results here;
+    }
+
+    private void ParseRules(bool calculateFingerprints) // TODO: this should be configurable via an option
     {
         var rawRules = _rulesParser.Parse(_inputConfiguration.RulesFilePath);
+
+        if (calculateFingerprints)
+        {
+            Log.Information("Calculating rule fingerprints");
+            
+            Parallel.ForEach(rawRules, rule => { rule.CalculateLeftFingerprint(); });
+            
+            Log.Information("Calculated rule fingerprints");
+        }
         
         Log.Information("Rules: {RulesCount}", rawRules.Count);
         
@@ -76,12 +109,26 @@ public class RetroPath : IDisposable
         _rules = rules;
     }
 
-    private async Task ParseSourcesAndSinks()
+    private async Task ParseSourcesAndSinksAsync(bool calculateSourceFingerprints) // TODO: this should be configurable via an option
     {
         var parsedSinks =
             await Task.Run(() => _compoundParser.Parse(_inputConfiguration.SinkFilePath, ChemicalType.Sink));
         var parsedSources =
             await Task.Run(() => _compoundParser.Parse(_inputConfiguration.SourceFilePath, ChemicalType.Source));
+
+        if (calculateSourceFingerprints)
+        {
+            Log.Information("Calculating source fingerprints");
+            
+            // no point in using parallel as there's usually only a few sources max;
+            // would actually be slower in parallel;
+            foreach (var (_, source) in parsedSources)
+            {
+                source.CalculateFingerprint();
+            }
+            
+            Log.Information("Calculated source fingerprints");
+        }
 
         var (sourcesInSink, sourcesNotInSink, sourcesAndSinks) =
             SinkAndSourceDivider.Divide(parsedSources, parsedSinks);
