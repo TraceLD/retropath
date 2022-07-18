@@ -6,31 +6,35 @@ namespace RetroPath.Core;
 /// <summary>
 /// Builder for building final results from a recursive iteration.
 /// </summary>
-public class GlobalResultsResultsBuilder : IResultsBuilder<GlobalResult>
+public class GlobalResultsBuilder : IResultsBuilder<GlobalResult>
 {
     private readonly List<ParsedGeneratedCompound> _left;
     private readonly List<ParsedGeneratedCompound> _right;
     private readonly Dictionary<string, TransformationInfo> _transformations;
     private readonly List<ChemicalCompound> _newSourceInSink;
+    private readonly int _iteration;
 
     /// <summary>
-    /// Constructor that instantiates a new instance of <see cref="GlobalResultsResultsBuilder"/>.
+    /// Constructor that instantiates a new instance of <see cref="GlobalResultsBuilder"/>.
     /// </summary>
     /// <param name="left">Left (substrates) coming from <see cref="GeneratedProductsParser"/>.</param>
     /// <param name="right">Right (products) coming from <see cref="GeneratedProductsParser"/>.</param>
     /// <param name="transformations">Transformations coming from <see cref="GeneratedProductsParser"/>.</param>
     /// <param name="newSourceInSink">Post-update sources in sink.</param>
-    public GlobalResultsResultsBuilder(
+    /// <param name="iteration">Iteration.</param>
+    public GlobalResultsBuilder(
         List<ParsedGeneratedCompound> left,
         List<ParsedGeneratedCompound> right,
         Dictionary<string, TransformationInfo> transformations,
-        List<ChemicalCompound> newSourceInSink
+        List<ChemicalCompound> newSourceInSink,
+        int iteration
     )
     {
         _left = left;
         _right = right;
         _transformations = transformations;
         _newSourceInSink = newSourceInSink;
+        _iteration = iteration;
     }
 
     /// <inheritdoc />
@@ -126,7 +130,7 @@ public class GlobalResultsResultsBuilder : IResultsBuilder<GlobalResult>
 
                     return new GlobalResult(initialSource, transformationId, reactionSmarts, substrateSmiles,
                         substrateInchi, productSmiles, productInchi, inSink, sinkNames, diameter, ruleIds, ecNumber,
-                        score);
+                        score, _iteration);
                 });
 
         return globalResults;
