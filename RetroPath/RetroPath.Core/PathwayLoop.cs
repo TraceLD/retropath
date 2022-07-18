@@ -88,7 +88,7 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
             _iSourcesNotInSink[_iOuter].Dispose();
         }
             
-        var iBuilder = new GlobalResultsResultsBuilder(iParsedProducts.Left, iParsedProducts.Right, iParsedProducts.TransformationInfos, _iSourcesInSink);
+        var iBuilder = new GlobalResultsBuilder(iParsedProducts.Left, iParsedProducts.Right, iParsedProducts.TransformationInfos, _iSourcesInSink, CurrentIteration);
         var iResults = iBuilder.Build().ToList();
 
         Log.Information("Added {ResCount} global results from iteration {IInner}", iResults.Count, CurrentIteration);
