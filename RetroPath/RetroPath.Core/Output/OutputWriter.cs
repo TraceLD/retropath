@@ -16,19 +16,9 @@ public class CsvOutputWriter<T>
 
     public void Write()
     {
-        PrepareFile();
-        
         using var writer = new StreamWriter(_filePath);
         using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
         
         csv.WriteRecords(_resultsToWrite);
-    }
-    
-    private void PrepareFile()
-    {
-        if (File.Exists(_filePath))
-        {
-            File.Delete(_filePath);
-        }
     }
 }
