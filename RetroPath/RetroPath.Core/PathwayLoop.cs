@@ -8,13 +8,11 @@ namespace RetroPath.Core;
 public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
 {
     private readonly InputConfiguration _inputConfiguration;
-    private readonly OutputConfiguration _outputConfiguration;
     private readonly int _pathwayLength;
     private readonly int _iOuter;
     private readonly List<IGrouping<int, ReactionRule>> _rules;
     
     private readonly List<GlobalResult> _results;
-    private List<GlobalResult>? _resultsToWrite;
 
     private List<ChemicalCompound> _iSourcesInSink;
     private List<ChemicalCompound> _iSourcesNotInSink;
@@ -24,7 +22,6 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
     
     public PathwayLoop(
         InputConfiguration inputConfiguration,
-        OutputConfiguration outputConfiguration,
         int iOuter,
         List<IGrouping<int, ReactionRule>> rules,
         List<ChemicalCompound> starterSourcesInSink,
@@ -33,7 +30,6 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
     )
     {
         _inputConfiguration = inputConfiguration;
-        _outputConfiguration = outputConfiguration;
         _pathwayLength = inputConfiguration.PathwayLength;
         _iOuter = iOuter;
         _rules = rules;
@@ -52,8 +48,6 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
         {
             if (CurrentIteration > _pathwayLength || _iSourcesAndSinks.Count < 1 || _iSourcesNotInSink.Count < 1)
             {
-                WriteResults();
-                
                 return _results;
             }
             
@@ -88,34 +82,16 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
             _iSourcesNotInSink[_iOuter].Dispose();
         }
             
-        var iBuilder = new GlobalResultsBuilder(iParsedProducts.Left, iParsedProducts.Right, iParsedProducts.TransformationInfos, _iSourcesInSink, CurrentIteration);
+        var iBuilder = new GlobalResultsBuilder(iParsedProducts.Left, iParsedProducts.Right, iParsedProducts.TransformationInfos, iNewSourcesInSink, CurrentIteration);
         var iResults = iBuilder.Build().ToList();
 
         Log.Information("Added {ResCount} global results from iteration {IInner}", iResults.Count, CurrentIteration);
 
         _results.AddRange(iResults);
-        _resultsToWrite = iResults;
 
         CurrentIteration++;
         _iSourcesInSink = iNewSourcesInSink;
         _iSourcesNotInSink = iNewSources;
         _iSourcesAndSinks = iNewSink;
-    }
-
-    private void WriteResults()
-    {
-        if (_resultsToWrite is null || !_resultsToWrite.Any())
-        {
-            return;
-        }
-        
-        Log.Information("Saving global results to CSV");
-        
-        var globalResultsWriter =
-            new CsvOutputWriter<GlobalResult>(_outputConfiguration.OutputDir, "global.csv", _resultsToWrite);
-        
-        globalResultsWriter.Write();
-        
-        Log.Information("Saved global results");
     }
 }
