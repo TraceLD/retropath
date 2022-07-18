@@ -1,4 +1,7 @@
-﻿namespace RetroPath.Core.Models;
+﻿using RetroPath.Core.Extensions;
+using RetroPath.Core.Models.Csv;
+
+namespace RetroPath.Core.Models;
 
 public record GlobalResult(
     HashSet<string> InitialSource,
@@ -13,5 +16,26 @@ public record GlobalResult(
     int Diameter,
     HashSet<string> RuleId,
     HashSet<string> EcNumber,
-    double Score
-);
+    double Score,
+    int Iteration
+)
+{
+    public CsvGlobalResult GetCsvRepresentation()
+        => new()
+        {
+            InitialSource = InitialSource.ToCsvString(),
+            TransformationId = TransformationId,
+            ReactionSmiles = ReactionSmiles,
+            SubstrateSmiles = SubstrateSmiles,
+            SubstrateInchi = SubstrateInchi,
+            ProductSmiles = ProductSmiles,
+            ProductInchi = ProductInchi,
+            InSink = InSink ? 1 : 0,
+            SinkName = SinkNames.ToCsvString(),
+            Diameter = Diameter,
+            RuleId = RuleId.ToCsvString(),
+            EcNumber = EcNumber.ToCsvString(),
+            Score = Score,
+            Iteration = Iteration
+        };
+}
