@@ -44,7 +44,7 @@ var rpConfig = new InputConfiguration(
     1000,
     0,
     1000,
-    3,
+    2,
     100
 );
 
@@ -92,21 +92,17 @@ foreach (var rulesGrouping in rules)
                 {
                     if (source.Mol!.hasSubstructMatch(smartsLeftMol))
                     {
-                        //results.Add((source, rule));
-
-                        test.Add(true);
+                        using var rxn = new OneComponentReaction(rule.RuleSmarts, source.Mol);
+                        var products = rxn.RunReaction();
                         
-                        // using var rxn = new OneComponentReaction(rule.RuleSmarts, source.Mol);
-                        // var products = rxn.RunReaction();
-                        //
-                        // foreach (var p in products)
-                        // {
-                        //     var leftSplit = source.Smiles.Split('.').ToList();
-                        //     var rightSplit = p.Split('.').ToList();
-                        //     var gp = new GeneratedProduct(leftSplit, rightSplit, rule, source);
-                        //
-                        //     generatedProducts.Add(gp);
-                        // }
+                        foreach (var p in products)
+                        {
+                             var leftSplit = source.Smiles.Split('.').ToList();
+                             var rightSplit = p.Split('.').ToList();
+                             var gp = new GeneratedProduct(leftSplit, rightSplit, rule, source);
+                        
+                             generatedProducts.Add(gp);
+                        }
                     }
                 }
                 catch
