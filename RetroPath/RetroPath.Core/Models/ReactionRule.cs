@@ -1,4 +1,8 @@
-﻿namespace RetroPath.Core.Models;
+﻿using System.Collections;
+using GraphMolWrap;
+using RetroPath.Core.Extensions;
+
+namespace RetroPath.Core.Models;
 
 public class ReactionRule
 {
@@ -8,8 +12,34 @@ public class ReactionRule
     public int ReactionOrder { get; set; }
     public int Diameter { get; set; }
     public double Score { get; set; }
+    
+    public ReactionRuleLeft? Left { get; private set; }
 
     public string GetFoldedRuleId() => $"[{string.Join(",", RuleIds)}]@{Diameter}";
 
     public bool IsMono() => ReactionOrder <= 1;
+
+    public void CalculateLeftFingerprint()
+    {
+        if (Left?.Fingerprint is not null) return; // already calculated;
+
+        var smartsLeft = RuleSmarts.Split(">>")[0];
+        if (smartsLeft.StartsWith("(") && smartsLeft.EndsWith(")"))
+        {
+            smartsLeft = smartsLeft[1..^1];
+        }
+
+        BitArray? arrFingerprint;
+        using (var mol = RWMol.MolFromSmarts(smartsLeft, 0, true))
+        {
+            using (var fp = RDKFuncs.PatternFingerprintMol(mol, FingerprintSettings.PreProcessingPatternFingerprintSize))
+            {
+                arrFingerprint = fp.ToBclBitArray();
+            }
+        }
+
+        var cardinality = arrFingerprint.FastGetCardinality();
+
+        Left = new(smartsLeft, new(arrFingerprint, cardinality));
+    }
 }

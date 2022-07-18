@@ -3,6 +3,7 @@ using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
+using Serilog;
 
 namespace RetroPath.Core.Parsers;
 
@@ -74,6 +75,11 @@ public sealed class RulesParser : Parser<List<ReactionRule>>
             }
         }
 
-        return groupedRules.Values.ToList();
+        var rulesList = groupedRules.Values.ToList();
+
+        Parallel.ForEach(rulesList, rule => { rule.CalculateLeftFingerprint(); });
+        //foreach (var r in rulesList) { r.CalculateLeftFingerprint(); }
+        
+        return rulesList;
     }
 }
