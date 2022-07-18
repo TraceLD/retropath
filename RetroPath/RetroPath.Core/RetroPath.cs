@@ -66,7 +66,7 @@ public class RetroPath : IDisposable
                 $"You must parse the inputs using the ${nameof(ParseRules)} method before running RP via ${nameof(Compute)}.");
         }
 
-        var rpPathwayLoop = new PathwayLoop(_inputConfiguration, 0, _rules, _sourcesInSink,
+        var rpPathwayLoop = new PathwayLoop(_inputConfiguration, 0, _rules,
             _sourcesNotInSink, _sourcesAndSinks);
         
         _globalResults = rpPathwayLoop.Run();

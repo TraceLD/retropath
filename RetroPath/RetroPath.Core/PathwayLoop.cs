@@ -14,7 +14,6 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
     
     private readonly List<GlobalResult> _results;
 
-    private List<ChemicalCompound> _iSourcesInSink;
     private List<ChemicalCompound> _iSourcesNotInSink;
     private Dictionary<string, ChemicalCompound> _iSourcesAndSinks;
     
@@ -24,7 +23,6 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
         InputConfiguration inputConfiguration,
         int iOuter,
         List<IGrouping<int, ReactionRule>> rules,
-        List<ChemicalCompound> starterSourcesInSink,
         List<ChemicalCompound> starterSourcesNotInSink,
         Dictionary<string, ChemicalCompound> starterSourcesAndSinks
     )
@@ -35,7 +33,6 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
         _rules = rules;
         _results = new();
 
-        _iSourcesInSink = starterSourcesInSink;
         _iSourcesNotInSink = starterSourcesNotInSink;
         _iSourcesAndSinks = starterSourcesAndSinks;
         
@@ -46,7 +43,7 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
     {
         while (true)
         {
-            if (CurrentIteration > _pathwayLength || _iSourcesAndSinks.Count < 1 || _iSourcesNotInSink.Count < 1)
+            if (CurrentIteration >= _pathwayLength || _iSourcesAndSinks.Count < 1 || _iSourcesNotInSink.Count < 1)
             {
                 return _results;
             }
@@ -90,7 +87,6 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
         _results.AddRange(iResults);
 
         CurrentIteration++;
-        _iSourcesInSink = iNewSourcesInSink;
         _iSourcesNotInSink = iNewSources;
         _iSourcesAndSinks = iNewSink;
     }
