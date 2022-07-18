@@ -34,6 +34,15 @@ Bundled with the program is a simple pinocembrin example data to verify the inst
 
 **Linux-only caution:** In the event that some system package is missing a human readable exception will be thrown and you should read it to see what package is missing and then install the missing package from your distro's package maneger (e.g. `apt`/`yum`/etc.).
 
+### Viewing the results
+
+To view the results see the `results` folder that has been generated after running the example.
+
+### Full usage
+
+To see help how to use the program with all the possible options and parameters run `./RetroPath.Cli` on Linux/macOS and `./RetroPath.Cli.exe` in the terminal.
+
+The basic usage is `./RetroPath.Cli <rules-file> <source-file> <sink-file> <pathway-length>` (on Windows it needs to be `./RetroPath.Cli.exe` instead).
 
 ## Information for developers
 
