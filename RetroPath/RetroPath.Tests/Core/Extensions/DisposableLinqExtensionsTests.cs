@@ -6,7 +6,7 @@ using RetroPath.Core;
 using RetroPath.Tests.TestUtils;
 using Xunit;
 
-namespace RetroPath.Tests.Core;
+namespace RetroPath.Tests.Core.Extensions;
 
 public class DisposableLinqExtensionsTests
 {
