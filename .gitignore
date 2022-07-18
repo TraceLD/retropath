@@ -3,6 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# macOS vileness
+RetroPath/.DS_Store
+
+# IDEA platform
 .idea/
 
 # User-specific files
@@ -19,6 +23,7 @@
 mono_crash.*
 
 # Build results
+[Dd]ist/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
@@ -350,7 +355,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-
-RetroPath/.DS_Store
-
-build/
