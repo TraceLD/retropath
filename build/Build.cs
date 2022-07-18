@@ -78,6 +78,11 @@ class Build : NukeBuild
         .Executes(() =>
         {
             PublishCliForPlatform(CLI_MACOS_ARM64);
+
+            var macOsRdk = BuildProjectDirectory / "macos_runtimes" / "RDKFuncs.so";
+            var macOsRdkDestination = CLI_MACOS_ARM64.TargetDir / "runtimes" / "macos-arm64" / "native" / "RDKFuncs.so";
+            
+            CopyFile(macOsRdk, macOsRdkDestination);
         });
     
     void PublishCliForPlatform(Platform platform)
