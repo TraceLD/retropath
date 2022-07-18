@@ -12,9 +12,9 @@ RetroPath 2.0 algorithm as a standalone application.
 
 Because the build is statically compiled on the C++ side and self-contained on the .NET side there should be no extra dependencies that need to be downloaded.  
 
-1. Download the distribution for your operating system from [GitHub Releases](https://github.com/TraceLD/retropath/releases).
+1. Download the distribution for your operating system from <a href="https://github.com/TraceLD/retropath/releases" target="_blank">GitHub Releases</a>
 
-2. Unzip the downloaded file to where you want RetroPath to be. To unzip on macOS simply double click the zip file. On Windows right click on the file and select "Extract All" or use a third-party software such as 7zip. On Linux open the terminal and type `unzip file_name.zip`.
+2. Unzip the downloaded file to where you want RetroPath to be. To unzip on macOS simply double click the zip file. On Windows right click on the file and select "Extract All" or use a third-party software such as 7zip. On Linux open the terminal and type `unzip file_name.zip`
 
 ### Running the example
 
