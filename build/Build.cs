@@ -24,6 +24,7 @@ class Build : NukeBuild
     public static int Main () => Execute<Build>(x => x.PublishCli);
 
     [Solution] readonly Solution Solution;
+    readonly Guid RetroPathCliProject = new("D2A39843-338C-4BD4-BCE2-AA80283AD1EC");
 
     static readonly AbsolutePath DIST_DIR = RootDirectory / "dist";
     static readonly AbsolutePath EXAMPLE_DATA_DIR = RootDirectory / "example_data";
@@ -36,8 +37,6 @@ class Build : NukeBuild
     static readonly Platform CLI_WINDOWS_X64 = new(CLI_DIR, RID_WIN_X64);
     static readonly Platform CLI_LINUX_X64 = new(CLI_DIR, RID_LINUX_X64);
     static readonly Platform CLI_MACOS_ARM64 = new(CLI_DIR, RID_MACOS_ARM64);
-
-    readonly Guid RetroPathCli = new("D2A39843-338C-4BD4-BCE2-AA80283AD1EC");
 
     Target Clean => _ => _
         .Executes(() =>
@@ -84,7 +83,7 @@ class Build : NukeBuild
     void PublishCliForPlatform(Platform platform)
     {
         DotNetTasks.DotNetPublish(_ => _.SetConfiguration(Configuration.Release)
-            .SetProject(Solution.GetProject(RetroPathCli))
+            .SetProject(Solution.GetProject(RetroPathCliProject))
             .SetRuntime(platform.Rid)
             .SetOutput(platform.TargetDir)
             .SetProperties(new Dictionary<string, object>
