@@ -1,5 +1,5 @@
 # retropath
-RetroPath 2.0 algorithm as a standalone application.
+RetroPath2.0 algorithm as a standalone application.
 
 ## Installation instruction for users
 
