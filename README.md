@@ -22,17 +22,19 @@ Bundled with the program is a simple pinocembrin example data to verify the inst
 
 #### Windows
 
-1. Enter the unzipped folder and open the terminal.
+1. Enter the unzipped folder and open the terminal
 
 2. Run the following command via the terminal: `./RetroPath.Cli.exe "./example_data/rules.csv" "./example_data/source.csv" "./example_data/sink.csv" 4`
 
 #### Linux and macOS
 
-1. Enter the unzipped folder and open the terminal.
+1. Enter the unzipped folder and open the terminal inside it
 
-2. Run the following command via the terminal: `./RetroPath.Cli "./example_data/rules.csv" "./example_data/source.csv" "./example_data/sink.csv" 4`
+2. Give RetroPath the permission to execute by running `chmod +x ./RetroPath.Cli`
 
-**Linux-only caution:** In the event that some system package is missing a human readable exception will be thrown and you should read it to see what package is missing and then install the missing package from your distro's package maneger (e.g. `apt`/`yum`/etc.).
+3. Run the following command via the terminal: `./RetroPath.Cli "./example_data/rules.csv" "./example_data/source.csv" "./example_data/sink.csv" 4`
+
+**Linux-only caution:** In the unlikely event that some system package is missing a human readable exception will be thrown and you should read it to see what package is missing and then install the missing package from your distro's package maneger (e.g. `apt`/`yum`/etc.).
 
 ### Viewing the results
 
