@@ -352,5 +352,3 @@ MigrationBackup/
 .ionide/
 
 RetroPath/.DS_Store
-
-build/
