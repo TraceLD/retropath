@@ -13,7 +13,8 @@ public class ChemicalCompound : IDisposable
     public bool Initial { get; set; }
     public Fingerprint? Fingerprint { get; private set; }
     
-    public ChemicalCompound(HashSet<string> names,
+    public ChemicalCompound(
+        HashSet<string> names,
         string inchi,
         string smiles,
         RWMol? mol,
