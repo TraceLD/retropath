@@ -111,9 +111,9 @@ public class RuleEngine
 
                     foreach (var p in products)
                     {
-                        var leftSplit = source.Smiles.Split('.').ToList();
-                        var rightSplit = p.Split('.').ToList();
-                        var gp = new GeneratedProduct(leftSplit, rightSplit, rule, source);
+                        var rxnLeftSideCompounds = source.Smiles.Split('.').ToList();
+                        var rxnRightSideCompounds = p.Split('.').ToList();
+                        var gp = new GeneratedProduct(rxnLeftSideCompounds, rxnRightSideCompounds, rule, source);
 
                         generatedProducts.Add(gp);
                     }
