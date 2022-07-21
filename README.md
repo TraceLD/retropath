@@ -1,5 +1,7 @@
 # retropath
-RetroPath2.0 algorithm as a standalone application.
+RetroPath2.0 algorithm as a standalone application aimed to be easy to use and install.
+
+RetroPath2.0 algorithm builds a reaction network from a set of source compounds to a set of sink compounds using a set of reaction rules. In retrosynthesis the source is (are) the target compound(s) and sink are the native metabolites. After generating the chemical reactions via retrosynthesis a subset may effectively link a source to a subset of sink compounds. This sub-network is a scope and is output in a dedicated file. (Delépine et al., 2018)
 
 ## Installation instruction for users
 
@@ -49,3 +51,8 @@ The basic usage is `./RetroPath.Cli <rules-file> <source-file> <sink-file> <path
 ## Information for developers
 
 TODO
+
+## References
+
+Delépine, B., Duigou, T., Carbonell, P. and Faulon, J.-L. (2018). RetroPath2.0: A retrosynthesis workflow for metabolic engineers. *Metabolic Engineering*, 45, pp.158–170. doi:10.1016/j.ymben.2017.12.002.
+‌
