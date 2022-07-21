@@ -1,4 +1,4 @@
 ﻿using BenchmarkDotNet.Running;
 using RetroPath.Benchmarks;
 
-BenchmarkRunner.Run<RulesFirerBenchmark>();
+BenchmarkRunner.Run<RuleEngineBenchmark>();

@@ -6,22 +6,19 @@ using RetroPath.RDKit.Abstractions.Reactions;
 
 namespace RetroPath.Core;
 
-/// <summary>
-/// Class that applies all the rules on source compounds.
-/// </summary>
-public class RulesFirer
+public class RuleEngine
 {
     private readonly List<ChemicalCompound> _sources;
     private readonly Dictionary<string, ChemicalCompound> _cofactors;
     private readonly List<IGrouping<int,ReactionRule>> _groupedRules;
 
     /// <summary>
-    /// Constructor that instantiates a new instance of <see cref="RulesFirer"/>.
+    /// Constructor that instantiates a new instance of <see cref="RuleEngine"/>.
     /// </summary>
     /// <param name="sources">Sources over which to fire rules.</param>
     /// <param name="cofactors">Cofactors to use for bi-molecular reactions.</param>
     /// <param name="groupedRules">Rules grouped by diameter.</param>
-    public RulesFirer(List<ChemicalCompound> sources, Dictionary<string, ChemicalCompound> cofactors, List<IGrouping<int,ReactionRule>> groupedRules)
+    public RuleEngine(List<ChemicalCompound> sources, Dictionary<string, ChemicalCompound> cofactors, List<IGrouping<int,ReactionRule>> groupedRules)
     {
         _sources = sources;
         _cofactors = cofactors;
@@ -68,15 +65,15 @@ public class RulesFirer
     private ConcurrentBag<GeneratedProduct> ProcessMono(ReactionRule rule)
     {
         var generatedProducts = new ConcurrentBag<GeneratedProduct>();
-        var smartsLeft = rule.RuleSmarts.Split(">>")[0];
 
-        if (smartsLeft.StartsWith("(") && smartsLeft.EndsWith(")"))
+        if (rule.Left is null)
         {
-            smartsLeft = smartsLeft[1..^1];
+            rule.CalculateLeftFingerprint();
         }
 
-        // ReSharper disable once ConvertToUsingDeclaration justification: prefer explicit scope to show it's not disposed before ForEach and its lambda complete;
-        using (var smartsLeftMol = RWMol.MolFromSmarts(smartsLeft))
+        // justification: prefer explicit scope to show it's not disposed before ForEach and its lambda complete;
+        // ReSharper disable once ConvertToUsingDeclaration
+        using (var smartsLeftMol = RWMol.MolFromSmarts(rule.Left!.Smarts))
         {
             Parallel.ForEach(_sources, source =>
             {

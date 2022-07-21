@@ -7,9 +7,9 @@ using RetroPath.Core.Parsers;
 namespace RetroPath.Benchmarks;
 
 [MemoryDiagnoser]
-public class RulesFirerBenchmark
+public class RuleEngineBenchmark
 {
-    private RulesFirer? _rulesFirer;
+    private RuleEngine? _ruleEngine;
 
     [GlobalSetup]
     public void Setup()
@@ -36,9 +36,9 @@ public class RulesFirerBenchmark
             .OrderByDescending(r => r.Key)
             .ToList();
 
-        _rulesFirer = new RulesFirer(new[] {source}.ToList(), new(), groupedRules);
+        _ruleEngine = new RuleEngine(new[] {source}.ToList(), new(), groupedRules);
     }
     
     [Benchmark]
-    public void FireRules() => _rulesFirer!.FireRules();
+    public void FireRules() => _ruleEngine!.FireRules();
 }

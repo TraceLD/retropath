@@ -56,8 +56,8 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
 
     public void RunIteration()
     {
-        var iRulesFirer = new RulesFirer(_iSourcesNotInSink, new(), _rules);
-        var iRes = iRulesFirer.FireRules();
+        var iRuleEngine = new RuleEngine(_iSourcesNotInSink, new(), _rules);
+        var iRes = iRuleEngine.FireRules();
 
         using var iGpParser = new GeneratedProductsParser(iRes, _iOuter, CurrentIteration);
         var iParsedProducts = iGpParser.Parse();
@@ -78,7 +78,7 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
         {
             _iSourcesNotInSink[_iOuter].Dispose();
         }
-            
+        
         var iBuilder = new GlobalResultsBuilder(iParsedProducts.Left, iParsedProducts.Right, iParsedProducts.TransformationInfos, iNewSourcesInSink, CurrentIteration);
         var iResults = iBuilder.Build().ToList();
 
