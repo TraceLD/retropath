@@ -109,7 +109,7 @@ public class RuleEngine
                 }
                 catch
                 {
-                    // ignored
+                    // ignored -  we don't care about failed reactions;
                 }
             });
         }
