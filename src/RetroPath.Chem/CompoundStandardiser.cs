@@ -86,9 +86,8 @@ public class CompoundStandardiser : IDisposable
             return new(null, true);
         }
         
-        var withHs2 = aromatised.addHs(false, true);
+        using var withHs2 = aromatised.addHs(false, true);
         var withHs2Rw = new RWMol(withHs2);
-        withHs2.Dispose();
 
         return new(withHs2Rw, false);
     }
