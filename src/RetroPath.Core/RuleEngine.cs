@@ -43,7 +43,7 @@ public class RuleEngine
 
                     foreach (var r in monoRes)
                     {
-                        monoRes.Add(r);
+                        results.Add(r);
                     }
                 }
                 else
