@@ -11,10 +11,16 @@ public class RetroPathCommand : ICommand
 {
     private InputConfiguration? _inputConfiguration;
     private OutputConfiguration? _outputConfiguration;
+
+// justification: They must be public init to work properly with CliFx;    
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
     
     #region Parameters
 
     [CommandParameter(0, Name = "rules", Description = "Path to the CSV file defining reactions rules.")]
+    
     public string RulesFilePath { get; init; } = null!;
 
     [CommandParameter(1, Name = "source", Description = "Path to the CSV file defining source compound(s).")]
@@ -52,6 +58,10 @@ public class RetroPathCommand : ICommand
     public string OutputDir { get; init; } = Path.Combine(Directory.GetCurrentDirectory(), "results");
 
     #endregion
+    
+// ReSharper restore UnusedAutoPropertyAccessor.Global
+// ReSharper restore MemberCanBePrivate.Global
+// ReSharper restore AutoPropertyCanBeMadeGetOnly.Global
 
     // cannot be a ctor because the props aren't filled in by CliFx at that point;
     private void Init()
