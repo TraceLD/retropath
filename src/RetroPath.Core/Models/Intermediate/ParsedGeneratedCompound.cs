@@ -1,6 +1,5 @@
 ﻿using GraphMolWrap;
 using RetroPath.Chem;
-using RetroPath.Core.Chem;
 
 namespace RetroPath.Core.Models.Intermediate;
 

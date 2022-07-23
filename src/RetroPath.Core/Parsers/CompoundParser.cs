@@ -5,8 +5,6 @@ using CsvHelper.Configuration.Attributes;
 using GraphMolWrap;
 using RetroPath.Chem;
 using RetroPath.Chem.Utils;
-using RetroPath.Core.Chem;
-using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
 
 namespace RetroPath.Core.Parsers;

@@ -1,7 +1,7 @@
 ﻿using GraphMolWrap;
 using RetroPath.Chem.Fingerprints;
 
-namespace RetroPath.Core.Chem.Reactions;
+namespace RetroPath.Core;
 
 public class ReactionRule
 {

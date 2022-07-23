@@ -1,6 +1,6 @@
 ﻿using GraphMolWrap;
 
-namespace RetroPath.Core;
+namespace RetroPath.Core.Extensions;
 
 internal static class TransformationsLinqExtensions
 {

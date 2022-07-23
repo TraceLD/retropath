@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
-using RetroPath.Core.Chem.Reactions;
-using RetroPath.Core.Models;
+using RetroPath.Core;
 using RetroPath.Core.Models.Configuration;
 using RetroPath.Core.Parsers;
 using Xunit;

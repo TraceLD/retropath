@@ -1,8 +1,6 @@
 ﻿using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration.Attributes;
-using RetroPath.Core.Chem.Reactions;
-using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
 
 namespace RetroPath.Core.Parsers;

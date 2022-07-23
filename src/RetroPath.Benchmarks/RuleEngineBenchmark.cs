@@ -1,6 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
 using RetroPath.Core;
-using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
 using RetroPath.Core.Parsers;
 

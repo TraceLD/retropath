@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using RetroPath.Chem.Extensions;
-using RetroPath.Core;
 using RetroPath.Tests.TestUtils;
 using Xunit;
 

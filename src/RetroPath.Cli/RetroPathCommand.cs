@@ -1,10 +1,7 @@
 ﻿using CliFx;
 using CliFx.Attributes;
 using CliFx.Infrastructure;
-using RetroPath.Core;
-using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
-using RetroPath.Core.Output;
 using Serilog;
 
 namespace RetroPath.Cli;

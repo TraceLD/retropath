@@ -1,6 +1,4 @@
 ﻿using RetroPath.Chem;
-using RetroPath.Core.Chem;
-using RetroPath.Core.Chem.Reactions;
 using RetroPath.Core.Exceptions;
 using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;

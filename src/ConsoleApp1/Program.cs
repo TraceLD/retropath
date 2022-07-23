@@ -1,6 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Text.Json;
 using ConsoleApp1;
@@ -9,11 +8,6 @@ using RetroPath.Chem;
 using RetroPath.Chem.Fingerprints;
 using RetroPath.Chem.Reactions;
 using RetroPath.Chem.Utils;
-using RetroPath.Core;
-using RetroPath.Core.Chem;
-using RetroPath.Core.Chem.Reactions;
-using RetroPath.Core.Extensions;
-using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
 using RetroPath.Core.Models.Intermediate;
 using RetroPath.Core.Parsers;

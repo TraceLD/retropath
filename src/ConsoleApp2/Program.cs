@@ -3,8 +3,6 @@
 using GraphMolWrap;
 using RetroPath.Chem;
 using RetroPath.Chem.Utils;
-using RetroPath.Core.Chem;
-using RetroPath.Core.Models;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()

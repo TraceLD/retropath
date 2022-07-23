@@ -1,9 +1,7 @@
 ﻿using RetroPath.Chem.Utils;
-using RetroPath.Core.Chem;
-using RetroPath.Core.Models;
 using RetroPath.Core.Models.Intermediate;
 
-namespace RetroPath.Core;
+namespace RetroPath.Core.Extensions;
 
 public static class TransformationInfosExtensions
 {
