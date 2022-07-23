@@ -161,7 +161,7 @@ public class GeneratedProductsParser : IDisposable
 
                 foreach (var r in allRules)
                 {
-                    var foldedId = r.GetFoldedRuleId();
+                    var foldedId = r.FoldedRuleId;
 
                     if (!rules.ContainsKey(foldedId))
                     {

@@ -2,7 +2,6 @@
 using GraphMolWrap;
 using RetroPath.Core.Chem.Fingerprints;
 using RetroPath.Core.Chem.Reactions;
-using RetroPath.Core.Extensions;
 using RetroPath.Core.Models;
 
 namespace RetroPath.Core;

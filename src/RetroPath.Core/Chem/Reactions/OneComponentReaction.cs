@@ -1,6 +1,6 @@
 ﻿using GraphMolWrap;
 
-namespace RetroPath.RDKit.Abstractions.Reactions;
+namespace RetroPath.Core.Chem.Reactions;
 
 /// <summary>
 /// Represents a one component chemical reaction.

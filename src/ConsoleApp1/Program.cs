@@ -6,12 +6,13 @@ using System.Text.Json;
 using ConsoleApp1;
 using GraphMolWrap;
 using RetroPath.Core;
+using RetroPath.Core.Chem.Fingerprints;
+using RetroPath.Core.Chem.Reactions;
 using RetroPath.Core.Extensions;
 using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
 using RetroPath.Core.Parsers;
 using RetroPath.RDKit.Abstractions;
-using RetroPath.RDKit.Abstractions.Reactions;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -73,18 +74,19 @@ foreach (var rulesGrouping in rules)
 {
     Parallel.ForEach(rulesGrouping, rule =>
     {
-        if (!rule.IsMono())
+        if (!rule.IsMono)
         {
             throw new NotImplementedException();
         }
         
-        using var smartsLeftMol = RWMol.MolFromSmarts(rule.Left!.Smarts);
+        using var smartsLeftMol = RWMol.MolFromSmarts(rule.LeftSmarts);
 
         Parallel.ForEach(sources, source =>
         {
-            var shouldDeepCheck = rule.Left!.Fingerprint.Cardinality <= source.Fingerprint!.Cardinality &&
-                                  rule.Left!.Fingerprint.FingerprintArr.NewAnd(source.Fingerprint!.FingerprintArr)
-                                      .FastGetCardinality() == rule.Left!.Fingerprint.Cardinality;
+            var sourceFingerprint = source.GetFingerprint();
+            var ruleLeftFingerprint = rule.GetLeftFingerprint();
+
+            var shouldDeepCheck = FingerprintOperations.IsPotentialMatch(sourceFingerprint, ruleLeftFingerprint);
 
             if (shouldDeepCheck)
             {

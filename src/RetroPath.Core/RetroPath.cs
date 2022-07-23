@@ -97,7 +97,7 @@ public class RetroPath : IDisposable
         {
             Log.Information("Calculating rule fingerprints");
             
-            Parallel.ForEach(rawRules, rule => { rule.CalculateLeftFingerprint(); });
+            Parallel.ForEach(rawRules, rule => { rule.CalculateLeftSideFingerprint(); });
             
             Log.Information("Calculated rule fingerprints");
         }
