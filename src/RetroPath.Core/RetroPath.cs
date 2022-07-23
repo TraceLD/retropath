@@ -1,7 +1,10 @@
-﻿using RetroPath.Core.Exceptions;
+﻿using RetroPath.Chem;
+using RetroPath.Core.Chem;
+using RetroPath.Core.Chem.Reactions;
+using RetroPath.Core.Exceptions;
 using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
-using RetroPath.Core.Models.Csv;
+using RetroPath.Core.Models.Dto;
 using RetroPath.Core.Output;
 using RetroPath.Core.Parsers;
 using Serilog;
@@ -82,7 +85,7 @@ public class RetroPath : IDisposable
         }
 
         var csvGlobalResults = _globalResults.Select(x => x.GetCsvRepresentation());
-        var globalResultsWriter = new CsvOutputWriter<CsvGlobalResult>(_outputConfiguration.OutputDir, "results.csv", csvGlobalResults);
+        var globalResultsWriter = new CsvOutputWriter<GlobalResultDto>(_outputConfiguration.OutputDir, "results.csv", csvGlobalResults);
 
         await globalResultsWriter.WriteAsync();
 

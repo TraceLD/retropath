@@ -1,10 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using GraphMolWrap;
+using RetroPath.Chem;
+using RetroPath.Chem.Utils;
 using RetroPath.Core.Chem;
-using RetroPath.Core.Chem.InchiUtils;
 using RetroPath.Core.Models;
-using RetroPath.RDKit.Abstractions;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()

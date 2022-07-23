@@ -1,5 +1,8 @@
-﻿using RetroPath.Core.Chem;
+﻿using RetroPath.Chem;
+using RetroPath.Chem.Utils;
+using RetroPath.Core.Chem;
 using RetroPath.Core.Models;
+using RetroPath.Core.Models.Intermediate;
 
 namespace RetroPath.Core;
 

@@ -3,8 +3,9 @@ using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 using GraphMolWrap;
+using RetroPath.Chem;
+using RetroPath.Chem.Utils;
 using RetroPath.Core.Chem;
-using RetroPath.Core.Chem.InchiUtils;
 using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
 

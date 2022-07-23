@@ -1,8 +1,12 @@
 ﻿using System.Collections.Concurrent;
 using GraphMolWrap;
-using RetroPath.Core.Chem.Fingerprints;
+using RetroPath.Chem;
+using RetroPath.Chem.Fingerprints;
+using RetroPath.Chem.Reactions;
+using RetroPath.Core.Chem;
 using RetroPath.Core.Chem.Reactions;
 using RetroPath.Core.Models;
+using RetroPath.Core.Models.Intermediate;
 
 namespace RetroPath.Core;
 

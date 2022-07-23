@@ -5,16 +5,18 @@ using System.Collections.Concurrent;
 using System.Text.Json;
 using ConsoleApp1;
 using GraphMolWrap;
+using RetroPath.Chem;
+using RetroPath.Chem.Fingerprints;
+using RetroPath.Chem.Reactions;
+using RetroPath.Chem.Utils;
 using RetroPath.Core;
 using RetroPath.Core.Chem;
-using RetroPath.Core.Chem.Fingerprints;
-using RetroPath.Core.Chem.InchiUtils;
 using RetroPath.Core.Chem.Reactions;
 using RetroPath.Core.Extensions;
 using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
+using RetroPath.Core.Models.Intermediate;
 using RetroPath.Core.Parsers;
-using RetroPath.RDKit.Abstractions;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()

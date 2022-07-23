@@ -1,4 +1,7 @@
-﻿using RetroPath.Core.Models;
+﻿using RetroPath.Chem;
+using RetroPath.Core.Chem;
+using RetroPath.Core.Chem.Reactions;
+using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
 using Serilog;
 

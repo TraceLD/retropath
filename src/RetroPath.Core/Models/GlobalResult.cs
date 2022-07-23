@@ -1,5 +1,5 @@
 ﻿using RetroPath.Core.Extensions;
-using RetroPath.Core.Models.Csv;
+using RetroPath.Core.Models.Dto;
 
 namespace RetroPath.Core.Models;
 
@@ -20,7 +20,7 @@ public record GlobalResult(
     int Iteration
 )
 {
-    public CsvGlobalResult GetCsvRepresentation()
+    public GlobalResultDto GetCsvRepresentation()
         => new()
         {
             InitialSource = InitialSource.ToCsvString(),
