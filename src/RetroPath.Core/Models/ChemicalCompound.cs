@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using GraphMolWrap;
+using RetroPath.Core.Chem.Fingerprints;
 using RetroPath.Core.Extensions;
 
 namespace RetroPath.Core.Models;
 
 public class ChemicalCompound : IDisposable
 {
+    private Fingerprint? _cachedFingerprint;
+    
     public HashSet<string> Names { get; }
     public string Inchi { get; }
     public string Smiles { get; }
     public RWMol? Mol { get; set; }
     public bool Initial { get; set; }
-    public Fingerprint? Fingerprint { get; private set; }
     
+    public bool HasCachedFingerprint => _cachedFingerprint is not null;
+
     public ChemicalCompound(
         HashSet<string> names,
         string inchi,
@@ -21,6 +25,8 @@ public class ChemicalCompound : IDisposable
         bool initial
     )
     {
+        _cachedFingerprint = default;
+        
         Names = names;
         Inchi = inchi;
         Smiles = smiles;
@@ -28,23 +34,32 @@ public class ChemicalCompound : IDisposable
         Initial = initial;
     }
     
-    public void CalculateFingerprint()
+    /// <summary>
+    /// Explicitly calculates a <see cref="Fingerprint"/> for this chemical compound and caches it.
+    ///
+    /// If a fingerprint has already been calculated and cached this will re-calculate and override it.
+    /// </summary>
+    /// <returns>The calculated <see cref="Fingerprint"/>.</returns>
+    public Fingerprint CalculateFingerprint()
     {
-        if (Fingerprint is not null)
+        if (Mol is null)
         {
-            return;
+            throw new Exception(
+                "Cannot calculate fingerprints for ChemicalCompounds without an associated RDKit molecule.");
         }
         
-        BitArray arrFp;
-        using (var fp = RDKFuncs.PatternFingerprintMol(Mol, FingerprintSettings.PreProcessingPatternFingerprintSize))
-        {
-            arrFp = fp.ToBclBitArray();
-        }
-        
-        var cardinality = arrFp.FastGetCardinality();
+        _cachedFingerprint = Fingerprint.CalcPatternFingerprintForMol(Mol);
 
-        Fingerprint = new(arrFp, cardinality);
+        return _cachedFingerprint;
     }
-    
-    public void Dispose() => Mol?.Dispose();
+
+    /// <summary>
+    /// Retrieves the <see cref="Fingerprint"/> from cache if present, calculates, caches the result and returns it otherwise.
+    /// </summary>
+    /// <returns>The cached calculated <see cref="Fingerprint"/> if present, newly calculated <see cref="Fingerprint"/> otherwise.</returns>
+    public Fingerprint GetFingerprint()
+        => HasCachedFingerprint ? _cachedFingerprint! : CalculateFingerprint();
+
+    public void Dispose()
+        => Mol?.Dispose();
 }

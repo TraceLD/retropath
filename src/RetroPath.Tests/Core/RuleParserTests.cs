@@ -30,19 +30,17 @@ public class RuleParserTests : IClassFixture<BigRulesFixture>
     [Fact]
     public void ShouldPopulateAllFieldsCorrectly()
     {
-        var expected = new ReactionRule
-        {
-            RuleIds = new() {"RR-02-fbdda75e23f518b6-02-F"},
-            RuleSmarts =
-                "([#6&v4:1](=[#8&v2:2])(-[#6&v4:3](-[#6&v4:4])(-[#1&v1:5])-[#1&v1:6])-[#1&v1:7])>>([#6&v4:1](-[#8&v2:2]-[#1&v1:6])(-[#6&v4:3](-[#6&v4:4])(-[#8&v2]-[#1&v1])-[#1&v1:5])(-[#1&v1:7])-[#1&v1])",
-            Diameter = 2,
-            EcNumber = new() {"NOEC"},
-            ReactionOrder = 1,
-            Score = 4.2956110769238762
-        };
+        var expected = new ReactionRule(
+            new() {"RR-02-fbdda75e23f518b6-02-F"},
+            "([#6&v4:1](=[#8&v2:2])(-[#6&v4:3](-[#6&v4:4])(-[#1&v1:5])-[#1&v1:6])-[#1&v1:7])>>([#6&v4:1](-[#8&v2:2]-[#1&v1:6])(-[#6&v4:3](-[#6&v4:4])(-[#8&v2]-[#1&v1])-[#1&v1:5])(-[#1&v1:7])-[#1&v1])",
+            new() {"NOEC"},
+            2,
+            1,
+            4.2956110769238762
+        );
 
         var actual = _fixture.Rules
-            .First(x => x.GetFoldedRuleId().Equals("[RR-02-fbdda75e23f518b6-02-F]@2"));
+            .First(x => x.FoldedRuleId.Equals("[RR-02-fbdda75e23f518b6-02-F]@2"));
 
         expected.Should().BeEquivalentTo(actual);
     }

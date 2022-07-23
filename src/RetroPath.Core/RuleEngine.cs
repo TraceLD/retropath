@@ -1,8 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using GraphMolWrap;
+using RetroPath.Core.Chem.Fingerprints;
+using RetroPath.Core.Chem.Reactions;
 using RetroPath.Core.Extensions;
 using RetroPath.Core.Models;
-using RetroPath.RDKit.Abstractions.Reactions;
 
 namespace RetroPath.Core;
 
@@ -36,7 +37,7 @@ public class RuleEngine
         {
             Parallel.ForEach(rulesGrouping, rule =>
             {
-                if (rule.IsMono())
+                if (rule.IsMono)
                 {
                     var monoRes = ProcessMono(rule);
 
@@ -69,33 +70,16 @@ public class RuleEngine
     {
         var generatedProducts = new ConcurrentBag<GeneratedProduct>();
 
-        if (rule.Left is null)
-        {
-            rule.CalculateLeftFingerprint();
-        }
-
         // justification: prefer explicit scope to show it's not disposed before ForEach and its lambda complete;
         // ReSharper disable once ConvertToUsingDeclaration
-        using (var smartsLeftMol = RWMol.MolFromSmarts(rule.Left!.Smarts))
+        using (var smartsLeftMol = RWMol.MolFromSmarts(rule.LeftSmarts))
         {
             Parallel.ForEach(_sources, source =>
             {
-                if (source.Fingerprint is null)
-                {
-                    source.CalculateFingerprint();
-                }
-                
-                // We look for a potential match using fingerprints as that's faster than running a deep check on every rule/source combination.
-                // The performance improvement is particularly big if there are many rules, which will be most of the time
-                // as retropath is usually ran on databases of 200k+ reaction rules.
-                //
-                // A potential SSS(A,B) match is found if OBC(FP(A)) <= OBC(FP(B)) AND OBC(FP(A) & FB(B)) == OBC(FP(A)),
-                // where A is the rule and B is the source molecule;
-                //
-                // Based on RDKit KNIME implementation of substructure filter: https://github.com/rdkit/knime-rdkit/blob/5fe11f9c021ca9b21d36d6231db62d943eb50eaa/org.rdkit.knime.nodes/src/org/rdkit/knime/nodes/moleculesubstructfilter/RDKitMoleculeSubstructFilterNodeModel.java#L484
-                var shouldDeepCheck = rule.Left!.Fingerprint.Cardinality <= source.Fingerprint!.Cardinality &&
-                                      rule.Left!.Fingerprint.FingerprintArr.NewAnd(source.Fingerprint!.FingerprintArr)
-                                          .FastGetCardinality() == rule.Left!.Fingerprint.Cardinality;
+                var sourceFingerprint = source.GetFingerprint();
+                var ruleLeftFingerprint = rule.GetLeftFingerprint();
+
+                var shouldDeepCheck = FingerprintOperations.IsPotentialMatch(sourceFingerprint, ruleLeftFingerprint);
 
                 // justification for null suppression: it's a source compound so Mol will always be populated;
                 // ReSharper disable once AccessToDisposedClosure justification: the lambda always completes before smartsLeftMol is disposed;

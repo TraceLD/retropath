@@ -63,15 +63,10 @@ public sealed class RulesParser : Parser<List<ReactionRule>>
             }
             else
             {
-                groupedRules.Add(key, new ReactionRule
-                {
-                    RuleIds = new HashSet<string> {r.RuleId},
-                    RuleSmarts = r.RuleSmarts,
-                    Diameter = r.Diameter.Value,
-                    ReactionOrder = r.ReactionOrder.Value,
-                    Score = r.Score.Value,
-                    EcNumber = r.SplitEc
-                });
+                var newRule = new ReactionRule(new HashSet<string> {r.RuleId}, r.RuleSmarts, r.SplitEc,
+                    r.Diameter.Value, r.ReactionOrder.Value, r.Score.Value);
+                
+                groupedRules.Add(key, newRule);
             }
         }
 
