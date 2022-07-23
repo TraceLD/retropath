@@ -6,7 +6,7 @@ public class Aromatiser
 {
     public RWMol? Aromatise(RWMol mol, bool rescueKek)
     {
-        var temp = new RWMol(mol);
+        var temp = new RWMol(mol); // TODO: I'm like 50% sure there is a memory leak here;
         
         if (RDKFuncs.setAromaticity(temp) != 0)
         {
