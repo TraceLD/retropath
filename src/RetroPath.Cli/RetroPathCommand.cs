@@ -110,10 +110,16 @@ public class RetroPathCommand : ICommand
     Max rule diameter: {MaxRuleDiameter}
     Pathway length: {PathwayLength}
     Max structures: {MaxStructures}",
-            _inputConfiguration!.RulesFilePath, _inputConfiguration.SinkFilePath, _inputConfiguration.SourceFilePath,
-            _inputConfiguration.SourceMw, _inputConfiguration.CofactorsFilePath ?? "None",
-            _inputConfiguration.CofactorMw, _inputConfiguration.MinDiameter, _inputConfiguration.MaxDiameter,
-            _inputConfiguration.PathwayLength, _inputConfiguration.MaxStructures);
+            _inputConfiguration!.RulesFilePath,
+            _inputConfiguration.SinkFilePath,
+            _inputConfiguration.SourceFilePath,
+            _inputConfiguration.SourceMw,
+            _inputConfiguration.CofactorsFilePath ?? "None",
+            _inputConfiguration.CofactorMw,
+            _inputConfiguration.MinDiameter,
+            _inputConfiguration.MaxDiameter,
+            _inputConfiguration.PathwayLength,
+            _inputConfiguration.MaxStructures);
 
     }
     
