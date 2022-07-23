@@ -3,7 +3,6 @@ using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
-using Serilog;
 
 namespace RetroPath.Core.Parsers;
 

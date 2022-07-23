@@ -9,7 +9,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\RetroPath.Core\RetroPath.Core.csproj" />
-      <ProjectReference Include="..\RetroPath.RDKit.Abstractions\RetroPath.RDKit.Abstractions.csproj" />
     </ItemGroup>
 
     <ItemGroup>

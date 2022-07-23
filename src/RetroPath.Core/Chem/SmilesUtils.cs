@@ -1,7 +1,7 @@
 ﻿using GraphMolWrap;
 using RetroPath.RDKit.Abstractions.Exceptions;
 
-namespace RetroPath.RDKit.Abstractions;
+namespace RetroPath.Core.Chem;
 
 /// <summary>
 /// Useful utility methods for working with SMILES strings.

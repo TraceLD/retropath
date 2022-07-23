@@ -1,6 +1,6 @@
 ﻿using GraphMolWrap;
 
-namespace RetroPath.RDKit.Abstractions;
+namespace RetroPath.Core.Chem;
 
 public sealed class SaltStripper : IDisposable
 {

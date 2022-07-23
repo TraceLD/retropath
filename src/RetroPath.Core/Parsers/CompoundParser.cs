@@ -3,9 +3,10 @@ using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 using GraphMolWrap;
+using RetroPath.Core.Chem;
+using RetroPath.Core.Chem.InchiUtils;
 using RetroPath.Core.Models;
 using RetroPath.Core.Models.Configuration;
-using RetroPath.RDKit.Abstractions;
 
 namespace RetroPath.Core.Parsers;
 

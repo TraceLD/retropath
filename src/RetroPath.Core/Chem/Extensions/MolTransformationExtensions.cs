@@ -1,9 +1,9 @@
 ﻿using GraphMolWrap;
 using Serilog;
 
-namespace RetroPath.RDKit.Abstractions;
+namespace RetroPath.Core.Chem.Extensions;
 
-public static class MolExtensions
+public static class MolTransformationExtensions
 {
     public static RWMol? Transform(this RWMol reactant, IEnumerable<string> smartsList, int maxCycles)
     {

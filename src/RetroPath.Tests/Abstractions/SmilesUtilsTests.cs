@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using FluentAssertions;
+using RetroPath.Core.Chem;
 using RetroPath.RDKit.Abstractions;
 using Xunit;
 

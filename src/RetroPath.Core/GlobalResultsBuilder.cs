@@ -1,5 +1,5 @@
-﻿using RetroPath.Core.Models;
-using RetroPath.RDKit.Abstractions;
+﻿using RetroPath.Core.Chem;
+using RetroPath.Core.Models;
 
 namespace RetroPath.Core;
 

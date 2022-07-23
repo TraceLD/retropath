@@ -1,6 +1,6 @@
 ﻿using GraphMolWrap;
 
-namespace RetroPath.RDKit.Abstractions;
+namespace RetroPath.Core.Chem.InchiUtils;
 
 public static class LiteInchi
 {

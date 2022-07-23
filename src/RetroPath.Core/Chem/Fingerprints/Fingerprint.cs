@@ -23,7 +23,7 @@ public class Fingerprint
     public static Fingerprint CalcPatternFingerprintForMol(RWMol mol)
     {
         BitArray bits;
-        using (var fp = RDKFuncs.PatternFingerprintMol(mol, FingerprintSettings.PreProcessingPatternFingerprintSize))
+        using (var fp = RDKFuncs.PatternFingerprintMol(mol, FingerprintDefaults.PreProcessingPatternFingerprintSize))
         {
             bits = fp.ToBclBitArray();
         }

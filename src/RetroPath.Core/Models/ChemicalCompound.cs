@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using GraphMolWrap;
+﻿using GraphMolWrap;
 using RetroPath.Core.Chem.Fingerprints;
-using RetroPath.Core.Extensions;
 
 namespace RetroPath.Core.Models;
 

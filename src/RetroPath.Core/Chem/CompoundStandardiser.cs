@@ -1,10 +1,12 @@
 ﻿using GraphMolWrap;
+using RetroPath.Core.Chem.Extensions;
+using RetroPath.Core.Chem.InchiUtils;
 
-namespace RetroPath.RDKit.Abstractions;
+namespace RetroPath.Core.Chem;
 
 public class CompoundStandardiser : IDisposable
 {
-    public record StandardiseResult(
+    public record StandardiseResult( // TODO: This should REALLY be a Result<T>;
         RWMol? Mol,
         bool StandardiseFailed
     ) : IDisposable

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Concurrent;
 using GraphMolWrap;
+using RetroPath.Core.Chem;
+using RetroPath.Core.Chem.InchiUtils;
 using RetroPath.Core.Models;
-using RetroPath.RDKit.Abstractions;
 
 namespace RetroPath.Core;
 
