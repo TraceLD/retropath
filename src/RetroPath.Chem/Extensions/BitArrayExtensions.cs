@@ -39,7 +39,7 @@ public static class BitArrayExtensions
 
         for (var i = 0; i < ba1.Count; i++)
         {
-            newBa[i] = ba1[i] && ba2[i];
+            newBa[i] = ba1[i] & ba2[i];
         }
 
         return newBa;
