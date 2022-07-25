@@ -82,7 +82,7 @@ public class RetroPath : IDisposable
             throw new ResultsNotGeneratedException("Results need to be generated first.");
         }
 
-        var csvGlobalResults = _globalResults.Select(x => x.GetCsvRepresentation());
+        var csvGlobalResults = _globalResults.Select(x => x.ToCsvDto());
         var globalResultsWriter = new CsvOutputWriter<GlobalResultDto>(_outputConfiguration.OutputDir, "results.csv", csvGlobalResults);
 
         await globalResultsWriter.WriteAsync();

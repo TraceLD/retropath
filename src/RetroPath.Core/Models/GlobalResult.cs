@@ -20,7 +20,7 @@ public record GlobalResult(
     int Iteration
 )
 {
-    public GlobalResultDto GetCsvRepresentation()
+    public GlobalResultDto ToCsvDto()
         => new()
         {
             InitialSource = InitialSource.ToCsvString(),
@@ -38,4 +38,22 @@ public record GlobalResult(
             Score = Score,
             Iteration = Iteration
         };
+
+    public static GlobalResult FromCsvDto(GlobalResultDto dto)
+        => new(
+            dto.InitialSource.Substring(1, dto.InitialSource.Length-2).Split(",").ToHashSet(),
+            dto.TransformationId,
+            dto.ReactionSmiles,
+            dto.SubstrateSmiles,
+            dto.SubstrateInchi,
+            dto.ProductSmiles,
+            dto.ProductInchi,
+            dto.InSink == 1,
+            dto.SinkName.Substring(1, dto.SinkName.Length-2).Split(",").ToHashSet(),
+            dto.Diameter,
+            dto.RuleId.Substring(1, dto.RuleId.Length-2).Split(",").ToHashSet(),
+            dto.EcNumber.Substring(1, dto.EcNumber.Length-2).Split(",").ToHashSet(),
+            dto.Score,
+            dto.Iteration
+        );
 }
