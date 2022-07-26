@@ -46,7 +46,7 @@ Bundled with the program is a simple pinocembrin example data to verify the inst
 
 2. Run the following command via the terminal: `./RetroPath.Cli.exe "./example_data/rules.csv" "./example_data/source.csv" "./example_data/sink.csv" 4`.
 
-#### Linux and macOS
+#### Linux
 
 1. Enter the unzipped folder and open the terminal inside it (you can do this by opening the terminal and `cd`ing into the folder).
 
