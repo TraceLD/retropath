@@ -25,4 +25,8 @@
       <ProjectReference Include="..\RetroPath.Core\RetroPath.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="data" />
+    </ItemGroup>
+
 </Project>
