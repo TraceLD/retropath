@@ -14,17 +14,17 @@ The algorithm builds a reaction network from a set of source compounds to a set 
 
 1. Open [GitHub Releases](https://github.com/TraceLD/retropath/releases) in a new tab (so you can easily go back to this document and reference further instructions) and download the distribution for your operating system by expanding the Assets list and downloading the file for your operating system.
 
-### Windows
+#### Windows
 
 2. Unzip the downloaded file by right clicking on the file and selecting "Extract All" and following the extraction wizard. If you get an error due to permissions/security exit the wizard, right click on the file, click "Properties" and towards the bottom right select "Unblock". You can see a visual example how to do it [here](https://winbuzzer.com/wp-content/uploads/2021/12/01.3-Windows-11-File-Explorer-Right-click-on-File-Properties-General-Unblock-Accept.jpg).
 
-### Linux
+#### Linux
 
 2. Open the terminal, `cd` into the folder where the downloaded zip file is and type `unzip file_name.zip` replacing `file_name` with the name of the downloaded file.
 
 3. Give RetroPath the permission to execute by `cd`ing into the unzipped folder in the terminal and running `chmod +x ./RetroPath.Cli`.
 
-### macOS (Apple Silicon Macs only)
+#### macOS (Apple Silicon Macs only)
 
 2. Unzip the downloaded file by double clicking the zip file.
 
