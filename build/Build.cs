@@ -70,12 +70,23 @@ class Build : NukeBuild
         .After(Restore)
         .Executes(() =>
         {
-            PublishCliForPlatform(CLI_MACOS_ARM64);
+            DotNetTasks.DotNetPublish(_ => _
+                .SetConfiguration(Configuration.Release)
+                .SetProject(Solution.GetProject(RetroPathCliProject))
+                .SetRuntime(CLI_MACOS_ARM64.Rid)
+                .SetOutput(CLI_MACOS_ARM64.TargetDir)
+                .SetProperties(new Dictionary<string, object>
+                {
+                    {"DebugType", "None"},
+                    {"DebugSymbols", false}
+                })
+                .DisableSelfContained());
 
             var macOsRdk = RootDirectory / "vendor" / "macos_runtimes" / "rdkit-rdk-wrapper" / "RDKFuncs.so";
             var macOsRdkDestination = CLI_MACOS_ARM64.TargetDir / "runtimes" / "macos-arm64" / "native" / "RDKFuncs.so";
             
             CopyFile(macOsRdk, macOsRdkDestination);
+            CopyExampleDataToTargetDir(CLI_MACOS_ARM64.TargetDir);
         });
     
     void PublishCliForPlatform(Platform platform)
@@ -92,6 +103,11 @@ class Build : NukeBuild
             })
             .EnableSelfContained());
         
-        CopyDirectoryRecursively(EXAMPLE_DATA_DIR, platform.TargetDir / "example_data");
+        CopyExampleDataToTargetDir(platform.TargetDir);
+    }
+
+    void CopyExampleDataToTargetDir(AbsolutePath targetDir)
+    {
+        CopyDirectoryRecursively(EXAMPLE_DATA_DIR, targetDir / "example_data");
     }
 }
