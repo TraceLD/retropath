@@ -28,13 +28,13 @@ The algorithm builds a reaction network from a set of source compounds to a set 
 
 2. Unzip the downloaded file by double clicking the zip file.
 
-3. Because macOS requires all pre-compiled binaries to be signed using an Apple Developer account which costs £100/year, to avoid that charge the RetroPath binaries for macOS are distributed as framework-dependant as the .NET runtime is already signed by Microsoft. This means that you will have to install .NET 6 Runtime.
+3. Go to the download page for .NET 6 by opening [this link](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) in a new tab [1].
 
-4. Go to the download page for .NET 6 by opening [this link](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) in a new tab.
+4. On the right side find the position that says ".NET Runtime", then find macOS in the table in the Installers column and click on "Arm64" to download the installer. This will download the ".pkg" installer.
 
-5. On the right side find the position that says ".NET Runtime", then find macOS in the table in the Installers column and click on "Arm64" to download the installer. This will download the ".pkg" installer.
+5. Open the downloaded installer and follow the instructions to complete the installation of .NET 6 Runtime.
 
-6. Open the downloaded installer and follow the instructions to complete the installation of .NET 6 Runtime.
+<sup>[1] - Because macOS requires all pre-compiled binaries to be signed using an Apple Developer account which costs £100/year, to avoid that charge the RetroPath binaries for macOS are distributed as framework-dependant as the .NET runtime is already signed by Microsoft. This means that you will have to install .NET 6 Runtime.</sup>
 
 ### Running the example
 
