@@ -60,6 +60,8 @@ Bundled with the program is a simple pinocembrin example data to verify the inst
 
 2. Run the following command via the terminal: `dotnet RetroPath.Cli.dll "./example_data/rules.csv" "./example_data/source.csv" "./example_data/sink.csv" 4`.
 
+**IMPORTANT:** If while running the program you get a pop-up saying "RDKFuncs.so can't be opened because Apple can't check it for malicious software" click "Ok". This will make the program quit with an error. This file is the library for the RDKit cheminformatics suite and can safely be opened, however it is not signed due to the aforementioned £100/year account requirement. To allow macOS to run it, immediately after the program quits with an error open System Preferences -> Security & Privacy. Towards the bottom there should be "RDKFuncs.so was blocked from use because it is not from an identified developer". Click "Allow anyway". Now run the command from step 2 again and when the pop up pops up again there will be a new option "Open". Click it. This will allow the program to execute correctly. 
+
 ### Viewing the results
 
 To view the results see the `results` folder that has been generated after running the example. Inside the folder there should be a `results.csv` file with the generated global results. Open it. Inside the file there should be 6 results (not counting the header with the column names) with Initial source being `[pinocembrin]` for each. The last column should be `Iteration`. If you have got such results then they are correct.
