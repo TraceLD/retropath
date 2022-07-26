@@ -62,7 +62,7 @@ Bundled with the program is a simple pinocembrin example data to verify the inst
 
 ### Viewing the results
 
-To view the results see the `results` folder that has been generated after running the example.
+To view the results see the `results` folder that has been generated after running the example. Inside the folder there should be a `results.csv` file with the generated global results. Open it. Inside the file there should be 6 results (not counting the header with the column names) with Initial source being `[pinocembrin]` for each. The last column should be `Iteration`. If you have got such results then they are correct.
 
 ### Full usage
 
