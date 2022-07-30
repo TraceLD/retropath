@@ -64,8 +64,7 @@ public class PathwayLoop : IRetroPathLoop<List<GlobalResult>>
 
         var iUpdater = new SourceSinkUpdater(_iSourcesAndSinks, iParsedProducts.Right, iParsedProducts.TransformationInfos, _inputConfiguration);
         var (iNewSourcesInSink, iNewSink, iNewSources) = iUpdater.Update();
-
-        // TODO: this needs extensive testing;
+        
         // dispose sources that will no longer be needed;
         if (CurrentIteration != 0)
         {
