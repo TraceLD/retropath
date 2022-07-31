@@ -11,7 +11,7 @@ using AllCompounds = List<Compound>;
 
 public class ScopeEngine
 {
-    private struct FireableTransformation
+    internal class FireableTransformation
     {
         public bool Fireable { get; set; }
         public bool Visited { get; set; }
@@ -19,11 +19,11 @@ public class ScopeEngine
 
     private class ReachableCompound
     {
-        public string? Source { get; set; }
+        public bool Source { get; set; }
         
         public bool Reachable { get; set; }
         public int Sink { get; set; } // TODO: should this be a bool?
-        public int FirstIteration { get; set; } // TODO: should this be a bool?
+        public int FirstIteration { get; set; }
     }
 
     private readonly List<SourceInformation> _sourceInfos;
@@ -70,11 +70,143 @@ public class ScopeEngine
 
     private void GetTransformationsFireableFromSource(SourceInformation sInfo)
     {
-        var reachableCompounds = new Dictionary<string, ReachableCompound>(); // key == CID;
-        
-        // get all transformations fireable from source;
         // key == TrID;
-        Dictionary<string, FireableTransformation> fireableTransformations = _data.Reactions 
+        var fireableTransformations = GetAllFireableTransformations(sInfo);
+        
+        // key == CID;
+        var reachableCompounds = GetAllReachableCompounds(fireableTransformations, sInfo);
+
+        // remove transformations with source in right side;
+        {
+            var frTrsWithRightSide = fireableTransformations
+                .Join(
+                    _data.RightLookup,
+                    f => f.Key,
+                    r => r.TransformationId,
+                    (f, r) => (FrTr: f, RightCpd: r)
+                )
+                .Where(x => reachableCompounds.ContainsKey(x.RightCpd.CID) && reachableCompounds[x.RightCpd.CID].Source);
+
+            foreach (var (fireableTransformation, _) in frTrsWithRightSide)
+            {
+                fireableTransformation.Value.Fireable = false;
+            }
+        }
+        
+        RefreshFirstIterationValues(reachableCompounds, fireableTransformations);
+        
+        
+    }
+    
+    private void RefreshFirstIterationValues(
+        Dictionary<string, ReachableCompound> reachableCompounds,
+        Dictionary<string, FireableTransformation> fireableTransformations
+    )
+    {
+        foreach (var (_, r) in reachableCompounds)
+        {
+            if (r.Source)
+            {
+                r.FirstIteration = -1;
+            }
+            else
+            {
+                r.FirstIteration = -2;
+            }
+        }
+
+        foreach (var t in fireableTransformations)
+        {
+            t.Value.Visited = false;
+        }
+
+        var iterCounter = -1;
+
+        while (true)
+        {
+            var nbToVisit = fireableTransformations.GetTransformationsNotVisistedCount();
+
+            if (nbToVisit > 0)
+            {
+                var toProcess = new HashSet<string>();
+
+                foreach (var reachableCompound in reachableCompounds)
+                {
+                    if (reachableCompound.Value.FirstIteration != iterCounter)
+                    {
+                        continue;
+                    }
+                    
+                    var left = _data.LeftLookup.FirstOrDefault(x => x.CID == reachableCompound.Key);
+                    if (left is null)
+                    {
+                        continue;
+                    }
+
+                    var isInFireable = fireableTransformations.TryGetValue(left.TransformationId, out var frTr);
+                    if (!isInFireable)
+                    {
+                        continue;
+                    }
+
+                    if (frTr!.Fireable && !frTr.Visited)
+                    {
+                        toProcess.Add(left.TransformationId);
+                    }
+                }
+                
+                foreach (var reachableCompound in reachableCompounds)
+                {
+                    if (reachableCompound.Value.FirstIteration != -2)
+                    {
+                        continue;
+                    }
+                    
+                    var right = _data.RightLookup.FirstOrDefault(x => x.CID == reachableCompound.Key);
+                    if (right is null)
+                    {
+                        continue;
+                    }
+                
+                    var isInFireable = fireableTransformations.TryGetValue(right.TransformationId, out var frTr);
+                    if (!isInFireable)
+                    {
+                        continue;
+                    }
+
+                    if (!toProcess.Contains(right.TransformationId))
+                    {
+                        continue;
+                    }
+
+                    reachableCompound.Value.FirstIteration = iterCounter + 1;
+                }
+
+                foreach (var fr in fireableTransformations
+                             .Where(fr => toProcess.Contains(fr.Key)))
+                {
+                    fr.Value.Visited = true;
+                }
+            }
+
+            var newNbToVisit = fireableTransformations.GetTransformationsNotVisistedCount();
+            
+            iterCounter++;
+
+            if (nbToVisit == newNbToVisit)
+            {
+                break;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gets all fireable transformations from source.
+    /// </summary>
+    /// <param name="sInfo">Source information.</param>
+    /// <returns>All fireable transformations from source. Key == Transformation ID.</returns>
+    private Dictionary<string, FireableTransformation> GetAllFireableTransformations(SourceInformation sInfo)
+        => _data.Reactions
             .Where(r => r.Fireable)
             .Join(
                 _data.SourcesLookup.Where(s => s.SourceName == sInfo.Name),
@@ -83,9 +215,13 @@ public class ScopeEngine
                 (rxn, _) => rxn.TransformationId
             )
             .Distinct()
-            .ToDictionary(k => k, _ => new FireableTransformation { Fireable = true, Visited = false});
+            .ToDictionary(k => k, _ => new FireableTransformation {Fireable = true, Visited = false});
+
+    private Dictionary<string, ReachableCompound> GetAllReachableCompounds(IReadOnlyDictionary<string, FireableTransformation> fireableTransformations, SourceInformation sInfo)
+    {
+        // key == CID;
+        var res = new Dictionary<string, ReachableCompound>();
         
-        // get all reachable compounds;
         var reachable = _data.LeftLookup
             .Where(x => fireableTransformations.ContainsKey(x.TransformationId))
             .Select(x => x.CID)
@@ -96,8 +232,31 @@ public class ScopeEngine
             .ToHashSet();
         
         reachable.UnionWith(reachableViaRight);
-        
-        
-        
+
+        foreach (var compound in _data.Compounds)
+        {
+            if (!reachable.Contains(compound.CID) || res.ContainsKey(compound.CID))
+            {
+                continue;
+            }
+            
+            var rc = new ReachableCompound
+            {
+                Reachable = compound.Reachable,
+                Source = compound.CID.Equals(sInfo.Smiles),
+                Sink = compound.Sink,
+                FirstIteration = compound.FirstIteration
+            };
+            
+            res.Add(compound.CID, rc);
+        }
+
+        return res;
     }
+}
+
+internal static class FireableTransformationsExtensions
+{
+    internal static int GetTransformationsNotVisistedCount(this Dictionary<string, ScopeEngine.FireableTransformation> frs)
+        => frs.Count(x => x.Value.Fireable && x.Value.Visited == false);
 }
