@@ -1,0 +1,152 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="500"
+             x:Class="RetroPath.Gui.Views.ConfigurationView">
+	<Grid Background="LightGray">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto"></RowDefinition>
+			<RowDefinition Height="*"></RowDefinition>
+			<RowDefinition Height="auto"></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+
+		<Border
+			Grid.Row="0"
+			Grid.Column="0"
+			Background="White"
+			Padding="10,10"
+		>
+			<StackPanel>
+				<TextBlock FontWeight="Bold" Margin="0,3">(1/2) Configuration</TextBlock>
+				<TextBlock TextWrapping="Wrap">Set input and output configuration.</TextBlock>
+			</StackPanel>
+		</Border>
+
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+
+			<StackPanel Grid.Column="0" Margin="10,10">
+				<TextBlock FontSize="10" Margin="0, 3, 0, 5">Rules file</TextBlock>
+				<Grid HorizontalAlignment="Stretch">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="5*"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					
+					<TextBox Grid.Column="0" Text="{Binding RulesFile}" />
+					<Button Grid.Column="1" Margin="5, 0" Command="{Binding GetRulesFile}">
+						...
+					</Button>
+				</Grid>
+				
+				<TextBlock FontSize="10" Margin="0, 3, 0, 5">Source file</TextBlock>
+				<Grid HorizontalAlignment="Stretch">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="5*"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					
+					<TextBox Grid.Column="0" Text="{Binding SourceFile}" />
+					<Button Grid.Column="1" Margin="5, 0" Command="{Binding GetSourceFile}">
+						...
+					</Button>
+				</Grid>
+				
+				<TextBlock FontSize="10" Margin="0, 3, 0, 5">Sink file</TextBlock>
+				<Grid HorizontalAlignment="Stretch">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="5*"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					
+					<TextBox Grid.Column="0" Text="{Binding SinkFile}" />
+					<Button Grid.Column="1" Margin="5, 0" Command="{Binding GetSinkFile}">
+						...
+					</Button>
+				</Grid>
+				
+				<TextBlock FontSize="10" Margin="0, 3, 0, 5">Cofactors file (optional)</TextBlock>
+				<Grid HorizontalAlignment="Stretch">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="5*"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					
+					<TextBox Grid.Column="0" Text="{Binding CofactorsFile}" />
+					<Button Grid.Column="1" Margin="5, 0" Command="{Binding GetCofactorsFile}">
+						...
+					</Button>
+				</Grid>
+				
+				<TextBlock FontSize="10" Margin="0, 3, 0, 5">Output directory</TextBlock>
+				<Grid HorizontalAlignment="Stretch">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="5*"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					
+					<TextBox Grid.Column="0" Text="{Binding OutputDir}" />
+					<Button Grid.Column="1" Margin="5, 0" Command="{Binding GetOutputDir}">
+						...
+					</Button>
+				</Grid>
+				
+			</StackPanel>
+			
+			<StackPanel Grid.Column="1" Margin="10,10">
+				<TextBlock FontSize="10" Margin="0, 3, 0, 5">Pathway length</TextBlock>
+				<NumericUpDown Value="{Binding PathwayLength}" Increment="1" Minimum="0"/>
+				
+				<TextBlock FontSize="10" Margin="0, 3, 0, 5">Min diameter for rules</TextBlock>
+				<NumericUpDown Value="{Binding MinDiameter}" Increment="1" Minimum="0"/>
+				
+				<TextBlock FontSize="10" Margin="0, 3, 0, 5">Max diameter for rules</TextBlock>
+				<NumericUpDown Value="{Binding MaxDiameter}" Increment="1" Minimum="0"/>
+				
+				<TextBlock FontSize="10" Margin="0, 3, 0, 5">Source max molecular weight</TextBlock>
+				<NumericUpDown Value="{Binding SourceMw}" Increment="1" Minimum="0"/>
+				
+				<TextBlock FontSize="10" Margin="0, 3, 0, 5">Max allowed structures per iteration</TextBlock>
+				<NumericUpDown Value="{Binding MaxStructures}" Increment="1" Minimum="0"/>
+				
+				<TextBlock FontSize="10" Margin="0, 3, 0, 5">Cofactor max molecular weight</TextBlock>
+				<NumericUpDown Value="{Binding CofactorMw}" Increment="1" Minimum="0"/>
+			</StackPanel>
+		</Grid>
+		
+		
+
+		<Grid Grid.Row="2" Margin="10,10,10,10">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			
+			<StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="6">
+				<Button Padding="10,8"
+				        Command="{Binding LoadConfiguration}">
+					Load configuration
+				</Button>
+			
+				<Button Padding="10,8"
+				        Command="{Binding SaveConfiguration}">
+					Save configuration
+				</Button>
+			</StackPanel>
+			
+			
+				
+			<Button Grid.Column="1" Padding="40,8,40,8"
+			        Command="{Binding $parent[Window].DataContext.Run}">
+				Next
+			</Button>
+		</Grid>
+	</Grid>
+</UserControl>
