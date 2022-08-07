@@ -4,6 +4,7 @@ using Avalonia.ReactiveUI;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Threading;
 using MessageBox.Avalonia.DTO;
@@ -27,7 +28,22 @@ namespace RetroPath.Gui
 
             TaskScheduler.UnobservedTaskException += (sender, eventArgs) =>
             {
-                OnUnhandledException(eventArgs.Exception).GetAwaiter().GetResult();
+                var errorWindow = MessageBox.Avalonia.MessageBoxManager
+                    .GetMessageBoxStandardWindow(new MessageBoxStandardParams{
+                        ContentTitle = $"Error: {eventArgs.Exception.GetType()}",
+                        ContentMessage = $"The following error has occurred while running RP2.0 with provided inputs:\n{eventArgs.Exception.Message}",
+                        ButtonDefinitions = ButtonEnum.Ok,
+                        ShowInCenter = true,
+                        WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                        SizeToContent = SizeToContent.WidthAndHeight,
+                        Icon = Icon.Error
+                    });
+        
+                Log.Error(eventArgs.Exception, "Error while running RP2.0 on provided input configuration");
+        
+                errorWindow.Show().GetAwaiter().GetResult();
+
+                Environment.Exit(2);
             };
 
             try
