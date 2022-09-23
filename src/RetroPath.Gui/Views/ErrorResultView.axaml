@@ -1,0 +1,46 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="RetroPath.Gui.Views.ErrorResultView">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+			
+
+            <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="20,0" TextWrapping="WrapWithOverflow">RetroPath2.0 has encountered an error!</TextBlock>
+                
+                <TextBlock Grid.Row="1" VerticalAlignment="Center" Margin="20,0" TextWrapping="Wrap" Text="{Binding ErrorMsg}"></TextBlock>
+                <TextBlock Grid.Row="2" VerticalAlignment="Center" Margin="20,0" TextWrapping="Wrap" Text="{Binding ErrorDetailsMsg}"></TextBlock>
+            </Grid>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Background="LightGray">
+            <Button Margin="10" Padding="40,8,40,8" HorizontalAlignment="Right"
+                    Command="{Binding $parent[Window].DataContext.Finish}">
+                Finish
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

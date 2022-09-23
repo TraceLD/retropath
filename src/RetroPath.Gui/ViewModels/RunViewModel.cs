@@ -102,7 +102,7 @@ public class RunViewModel : ViewModelBase
         SourceProgressBarIsVisible = false;
     }
 
-    public async Task Run()
+    public async Task<RunResult> Run()
     {
         try
         {
@@ -128,15 +128,17 @@ public class RunViewModel : ViewModelBase
             MainProgressBarIncrementProcessedSources();
             IterationProgressBarIsVisible = false;
 
-            // TODO: scope
             MainProgressBarText = "Main progress: Writing results to CSV...";
             await rp.WriteResultsToCsvAsync();
             MainProgressBarValue = 100;
+            
+            return new RunResult();
         }
         catch (Exception e)
         {
-            await Dispatcher.UIThread.InvokeAsync(async () => await HandleExceptionWhileRunning(e),
-                DispatcherPriority.MaxValue);
+            //await Dispatcher.UIThread.InvokeAsync(async () => await HandleExceptionWhileRunning(e), DispatcherPriority.MaxValue);
+            
+            return new RunResult(e);
         }
     }
 

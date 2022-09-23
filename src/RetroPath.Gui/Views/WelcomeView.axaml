@@ -16,12 +16,12 @@
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"></ColumnDefinition>
-				<ColumnDefinition Width="2.5*"></ColumnDefinition>
+				<ColumnDefinition Width="4*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
+			
 
-			<TextBlock Grid.Row="0" Grid.Column="0" Background="Black" />
-
-			<Grid Grid.Row="0" Grid.Column="1">
+			<Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*"></RowDefinition>
 					<RowDefinition Height="*"></RowDefinition>
