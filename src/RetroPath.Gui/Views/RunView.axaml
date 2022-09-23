@@ -1,0 +1,57 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="500"
+             x:Class="RetroPath.Gui.Views.RunView">
+    <Grid Background="LightGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Border
+            Grid.Row="0"
+            Grid.Column="0"
+            Background="White"
+            Padding="10,10"
+        >
+            <StackPanel>
+                <TextBlock FontWeight="Bold" Margin="0,3">(2/3) Running RetroPath2.0</TextBlock>
+                <TextBlock TextWrapping="Wrap">The RetroPath2.0 algorithm is running with the provided configuration.</TextBlock>
+            </StackPanel>
+        </Border>
+        
+        
+        <Grid Grid.Row="1" Margin="30">
+            <StackPanel Spacing="30" VerticalAlignment="Center">
+                <StackPanel Spacing="2">
+                    <TextBlock FontSize="11" Margin="100,0" Text="{Binding MainProgressBarText}" />
+                    <ProgressBar Margin="100, 0" Height="20" Value="{Binding MainProgressBarValue, Mode = TwoWay}"/>
+                </StackPanel>
+                
+                <StackPanel Spacing="2" IsVisible="{Binding SourceProgressBarIsVisible}">
+                    <TextBlock FontSize="11" Margin="100,0" Text="{Binding SourceProgressBarText}" />
+                    <ProgressBar Margin="100, 0" Height="20" Value="{Binding SourceProgressBarValue, Mode = TwoWay}"/>
+                </StackPanel>
+                
+                <StackPanel Spacing="2" IsVisible="{Binding IterationProgressBarIsVisible}">
+                    <TextBlock FontSize="11" Margin="100,0" Text="{Binding IterationProgressBarText}" />
+                    <ProgressBar Margin="100, 0" Height="20" IsIndeterminate="True" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        
+        <StackPanel Grid.Row="2" Background="LightGray">
+            <Button Margin="10" Padding="40,8,40,8" HorizontalAlignment="Right"
+                    Command="{Binding $parent[Window].DataContext.Cancel}">
+                Cancel
+            </Button>
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

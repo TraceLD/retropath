@@ -1,22 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.Core", "RetroPath.Core\RetroPath.Core.csproj", "{B195FFBA-C2F5-4D98-9DB1-F30A0A8F595C}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroPath.Core", "RetroPath.Core\RetroPath.Core.csproj", "{B195FFBA-C2F5-4D98-9DB1-F30A0A8F595C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.Cli", "RetroPath.Cli\RetroPath.Cli.csproj", "{D2A39843-338C-4BD4-BCE2-AA80283AD1EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroPath.Cli", "RetroPath.Cli\RetroPath.Cli.csproj", "{D2A39843-338C-4BD4-BCE2-AA80283AD1EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.Benchmarks", "RetroPath.Benchmarks\RetroPath.Benchmarks.csproj", "{4374932C-1B22-4E31-886E-A59F24ECBC84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroPath.Benchmarks", "RetroPath.Benchmarks\RetroPath.Benchmarks.csproj", "{4374932C-1B22-4E31-886E-A59F24ECBC84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.Tests", "RetroPath.Tests\RetroPath.Tests.csproj", "{EB2900CC-BD64-452B-B0BE-1C1AE41CA23E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroPath.Tests", "RetroPath.Tests\RetroPath.Tests.csproj", "{EB2900CC-BD64-452B-B0BE-1C1AE41CA23E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{63D6151D-C197-48D0-A5E8-31C49B88677C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{63D6151D-C197-48D0-A5E8-31C49B88677C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp2", "ConsoleApp2\ConsoleApp2.csproj", "{7AEDF506-5F2F-412F-9CE4-D6457C8723D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp2", "ConsoleApp2\ConsoleApp2.csproj", "{7AEDF506-5F2F-412F-9CE4-D6457C8723D6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Experiments", "Experiments", "{96395912-6ED6-483B-A047-3DD04C0BA6E1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "..\build\_build.csproj", "{BAE8DA20-14AB-4A33-9C49-C9EC40524D00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.Chem", "RetroPath.Chem\RetroPath.Chem.csproj", "{3FC8D8F1-651B-429B-9F18-CBAB4FA1D0AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroPath.Chem", "RetroPath.Chem\RetroPath.Chem.csproj", "{3FC8D8F1-651B-429B-9F18-CBAB4FA1D0AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroPath.Gui", "RetroPath.Gui\RetroPath.Gui.csproj", "{A6B5587C-CBD7-4F12-BF89-CDDF22E23081}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{F6A34A9B-1BF0-4570-8B1D-8F59600D009F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,8 +31,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BAE8DA20-14AB-4A33-9C49-C9EC40524D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BAE8DA20-14AB-4A33-9C49-C9EC40524D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B195FFBA-C2F5-4D98-9DB1-F30A0A8F595C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B195FFBA-C2F5-4D98-9DB1-F30A0A8F595C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B195FFBA-C2F5-4D98-9DB1-F30A0A8F595C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -50,13 +55,27 @@ Global
 		{7AEDF506-5F2F-412F-9CE4-D6457C8723D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AEDF506-5F2F-412F-9CE4-D6457C8723D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AEDF506-5F2F-412F-9CE4-D6457C8723D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAE8DA20-14AB-4A33-9C49-C9EC40524D00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAE8DA20-14AB-4A33-9C49-C9EC40524D00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FC8D8F1-651B-429B-9F18-CBAB4FA1D0AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3FC8D8F1-651B-429B-9F18-CBAB4FA1D0AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FC8D8F1-651B-429B-9F18-CBAB4FA1D0AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FC8D8F1-651B-429B-9F18-CBAB4FA1D0AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6B5587C-CBD7-4F12-BF89-CDDF22E23081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6B5587C-CBD7-4F12-BF89-CDDF22E23081}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6B5587C-CBD7-4F12-BF89-CDDF22E23081}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6B5587C-CBD7-4F12-BF89-CDDF22E23081}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{D2A39843-338C-4BD4-BCE2-AA80283AD1EC} = {F6A34A9B-1BF0-4570-8B1D-8F59600D009F}
 		{63D6151D-C197-48D0-A5E8-31C49B88677C} = {96395912-6ED6-483B-A047-3DD04C0BA6E1}
 		{7AEDF506-5F2F-412F-9CE4-D6457C8723D6} = {96395912-6ED6-483B-A047-3DD04C0BA6E1}
+		{A6B5587C-CBD7-4F12-BF89-CDDF22E23081} = {F6A34A9B-1BF0-4570-8B1D-8F59600D009F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EBC1E301-D8DB-4D3A-99D2-BE1A23D1FD75}
 	EndGlobalSection
 EndGlobal

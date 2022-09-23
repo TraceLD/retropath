@@ -36,8 +36,8 @@ public class RetroPath : IDisposable
     {
         Log.Information("Parsing inputs...");
         
-        await Task.Run(() => ParseRules(true));
-        await ParseSourcesAndSinksAsync(true);
+        await Task.Run(() => ParseRules(true)).ConfigureAwait(false);
+        await ParseSourcesAndSinksAsync(true).ConfigureAwait(false);
         
         Log.Information("Sinks + sources: {SpsCount}", _sourcesAndSinks!.Count);
         Log.Information("Sources in sink: {SisCount}", _sourcesInSink!.Count);
@@ -117,9 +117,11 @@ public class RetroPath : IDisposable
     private async Task ParseSourcesAndSinksAsync(bool calculateSourceFingerprints) // TODO: this should be configurable via an option
     {
         var parsedSinks =
-            await Task.Run(() => _compoundParser.Parse(_inputConfiguration.SinkFilePath, ChemicalType.Sink));
+            await Task.Run(() => _compoundParser.Parse(_inputConfiguration.SinkFilePath, ChemicalType.Sink))
+                .ConfigureAwait(false);
         var parsedSources =
-            await Task.Run(() => _compoundParser.Parse(_inputConfiguration.SourceFilePath, ChemicalType.Source));
+            await Task.Run(() => _compoundParser.Parse(_inputConfiguration.SourceFilePath, ChemicalType.Source))
+                .ConfigureAwait(false);
 
         if (calculateSourceFingerprints)
         {
