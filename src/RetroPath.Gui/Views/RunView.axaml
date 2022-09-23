@@ -21,7 +21,7 @@
             Padding="10,10"
         >
             <StackPanel>
-                <TextBlock FontWeight="Bold" Margin="0,3">(2/2) Running RetroPath2.0</TextBlock>
+                <TextBlock FontWeight="Bold" Margin="0,3">(2/3) Running RetroPath2.0</TextBlock>
                 <TextBlock TextWrapping="Wrap">The RetroPath2.0 algorithm is running with the provided configuration.</TextBlock>
             </StackPanel>
         </Border>

@@ -14,11 +14,11 @@ public class RuleEngineBenchmark
     public void Setup()
     {
         var inputConfig = new InputConfiguration(
-            @"C:\Users\Lukasz\Documents\projects\retropath-standalone\data\retrorules_rr02_rp2_flat_all.csv",
+            @"C:\Users\Lukasz\Documents\projects\retropath-standalone\data\benchmark_rules.csv",
             @"C:\Users\Lukasz\Documents\projects\rp\RetroPath2.0\tutorial_data\pinocembrin\sink_B.csv",
             @"C:\Users\Lukasz\Documents\projects\rp\RetroPath2.0\tutorial_data\pinocembrin\source.csv",
             1000,
-            "cofacts_file",
+            null,
             1000,
             0,
             1000,

@@ -45,11 +45,20 @@ namespace RetroPath.Gui.ViewModels
 
             Content = new RunViewModel(_appSpecification);
 
-            await ((RunViewModel) Content).Run();
+            var result = await ((RunViewModel) Content).Run();
+
+            if (result.IsSuccess)
+            {
+                Content = new SuccessResultViewModel(_appSpecification);
+            }
+            else
+            {
+                Content = new ErrorResultViewModel(result);
+            }
         }
 
         public void Cancel() => Environment.Exit(18);
 
-        public void GoToResultsScreen() => throw new NotImplementedException();
+        public void Finish() => Environment.Exit(0);
     }
 }

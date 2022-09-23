@@ -14,5 +14,10 @@
     <ItemGroup>
       <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
     </ItemGroup>
+    
+    <PropertyGroup>
+        <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    </PropertyGroup>
 
 </Project>

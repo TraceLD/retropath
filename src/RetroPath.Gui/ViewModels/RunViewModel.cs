@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using Avalonia.Threading;
+using MessageBox.Avalonia.DTO;
+using MessageBox.Avalonia.Enums;
+using MessageBox.Avalonia.Models;
 using ReactiveUI;
 using RetroPath.Gui.Models;
+using Serilog;
 
 namespace RetroPath.Gui.ViewModels;
 
@@ -97,33 +102,65 @@ public class RunViewModel : ViewModelBase
         SourceProgressBarIsVisible = false;
     }
 
-    public async Task Run()
+    public async Task<RunResult> Run()
     {
-        using var rp = new RetroPath.Core.RetroPath(_appSpecification.InputConfiguration,
-            _appSpecification.OutputConfiguration);
+        try
+        {
+            using var rp = new RetroPath.Core.RetroPath(_appSpecification.InputConfiguration,
+                _appSpecification.OutputConfiguration);
 
-        rp.PrepareOutputDir();
-        MainProgressBarIncrementPreparedOutputDir();
+            rp.PrepareOutputDir();
+            MainProgressBarIncrementPreparedOutputDir();
 
-        MainProgressBarText = "Main progress: Parsing inputs...";
-        await rp.ParseInputsAsync().ConfigureAwait(false);
-        MainProgressBarIncrementParsedInputs();
+            MainProgressBarText = "Main progress: Parsing inputs...";
+            await rp.ParseInputsAsync().ConfigureAwait(false);
+            MainProgressBarIncrementParsedInputs();
+
+            // TODO: compatible with multiple sources;
+            MainProgressBarText = "Main progress: Running RP2.0 for sources...";
+            SourceProgressBarText = "Sources progress: Processing source (1/1)...";
+            SourceProgressBarValue = 10;
+            SourceProgressBarIsVisible = true;
+            IterationProgressBarText = "Current source progress: Firing rules...";
+            IterationProgressBarIsVisible = true;
+            await Task.Run(() => rp.Compute());
+            SourceProgressBarIncrementSourceProcessed(1);
+            MainProgressBarIncrementProcessedSources();
+            IterationProgressBarIsVisible = false;
+
+            MainProgressBarText = "Main progress: Writing results to CSV...";
+            await rp.WriteResultsToCsvAsync();
+            MainProgressBarValue = 100;
+            
+            return new RunResult();
+        }
+        catch (Exception e)
+        {
+            //await Dispatcher.UIThread.InvokeAsync(async () => await HandleExceptionWhileRunning(e), DispatcherPriority.MaxValue);
+            
+            return new RunResult(e);
+        }
+    }
+
+    private async Task HandleExceptionWhileRunning(Exception e)
+    {
+        var errorWindow = MessageBox.Avalonia.MessageBoxManager
+            .GetMessageBoxStandardWindow(new MessageBoxStandardParams
+            {
+                ContentTitle = $"Error: {e.GetType()}",
+                ContentMessage =
+                    $"The following error has occurred while running RP2.0 with provided inputs:\n{e.Message}",
+                ButtonDefinitions = ButtonEnum.Ok,
+                ShowInCenter = true,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                SizeToContent = SizeToContent.WidthAndHeight,
+                Icon = Icon.Error
+            });
+
+        Log.Error(e, "Error while running RP2.0 on provided input configuration");
+
+        await errorWindow.ShowDialog(WindowHelpers.CurrentDesktopWindow);
         
-        // TODO: compatible with multiple sources;
-        MainProgressBarText = "Main progress: Running RP2.0 for sources...";
-        SourceProgressBarText = "Sources progress: Processing source (1/1)...";
-        SourceProgressBarValue = 10;
-        SourceProgressBarIsVisible = true;
-        IterationProgressBarText = "Current source progress: Firing rules...";
-        IterationProgressBarIsVisible = true;
-        await Task.Run(() => rp.Compute());
-        SourceProgressBarIncrementSourceProcessed(1);
-        MainProgressBarIncrementProcessedSources();
-        IterationProgressBarIsVisible = false;
-        
-        // TODO: scope
-        MainProgressBarText = "Main progress: Writing results to CSV...";
-        await rp.WriteResultsToCsvAsync();
-        MainProgressBarValue = 100;
+        Environment.Exit(2);
     }
 }

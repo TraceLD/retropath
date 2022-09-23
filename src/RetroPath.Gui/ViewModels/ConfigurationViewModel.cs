@@ -199,7 +199,7 @@ namespace RetroPath.Gui.ViewModels
                     .GetMessageBoxStandardWindow(new MessageBoxStandardParams{
                         ContentTitle = "JSON Error",
                         ContentMessage = "The specified JSON file could not be parsed into a valid app configuration",
-                        ButtonDefinitions = ButtonEnum.OkAbort,
+                        ButtonDefinitions = ButtonEnum.Ok,
                         Icon = Icon.Error
                     });
                 
